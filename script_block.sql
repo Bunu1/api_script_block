@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.6.4
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 06 mai 2018 à 18:17
--- Version du serveur :  5.7.21
--- Version de PHP :  5.6.35
+-- Client :  127.0.0.1
+-- Généré le :  Dim 13 Mai 2018 à 21:43
+-- Version du serveur :  5.7.14
+-- Version de PHP :  5.6.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -28,8 +26,7 @@ SET time_zone = "+00:00";
 -- Structure de la table `argument`
 --
 
-DROP TABLE IF EXISTS `argument`;
-CREATE TABLE IF NOT EXISTS `argument` (
+CREATE TABLE `argument` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `value` varchar(100) NOT NULL,
@@ -43,19 +40,17 @@ CREATE TABLE IF NOT EXISTS `argument` (
 -- Structure de la table `article`
 --
 
-DROP TABLE IF EXISTS `article`;
-CREATE TABLE IF NOT EXISTS `article` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `article` (
+  `id` int(11) NOT NULL,
   `subject` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `available` int(11) NOT NULL DEFAULT '1',
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `id_user` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `article`
+-- Contenu de la table `article`
 --
 
 INSERT INTO `article` (`id`, `subject`, `content`, `available`, `date_add`, `id_user`) VALUES
@@ -68,12 +63,10 @@ INSERT INTO `article` (`id`, `subject`, `content`, `available`, `date_add`, `id_
 -- Structure de la table `block`
 --
 
-DROP TABLE IF EXISTS `block`;
-CREATE TABLE IF NOT EXISTS `block` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `block` (
+  `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+  `description` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -82,8 +75,7 @@ CREATE TABLE IF NOT EXISTS `block` (
 -- Structure de la table `block_argument`
 --
 
-DROP TABLE IF EXISTS `block_argument`;
-CREATE TABLE IF NOT EXISTS `block_argument` (
+CREATE TABLE `block_argument` (
   `id_block` int(11) NOT NULL,
   `id_argument` int(11) NOT NULL,
   `pre_option` varchar(10) NOT NULL
@@ -95,8 +87,7 @@ CREATE TABLE IF NOT EXISTS `block_argument` (
 -- Structure de la table `block_instruction`
 --
 
-DROP TABLE IF EXISTS `block_instruction`;
-CREATE TABLE IF NOT EXISTS `block_instruction` (
+CREATE TABLE `block_instruction` (
   `id_code_block` int(11) NOT NULL,
   `id_instruction` int(11) NOT NULL,
   `pos` int(11) NOT NULL
@@ -108,14 +99,12 @@ CREATE TABLE IF NOT EXISTS `block_instruction` (
 -- Structure de la table `code_block`
 --
 
-DROP TABLE IF EXISTS `code_block`;
-CREATE TABLE IF NOT EXISTS `code_block` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `code_block` (
+  `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `platform` varchar(100) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `id_block` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  `id_block` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -124,8 +113,7 @@ CREATE TABLE IF NOT EXISTS `code_block` (
 -- Structure de la table `instruction`
 --
 
-DROP TABLE IF EXISTS `instruction`;
-CREATE TABLE IF NOT EXISTS `instruction` (
+CREATE TABLE `instruction` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `syntax` text NOT NULL,
@@ -138,9 +126,8 @@ CREATE TABLE IF NOT EXISTS `instruction` (
 -- Structure de la table `script`
 --
 
-DROP TABLE IF EXISTS `script`;
-CREATE TABLE IF NOT EXISTS `script` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `script` (
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `category` varchar(255) NOT NULL DEFAULT 'clean',
@@ -148,16 +135,16 @@ CREATE TABLE IF NOT EXISTS `script` (
   `downloads_count` int(11) NOT NULL DEFAULT '0',
   `date_crea` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_user` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `report` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `script`
+-- Contenu de la table `script`
 --
 
-INSERT INTO `script` (`id`, `name`, `description`, `category`, `size`, `downloads_count`, `date_crea`, `id_user`) VALUES
-(5, 'test', 'un bon test', 'clean', 50, 0, '2018-05-06 12:51:21', 1);
+INSERT INTO `script` (`id`, `name`, `description`, `category`, `size`, `downloads_count`, `date_crea`, `id_user`, `report`) VALUES
+(5, 'test', 'un bon test', 'clean', 50, 0, '2018-05-06 12:51:21', 1, 1),
+(6, 'test2', 'un bon test', 'clean', 60, 0, '2018-05-06 12:51:21', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -165,28 +152,91 @@ INSERT INTO `script` (`id`, `name`, `description`, `category`, `size`, `download
 -- Structure de la table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `date_insc` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `rank` int(11) NOT NULL,
-  `active` int(11) NOT NULL,
-  `enabled` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `rank` int(11) NOT NULL DEFAULT '0',
+  `active` int(11) NOT NULL DEFAULT '0',
+  `enabled` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `user`
+-- Contenu de la table `user`
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `date_insc`, `rank`, `active`, `enabled`) VALUES
-(1, 'bunu', 'bunu@nu.bu', 'bunu', '2018-05-06 13:37:08', 1, 1, 1);
+(1, 'bunu', 'bunu@nu.bu', 'bunu', '2018-05-06 13:37:08', 1, 1, 1),
+(70, 'aze', 'aze@azr.com', '$2y$10$TjKkx5n9/P.mdfPdaN.pTOkOCfwlt2ndzu0n0QzY3qIimMDRfvNS6', '2018-05-13 19:47:41', 0, 0, 0);
 
 --
--- Contraintes pour les tables déchargées
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `article`
+--
+ALTER TABLE `article`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `block`
+--
+ALTER TABLE `block`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `code_block`
+--
+ALTER TABLE `code_block`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `script`
+--
+ALTER TABLE `script`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Index pour la table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `article`
+--
+ALTER TABLE `article`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT pour la table `block`
+--
+ALTER TABLE `block`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `code_block`
+--
+ALTER TABLE `code_block`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `script`
+--
+ALTER TABLE `script`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT pour la table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+--
+-- Contraintes pour les tables exportées
 --
 
 --
@@ -194,7 +244,6 @@ INSERT INTO `user` (`id`, `name`, `email`, `password`, `date_insc`, `rank`, `act
 --
 ALTER TABLE `script`
   ADD CONSTRAINT `script_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
