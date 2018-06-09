@@ -36,6 +36,11 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.BIGINT,
       allowNull: false,
       foreignKey: true
+    },
+    report: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      defaultValue: 0
     }
 	}, {
 		paranoid: false,
