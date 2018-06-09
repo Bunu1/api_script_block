@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Sam 09 Juin 2018 à 14:30
+-- Généré le :  Sam 09 Juin 2018 à 17:39
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -91,7 +91,13 @@ INSERT INTO `argument` (`id`, `name`, `value`, `type`, `description`) VALUES
 (76, 'sed Options', '`#1`', NULL, 'Options of sed command, try \'man sed\' to see them all'),
 (77, 'sed Pattern', '`#2`', NULL, 'A pattern searched on eached lines of the file(s)'),
 (78, 'sed File', '`#2`', NULL, 'A file'),
-(79, 'touch Options', '`#1`', NULL, 'Name of the empty file');
+(79, 'touch Options', '`#1`', NULL, 'Name of the empty file'),
+(80, 'Return value', '`#1`', NULL, 'Returned value'),
+(81, 'First Operand', '`#1`', NULL, 'Something comparable'),
+(82, 'Second  Operand', '`#2`', NULL, 'Something comparable'),
+(83, 'Operator', '`#op`', NULL, 'Operator for comparison'),
+(84, 'Filename', '`#1`', NULL, 'Name of the file'),
+(85, 'Code', '`#1`', NULL, 'The code you write in');
 
 -- --------------------------------------------------------
 
@@ -167,7 +173,15 @@ INSERT INTO `block` (`id`, `name`, `description`) VALUES
 (60, 'find Command', 'Search for files in a directory hierarchy.'),
 (61, 'grep Command', 'grep searches for PATTERN in each FILE. If no FILE is given, recursive searches examine the working directory, and nonrecursive searches read standard input.'),
 (62, 'sed Command', 'A stream editor used to filer and perform basic text transformations on an input stream (a file or input from a pipeline)'),
-(63, 'Empty file', 'Create an empty file');
+(63, 'Empty file', 'Create an empty file'),
+(64, 'Return', 'Allows to return a value from a function'),
+(65, 'Comparison Test', 'Test: something operator something'),
+(66, 'File Test', 'Several test on a file'),
+(67, 'Function Test', 'Test on the returned value of a function'),
+(68, 'Custom', 'Custom block for personnal use (you can write free code inside)'),
+(69, 'And', 'And operator'),
+(70, 'Or', 'Or operator'),
+(71, 'Logical Not', 'Logical Not operator (!)');
 
 -- --------------------------------------------------------
 
@@ -253,7 +267,16 @@ INSERT INTO `block_argument` (`id_block`, `id_argument`, `pre_option`) VALUES
 (62, 76, NULL),
 (62, 77, NULL),
 (62, 78, NULL),
-(63, 79, NULL);
+(63, 79, NULL),
+(64, 80, NULL),
+(65, 81, NULL),
+(65, 82, NULL),
+(65, 83, NULL),
+(66, 83, NULL),
+(66, 84, NULL),
+(67, 24, NULL),
+(67, 25, NULL),
+(68, 85, NULL);
 
 -- --------------------------------------------------------
 
@@ -359,7 +382,18 @@ INSERT INTO `block_instruction` (`id_code_block`, `id_instruction`, `pos`) VALUE
 (54, 154, 1),
 (59, 159, 1),
 (60, 160, 1),
-(61, 161, 1);
+(61, 161, 1),
+(64, 164, 1),
+(65, 165, 1),
+(66, 166, 1),
+(67, 167, 1),
+(68, 168, 1),
+(70, 169, 1),
+(70, 171, 1),
+(70, 173, 1),
+(71, 170, 1),
+(71, 172, 1),
+(71, 174, 1);
 
 -- --------------------------------------------------------
 
@@ -509,7 +543,18 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
 (159, 'type Command', 'type `#1` `#2`', 'arguments', 'batch'),
 (160, 'find Command', 'find `#1` `#2`', 'arguments', 'batch'),
 (161, 'findstr Command', 'findstr `#1` `#2` `#3`', 'arguments', 'batch'),
-(163, 'Empty File Command', 'copy /y nul `#1`', 'arguments', 'batch');
+(163, 'Empty File Command', 'copy /y nul `#1`', 'arguments', 'batch'),
+(164, 'Return', 'return `#1`', 'arguments', 'unix'),
+(165, 'Comparison Test', '[ `#1` `#op` `#2` ]', 'arguments', 'unix'),
+(166, 'File test', '[ `#op` `#1` ]', 'arguments', 'unix'),
+(167, 'Function test', '`#1` `#2`', 'arguments', 'unix'),
+(168, 'Code', '`#1`', 'arguments', 'unix'),
+(169, 'And', '&&', 'text-only', 'unix'),
+(170, 'And', 'AND', 'text-only', 'windows'),
+(171, 'Or', '||', 'text-only', 'unix'),
+(172, 'Or', 'OR', 'text-only', 'windows'),
+(173, 'Not', '!', 'text-only', 'unix'),
+(174, 'Not', 'NOT', 'text-only', 'windows');
 
 -- --------------------------------------------------------
 
@@ -638,7 +683,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `argument`
 --
 ALTER TABLE `argument`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 --
 -- AUTO_INCREMENT pour la table `article`
 --
@@ -648,7 +693,7 @@ ALTER TABLE `article`
 -- AUTO_INCREMENT pour la table `block`
 --
 ALTER TABLE `block`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 --
 -- AUTO_INCREMENT pour la table `code_block`
 --
@@ -663,7 +708,7 @@ ALTER TABLE `conditions`
 -- AUTO_INCREMENT pour la table `instruction`
 --
 ALTER TABLE `instruction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
 --
 -- AUTO_INCREMENT pour la table `script`
 --
