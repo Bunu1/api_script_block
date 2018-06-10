@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Sam 09 Juin 2018 à 17:39
+-- Généré le :  Dim 10 Juin 2018 à 11:39
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -285,7 +285,7 @@ INSERT INTO `block_argument` (`id_block`, `id_argument`, `pre_option`) VALUES
 --
 
 CREATE TABLE `block_instruction` (
-  `id_code_block` int(11) NOT NULL,
+  `id_block` int(11) NOT NULL,
   `id_instruction` int(11) NOT NULL,
   `pos` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -294,7 +294,7 @@ CREATE TABLE `block_instruction` (
 -- Contenu de la table `block_instruction`
 --
 
-INSERT INTO `block_instruction` (`id_code_block`, `id_instruction`, `pos`) VALUES
+INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (1, 1, 1),
 (2, 2, 1),
 (3, 3, 1),
@@ -521,29 +521,29 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
 (68, 'grep Command', 'grep `#1` `#2` `#3`', 'arguments', 'unix'),
 (69, 'sed Command', 'sed `#1` `#2` `#3`', 'arguments', 'unix'),
 (70, 'Empty File Command', 'touch `#1`', 'arguments', 'unix'),
-(120, 'Default Variable', 'IF [%`#2`] == [] (SET `#1`=`#2`) else (SET `#1`=`#3`)', 'arguments', 'batch'),
-(121, 'Function Start', ':`#1`', 'arguments', 'batch'),
-(122, 'Function Content', '`#blocs`', 'blocs', 'batch'),
-(123, 'Function End', 'exit /b', 'text-only', 'batch'),
-(124, 'Function Call', 'CALL :`#1` `#2`', 'arguments', 'batch'),
-(125, 'Switch Start', 'powershell -Command "& {Switch (`#1`) {', 'arguments', 'batch'),
-(126, 'Case Start', '`#2` { ', 'arguments-loopstart', 'batch'),
-(127, 'Switch Content', '`#blocs` ', 'blocs', 'batch'),
-(128, 'Case End', '}', 'text-only-loopend', 'batch'),
-(129, 'Switch End', '}}"', 'text-only', 'batch'),
-(130, 'For Start', 'for `#1` `#` in (`#2`) do ( ', 'arguments', 'batch'),
-(131, 'For Content', '`#blocs` ', 'blocs', 'batch'),
-(132, 'For End', ')', 'text-only', 'batch'),
-(133, 'Array declaration', 'set `#1`=`#2`', 'arguments', 'batch'),
-(134, 'Array show', 'for %%a in (%`#1`%) do ( echo %%a )', 'arguments', 'batch'),
-(150, 'cd Command', 'cd `#1` `#2`', 'arguments', 'batch'),
-(151, 'dir Command', 'dir `#1` `#2`', 'arguments', 'batch'),
-(153, 'del Command', 'del `#1` `#2`', 'arguments', 'batch'),
-(154, 'cacls Command', 'CACLS `#3` `#1` `#2`', 'arguments', 'batch'),
-(159, 'type Command', 'type `#1` `#2`', 'arguments', 'batch'),
-(160, 'find Command', 'find `#1` `#2`', 'arguments', 'batch'),
-(161, 'findstr Command', 'findstr `#1` `#2` `#3`', 'arguments', 'batch'),
-(163, 'Empty File Command', 'copy /y nul `#1`', 'arguments', 'batch'),
+(120, 'Default Variable', 'IF [%`#2`] == [] (SET `#1`=`#2`) else (SET `#1`=`#3`)', 'arguments', 'windows'),
+(121, 'Function Start', ':`#1`', 'arguments', 'windows'),
+(122, 'Function Content', '`#blocs`', 'blocs', 'windows'),
+(123, 'Function End', 'exit /b', 'text-only', 'windows'),
+(124, 'Function Call', 'CALL :`#1` `#2`', 'arguments', 'windows'),
+(125, 'Switch Start', 'powershell -Command "& {Switch (`#1`) {', 'arguments', 'windows'),
+(126, 'Case Start', '`#2` { ', 'arguments-loopstart', 'windows'),
+(127, 'Switch Content', '`#blocs` ', 'blocs', 'windows'),
+(128, 'Case End', '}', 'text-only-loopend', 'windows'),
+(129, 'Switch End', '}}"', 'text-only', 'windows'),
+(130, 'For Start', 'for `#1` `#` in (`#2`) do ( ', 'arguments', 'windows'),
+(131, 'For Content', '`#blocs` ', 'blocs', 'windows'),
+(132, 'For End', ')', 'text-only', 'windows'),
+(133, 'Array declaration', 'set `#1`=`#2`', 'arguments', 'windows'),
+(134, 'Array show', 'for %%a in (%`#1`%) do ( echo %%a )', 'arguments', 'windows'),
+(150, 'cd Command', 'cd `#1` `#2`', 'arguments', 'windows'),
+(151, 'dir Command', 'dir `#1` `#2`', 'arguments', 'windows'),
+(153, 'del Command', 'del `#1` `#2`', 'arguments', 'windows'),
+(154, 'cacls Command', 'CACLS `#3` `#1` `#2`', 'arguments', 'windows'),
+(159, 'type Command', 'type `#1` `#2`', 'arguments', 'windows'),
+(160, 'find Command', 'find `#1` `#2`', 'arguments', 'windows'),
+(161, 'findstr Command', 'findstr `#1` `#2` `#3`', 'arguments', 'windows'),
+(163, 'Empty File Command', 'copy /y nul `#1`', 'arguments', 'windows'),
 (164, 'Return', 'return `#1`', 'arguments', 'unix'),
 (165, 'Comparison Test', '[ `#1` `#op` `#2` ]', 'arguments', 'unix'),
 (166, 'File test', '[ `#op` `#1` ]', 'arguments', 'unix'),
@@ -641,7 +641,7 @@ ALTER TABLE `block_argument`
 --
 ALTER TABLE `block_instruction`
   ADD KEY `id_instruction_block` (`id_instruction`),
-  ADD KEY `id_block_instruction` (`id_code_block`);
+  ADD KEY `id_block` (`id_block`);
 
 --
 -- Index pour la table `code_block`
@@ -734,7 +734,7 @@ ALTER TABLE `block_argument`
 -- Contraintes pour la table `block_instruction`
 --
 ALTER TABLE `block_instruction`
-  ADD CONSTRAINT `id_block_instruction` FOREIGN KEY (`id_code_block`) REFERENCES `block` (`id`),
+  ADD CONSTRAINT `id_block_in_block_instruction` FOREIGN KEY (`id_block`) REFERENCES `block` (`id`),
   ADD CONSTRAINT `id_instruction_block` FOREIGN KEY (`id_instruction`) REFERENCES `instruction` (`id`);
 
 --
