@@ -39,6 +39,7 @@ scriptRouter.post('/add', function(req, res) {
   });
 });
 
+
 scriptRouter.get('/', function(req, res) {
   const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
   const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
@@ -61,7 +62,7 @@ scriptRouter.delete('/remove/:id', function(req, res) {
   
   ScriptController.remove(id)
   .then((p) => {
-    res.status(201).json(p);
+    res.status(200).json(p);
   })
   .catch((err) => {
     console.error(err);
@@ -83,7 +84,7 @@ scriptRouter.post('/update', function(req, res) {
   
   ScriptController.update(id, description, category, dl_count, report)
   .then((p) => {
-    res.status(201).json(p);
+    res.status(200).json(p);
   })
   .catch((err) => {
     console.error(err);

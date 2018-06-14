@@ -4,48 +4,65 @@ const Op = ModelIndex.Sequelize.Op;
 
 const BlockController = function() { };
 
-BlockController.add = function(subject, content, id_user) {
+BlockController.add = function(name, description) {
   return Block.create({
-    subject: subject,
-    content: content,
-    id_user: id_user
+    name: name,
+    description: description,
   });
 }
 
-BlockController.findAll = function(id, subject, content, available, date_add, id_user, limit, offset) {
+BlockController.getFullBlocks = function(id) {
+	const where = {};
+	if(id !== undefined) {
+		where.id = {
+			[Op.like] :  id
+		}
+	}
+	
+	return Block.findAll({
+		include: [{
+			model: ModelIndex.Argument,
+		}, {
+			model: ModelIndex.Instruction
+		}],
+		where: where
+	})
+}
+
+BlockController.getBlockInfos = function(id) {
+	return Block.findAll({
+		include: [{
+			model: ModelIndex.Argument,
+//			include: [{
+//				model: ModelIndex.Promotion
+//			}],
+//			required: true
+		}, {
+			model: ModelIndex.Instruction
+		}],
+		where: { id: id }
+	})
+}
+
+BlockController.getAll = function(id, name, description, limit, offset) {
   const where = {};
 	const options = {};
   
 	if(id !== undefined){
 		where.id = {
-			[Op.like]: `${id}%`
+			[Op.like]: id
 		}
 	}
-	if(subject !== undefined){
-		where.subject = {
-			[Op.like]: `${subject}%`
+	if(name !== undefined){
+		where.name = {
+			[Op.like]: `${name}%`
 		}
 	}
-	if(content !== undefined){
-		where.content = {
-			[Op.like]: `${content}%`
+	if(description !== undefined){
+		where.description = {
+			[Op.like]: `${description}%`
 		}
 	}
-	if(available !== undefined){
-		where.available = {
-			[Op.like]: `${available}%`
-		}
-	}
-	if(date_add !== undefined){
-		where.date_add = {
-			[Op.like]: `${date_add}%`
-		}
-	}
-  if(id_user !== undefined){
-    where.id_user = {
-      [Op.like]: `${id_user}%`
-    }
-  }
 	options.where = where;
 	if(limit !== undefined){
 		options.limit = limit;
@@ -61,20 +78,16 @@ BlockController.remove = function(id) {
   return Block.destroy({ where: { id: id } });
 }
 
-BlockController.update = function(id, subject, content, available) {
-  return Block.find({where: {id: id}})
-  .then((Block) => {
-    if(Block) {
-      if(subject === undefined) subject = Block.subject;
-      if(content === undefined) content = Block.content;
-      if(available === undefined) available = Block.available;
-      return Block.updateAttributes({
-        subject: subject,
-        content: content,
-        available: available
-      });
-    }
-  })
+BlockController.update = function(id, name, description, available) {
+	const options = {};
+	if(name !== undefined)
+		options.name = name;
+	if(description !== undefined)
+		options.description = description;
+	if(available !== undefined)
+		options.available = available;
+	
+	return Block.update(options, { returning: true, where: {id: id} });
 }
 
 module.exports = BlockController

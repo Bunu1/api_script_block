@@ -8,23 +8,18 @@ const blockRouter = express.Router();
 blockRouter.use(bodyParser.json());
 
 blockRouter.post('/add', function(req, res) {
-  const subject = req.body.subject;
-  const content = req.body.content;
-  const id_user = req.body.id_user;
+  const name = req.body.name;
+  const description = req.body.description;
   
-  if(subject === undefined) {
+  if(name === undefined) {
     res.status(400).end();
     return;
   }
   if(content === undefined) {
     description = "";
   }
-  if(id_user === undefined) {
-    res.status(400).end();
-    return;
-  }
   
-  BlockController.add(subject, content, id_user)
+  BlockController.add(name, description)
   .then((p) => {
     res.status(201).json(p);
   })
@@ -32,14 +27,42 @@ blockRouter.post('/add', function(req, res) {
     console.error(err);
     res.status(500).end();
   });
+});
+
+blockRouter.get('/full', function(req, res) {	
+	BlockController.getFullBlocks(req.query.id)
+	.then((blocks) => {
+		res.status(200).json(blocks);
+	})
+	.catch((err) => {
+		res.status(500).end();
+	})
+});
+
+blockRouter.get('/infos/:id', function(req, res) {
+	const id = req.params.id;
+	
+	if(id === undefined) {
+		req.status(400).end();
+		return;
+	}
+	
+	BlockController.getBlockInfos(id)
+	.then((p) => {
+		res.status(200).json(p);
+	})
+	.catch((err) => {
+		console.log(err);
+		res.status(500).end();
+	})
 });
 
 blockRouter.get('/', function(req, res) {
   const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
   const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
-  BlockController.findAll(req.query.id, req.query.subject, req.query.content, req.query.available, req.query.date_add, req.query.id_user, limit, offset)
+  BlockController.getAll(req.query.id, req.query.name, req.query.description, limit, offset)
   .then((blocks) => {
-    res.json(blocks);
+    res.status(200).json(blocks);
   })
   .catch((err) => {
     console.error(err);
@@ -47,35 +70,51 @@ blockRouter.get('/', function(req, res) {
   });
 });
 
-blockRouter.delete('/remove/:id', function(req, res) {
-  const id = parseInt(req.params.id);
-  
-  if(id === undefined) {
-    req.status(400).end();
-  }
-  
-  BlockController.remove(id)
-  .then((p) => {
-    res.status(201).json(p);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).end();
-  });
-})
+blockRouter.put('/disable/:id', function(req, res) {
+	const id =  req.params.id;
+	if(isNan(parseInt(id, 10))) {
+		res.status(404).end();
+		return;
+	}
+	
+	BlockController.update(id, undefined, undefined, 0)
+	.then((p) => {
+		res.status(200).json(p);
+	})
+	.catch((err) => {
+		console.log(err);
+		res.status(500).end();
+	});
+});
 
-blockRouter.post('/update', function(req, res) {
+blockRouter.put('/enable/:id', function(req, res) {
+	const id =  req.params.id;
+	BlockController.update(id, undefined, undefined, 1)
+	.then((p) => {
+		res.status(200).json(p);
+	})
+	.catch((err) => {
+		console.log(err);
+		res.status(500).end();
+	});
+});
+
+blockRouter.put('/update', function(req, res) {
   const id = req.body.id;
-  const subject = req.body.subject;
-  const content = req.body.content;
+  const name = req.body.name;
+  const description = req.body.description;
   const available = req.body.available;
   
+	console.log(name);
+	console.log(description);
+	console.log(available);
+	
   if(id === undefined) {
-    res.status(400).end();
+    res.status(404).end();
     return;
   }
   
-  BlockController.update(id, subject, content, available)
+  BlockController.update(id, name, description, available)
   .then((p) => {
     res.status(201).json(p);
   })
