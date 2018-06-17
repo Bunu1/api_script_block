@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+var request = require('request')
 const controllers = require('../controllers');
 
 const BlockController = controllers.BlockController;
@@ -123,6 +124,81 @@ blockRouter.put('/update', function(req, res) {
     res.status(500).end();
   });
 });
+
+blockRouter.post('/finalscript', function(req, res) {
+
+  const type = req.body.type;
+  const blocks = req.body.blocks;
+
+  if(type === undefined || (type != "unix" && type != "windows")) {
+    res.status(400).end();
+    return;
+  }
+  if(blocks === undefined) {
+    res.status(400).end();
+    return;
+  }
+
+  var blockinfo = new Array();
+
+  var finalstring= "";
+  	blocks.forEach(function(block) {
+	setTimeout(function(){
+	request({
+	  method: 'GET',
+	  uri: "http://localhost:8080/block/infos/"+block['id'],
+	  headers: {
+	  	'Access-Control-Allow-Origin': '*',
+	  	'Content-type': 'application/json'
+	  },
+	  json: true
+	}, function (error, response, body) {
+	  var bd = JSON.parse(JSON.stringify(body));
+	  blockinfo.push(bd[0]);
+
+	  blockinfo[blockinfo.length-1]['Instructions'].forEach(function(instruction) {
+	  	if(type == instruction['platform']){
+	  		if(instruction['type'].indexOf('arguments') != -1 && instruction['type'].indexOf('loop') == -1){
+		  		var base = instruction['syntax'];
+		  		for (var k in block['arguments']){
+		  			base = base.replace("`"+k+"`", block['arguments'][k]);
+
+				}
+				finalstring += base;
+		  		finalstring += '\n';
+		  	}
+
+		  	if(instruction['type'].indexOf('text-only') != -1 && instruction['type'].indexOf('loop') == -1){
+		  		var base = instruction['syntax'];
+				finalstring += base;
+		  		finalstring += '\n';
+		  	}
+
+		  	if(instruction['type'].indexOf('blocs') != -1 && instruction['type'].indexOf('loop') == -1){
+
+		  	}
+
+	  	}
+	  	
+	  });
+
+	  console.log(finalstring);
+	  //console.log(bd[0]);
+	  console.log("----------------------------------");
+	})
+
+  //console.log(blockinfo);
+	/*request('GET', "http://localhost:8080/block/infos/"+block['id']).done((res) => {
+	  console.log(res.body);
+	});*/
+	  }, 100);
+  });
+  setTimeout(function(){
+  //console.log(blockinfo);
+  res.status(201).json(blockinfo);
+
+  }, 2000);
+  });
 
 
 module.exports = blockRouter;
