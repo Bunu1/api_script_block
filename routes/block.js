@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var request = require('request')
 const controllers = require('../controllers');
-
+const XMLWriter = require('xml-writer');
 const BlockController = controllers.BlockController;
 
 const blockRouter = express.Router();
@@ -124,6 +124,68 @@ blockRouter.put('/update', function(req, res) {
     res.status(500).end();
   });
 });
+
+// --------------
+function loop_on_block(el, xw) {
+  xw.startElement(el['title']);
+  for(var p in el) {
+    if(el.hasOwnProperty(p)) {
+      xw.writeAttribute("a", "aa");
+    }
+  }
+  xw.endElement();
+  console.log(el)
+}
+
+blockRouter.post('/createSM', function(req, res) {
+  const name = req.body.name;
+  const blocks = req.body.blocks;
+  
+//  console.log("name = " + name);
+//  console.log("blocks = " + blocks);
+  
+  if(name === undefined) name = "undefined";
+  if(blocks === undefined) {
+    res.status(400).end();
+    return;
+  }
+  
+  xw = new XMLWriter;
+  xw.startDocument();
+  xw.startElement('FileName');
+  xw.writeAttribute('name', name);
+  xw.endElement();
+ 
+  
+//  console.log(blocks.constructor)
+  blocks.forEach((element) => {
+    loop_on_block(element, xw);
+    
+//    console.log("{");
+//    for(var p in element) {
+//      if(element.hasOwnProperty(p)) {
+////        if(p.localeCompare("title") === 0) {
+////          xw.writeElement(element[p]);
+////        }
+////        if(element[p].constructor === Array) {
+////          
+////        } else {
+////          xw.
+////        }
+//        loop_on_block(element, xw);
+////        console.log("\t" + p + " -> " + element[p])
+////        loop_on_block(xw, element, p)
+//      }
+//    }
+//    console.log("},")
+  })
+  
+  xw.endDocument();
+  
+  console.log(xw.toString());
+  res.status(200).end();
+});
+// ----------------------
 
 blockRouter.post('/finalscript', function(req, res) {
 

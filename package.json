@@ -17,6 +17,7 @@
     "mysql": "^2.15.0",
     "mysql2": "^1.5.3",
     "sequelize": "^4.37.6",
-    "then-request": "^6.0.0"
+    "then-request": "^6.0.0",
+    "xml-writer": "^1.7.0"
   }
 }
