@@ -126,15 +126,39 @@ blockRouter.put('/update', function(req, res) {
 });
 
 // --------------
-function loop_on_block(el, xw) {
+function write_infos(infos, xw) {
+	
+}
+
+function write_blocks(el, xw) {
   xw.startElement(el['title']);
   for(var p in el) {
     if(el.hasOwnProperty(p)) {
-      xw.writeAttribute("a", "aa");
+//      console.log("\t" + p + " -> " + el[p])
+			if(el[p].constructor === Object) {
+				for(var o in el[p]) {
+					if(el[p].hasOwnProperty(o)) {
+//						console.log("\t\t" + o + " -> " + el[p][o])
+						
+//						console.log("|"+o+"| " + typeof o)
+//						console.log("|"+el[p][o]+"| " + typeof el[p][o])
+//						console.log(typeof el[p][o])
+						console.log(el)
+						console.log(el[p])
+						console.log(el[p][o])
+						xw.writeAttribute(o, el[p][o]);
+					}
+				}
+			} else if(el[p].constructor === Array) {
+//				console.log("arr")
+			} else {
+//				console.log("else")
+				xw.writeAttribute(p, el[p]);
+			}
+//      xw.writeAttribute("a", "aa");
     }
   }
   xw.endElement();
-  console.log(el)
 }
 
 blockRouter.post('/createSM', function(req, res) {
@@ -159,22 +183,22 @@ blockRouter.post('/createSM', function(req, res) {
   
 //  console.log(blocks.constructor)
   blocks.forEach((element) => {
-    loop_on_block(element, xw);
+    write_blocks(element, xw);
     
 //    console.log("{");
 //    for(var p in element) {
 //      if(element.hasOwnProperty(p)) {
-////        if(p.localeCompare("title") === 0) {
-////          xw.writeElement(element[p]);
-////        }
-////        if(element[p].constructor === Array) {
-////          
-////        } else {
-////          xw.
-////        }
+//        if(p.localeCompare("title") === 0) {
+//          xw.writeElement(element[p]);
+//        }
+//        if(element[p].constructor === Array) {
+//          
+//        } else {
+//          xw.
+//        }
 //        loop_on_block(element, xw);
-////        console.log("\t" + p + " -> " + element[p])
-////        loop_on_block(xw, element, p)
+//        console.log("\t" + p + " -> " + element[p])
+//        loop_on_block(xw, element, p)
 //      }
 //    }
 //    console.log("},")

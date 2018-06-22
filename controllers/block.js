@@ -22,9 +22,9 @@ BlockController.getFullBlocks = function(id) {
 	return Block.findAll({
 		include: [{
 			model: ModelIndex.Argument,
-		}, {
+		}/*, {
 			model: ModelIndex.Instruction
-		}],
+		}*/],
 		where: where
 	})
 }
