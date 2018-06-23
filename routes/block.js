@@ -2,7 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var request = require('request')
 const controllers = require('../controllers');
-const XMLWriter = require('xml-writer');
+const fs = require('fs');
+const xmlbuilder = require('xmlbuilder');
+
 const BlockController = controllers.BlockController;
 
 const blockRouter = express.Router();
@@ -130,87 +132,56 @@ function write_infos(infos, xw) {
 	
 }
 
-function write_blocks(el, xw) {
-  xw.startElement(el['title']);
+function write_blocks(el, xmlobj) {
+  xmlobj[el['title']] = {};
   for(var p in el) {
     if(el.hasOwnProperty(p)) {
-//      console.log("\t" + p + " -> " + el[p])
-			if(el[p].constructor === Object) {
-				for(var o in el[p]) {
-					if(el[p].hasOwnProperty(o)) {
-//						console.log("\t\t" + o + " -> " + el[p][o])
-						
-//						console.log("|"+o+"| " + typeof o)
-//						console.log("|"+el[p][o]+"| " + typeof el[p][o])
-//						console.log(typeof el[p][o])
-						console.log("el = " + el)
-						console.log("el p = " + el[p])
-						console.log("el p o = " + typeof el[p][o])
-//						xw.writeAttribute(String(o), String(el[p][o]));
-					}
-				}
-			} else if(el[p].constructor === Array) {
-//				console.log("arr")
-			} else {
-//				console.log("else")
-				xw.writeAttribute(p, el[p]);
-			}
-//      xw.writeAttribute("a", "aa");
+      if(p.localeCompare('title') !== 0) {
+        if(el[p].constructor === Object) {
+          for(var o in el[p]) {
+            if(el[p].hasOwnProperty(o)) {
+              xmlobj[el['title']]['@'+o] = el[p][o];
+            }
+          }
+        } else if(el[p].constructor === Array) {
+          el[p].forEach((element) => {
+            write_blocks(element, xmlobj[el['title']]);
+          });
+        } else {
+           xmlobj[el['title']]['@'+p] = el[p];
+        }
+      }
     }
   }
-	console.log("end element")
-  xw.endElement();
 }
 
 blockRouter.post('/createSM', function(req, res) {
+  var xmlobj = {};
+  xmlobj.SMFile = {};
   const name = req.body.name;
-  const blocks = req.body.blocks;
-  
-//  console.log("name = " + name);
-//  console.log("blocks = " + blocks);
+  const blocks = req.body.blocks; 
   
   if(name === undefined) name = "undefined";
   if(blocks === undefined) {
     res.status(400).end();
     return;
   }
+  xmlobj.SMFile.FileName = { '@name': name } ;
   
-  xw = new XMLWriter;
-  xw.startDocument();
-  xw.startElement('FileName');
-  xw.writeAttribute('name', name);
-  xw.endElement();
- 
-  
-//  console.log(blocks.constructor)
   blocks.forEach((element) => {
-    write_blocks(element, xw);
-    
-//    console.log("{");
-//    for(var p in element) {
-//      if(element.hasOwnProperty(p)) {
-//        if(p.localeCompare("title") === 0) {
-//          xw.writeElement(element[p]);
-//        }
-//        if(element[p].constructor === Array) {
-//          
-//        } else {
-//          xw.
-//        }
-//        loop_on_block(element, xw);
-//        console.log("\t" + p + " -> " + element[p])
-//        loop_on_block(xw, element, p)
-//      }
-//    }
-//    console.log("},")
+    write_blocks(element, xmlobj.SMFile);
   })
   
-  xw.endDocument();
-  
-  console.log(xw.toString());
+    console.log(xmlobj)
+  var ee = xmlbuilder.create(xmlobj).end({ pretty: true});
+  console.log("xml = " + ee);
+  fs.writeFile('file.xml', ee, function(err) {
+    if(err)
+      return console.log(err);
+    console.log("File saved");
+  })
   res.status(200).end();
 });
-// ----------------------
 
 blockRouter.post('/finalscript', function(req, res) {
 
