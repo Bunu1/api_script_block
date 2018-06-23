@@ -143,10 +143,10 @@ function write_blocks(el, xw) {
 //						console.log("|"+o+"| " + typeof o)
 //						console.log("|"+el[p][o]+"| " + typeof el[p][o])
 //						console.log(typeof el[p][o])
-						console.log(el)
-						console.log(el[p])
-						console.log(el[p][o])
-						xw.writeAttribute(o, el[p][o]);
+						console.log("el = " + el)
+						console.log("el p = " + el[p])
+						console.log("el p o = " + typeof el[p][o])
+//						xw.writeAttribute(String(o), String(el[p][o]));
 					}
 				}
 			} else if(el[p].constructor === Array) {
@@ -158,6 +158,7 @@ function write_blocks(el, xw) {
 //      xw.writeAttribute("a", "aa");
     }
   }
+	console.log("end element")
   xw.endElement();
 }
 
