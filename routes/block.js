@@ -1,8 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-var request = require('request')
+const request = require('request')
 const controllers = require('../controllers');
 const fs = require('fs');
+const path = require('path')
 const xmlbuilder = require('xmlbuilder');
 
 const BlockController = controllers.BlockController;
@@ -32,8 +33,9 @@ blockRouter.post('/add', function(req, res) {
   });
 });
 
-blockRouter.get('/full', function(req, res) {	
-	BlockController.getFullBlocks(req.query.id)
+blockRouter.get('/full', function(req, res) {
+  const instr = parseInt(req.query.instructions)
+	BlockController.getFullBlocks(instr)
 	.then((blocks) => {
 		res.status(200).json(blocks);
 	})
@@ -127,11 +129,6 @@ blockRouter.put('/update', function(req, res) {
   });
 });
 
-// --------------
-function write_infos(infos, xw) {
-	
-}
-
 function write_blocks(el, xmlobj) {
   xmlobj[el['title']] = {};
   for(var p in el) {
@@ -155,7 +152,7 @@ function write_blocks(el, xmlobj) {
   }
 }
 
-blockRouter.post('/createSM', function(req, res) {
+blockRouter.post('/JSONtoSM', function(req, res) {
   var xmlobj = {};
   xmlobj.SMFile = {};
   const name = req.body.name;
@@ -173,14 +170,15 @@ blockRouter.post('/createSM', function(req, res) {
   })
   
     console.log(xmlobj)
-  var ee = xmlbuilder.create(xmlobj).end({ pretty: true});
-  console.log("xml = " + ee);
-  fs.writeFile('file.xml', ee, function(err) {
-    if(err)
-      return console.log(err);
-    console.log("File saved");
-  })
-  res.status(200).end();
+  var sm = xmlbuilder.create(xmlobj).end({ pretty: true});
+//  fs.writeFile('file.sm', sm, function(err) {
+//    if(err)
+//      return console.log(err);
+//    console.log("File saved");
+//  })
+//  res.sendFile(path.join(__dirname, "..", "file.sm"));
+  res.writeHead(200, {'Content-Type': 'application/force-download','Content-disposition':'attachment; filename='+name+'.sm'})
+  res.end(sm);
 });
 
 blockRouter.post('/finalscript', function(req, res) {
