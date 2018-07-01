@@ -3,5 +3,6 @@ module.exports = {
   ArticleController: require('./article'),
   BlockController: require('./block'),
   ArgumentController: require('./argument'),
-  InstructionController: require('./instruction')
+  InstructionController: require('./instruction'),
+  UserController: require('./user')
 }

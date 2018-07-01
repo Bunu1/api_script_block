@@ -5,6 +5,7 @@ const controllers = require('../controllers');
 const fs = require('fs');
 const path = require('path')
 const xmlbuilder = require('xmlbuilder');
+const xml2js = require('xml2js');
 
 const BlockController = controllers.BlockController;
 
@@ -129,6 +130,20 @@ blockRouter.put('/update', function(req, res) {
   });
 });
 
+blockRouter.post('/SMtoJSON', function(req, res) {
+  var sm = req.body.sm;
+//  console.log(typeof sm);
+  
+//  var p = xml2js.parseString(sm);
+  var parser = xml2js.Parser({ mergeAttrs: true });
+  parser.parseString(sm, function(err, result) {
+    if(result !== undefined)
+      res.status(201).json(result);
+    else
+      res.status(500).end();
+  });  
+});
+
 function write_blocks(el, xmlobj) {
   xmlobj[el['title']] = {};
   for(var p in el) {
@@ -137,7 +152,7 @@ function write_blocks(el, xmlobj) {
         if(el[p].constructor === Object) {
           for(var o in el[p]) {
             if(el[p].hasOwnProperty(o)) {
-              xmlobj[el['title']]['@'+o] = el[p][o];
+              xmlobj[el['title']]['@'+o] = 'el[p][o]';
             }
           }
         } else if(el[p].constructor === Array) {
@@ -145,7 +160,7 @@ function write_blocks(el, xmlobj) {
             write_blocks(element, xmlobj[el['title']]);
           });
         } else {
-           xmlobj[el['title']]['@'+p] = el[p];
+           xmlobj[el['title']]['@'+p] = 'el[p]';
         }
       }
     }
