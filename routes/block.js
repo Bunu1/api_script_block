@@ -4,8 +4,6 @@ var request = require('request')
 var fs = require("fs");
 var path = require('path');
 const controllers = require('../controllers');
-const fs = require('fs');
-const path = require('path')
 const xmlbuilder = require('xmlbuilder');
 const xml2js = require('xml2js');
 
