@@ -10,16 +10,12 @@ const userRouter = express.Router();
 userRouter.use(bodyParser.json());
 
 
-
-
-
-
 userRouter.post('/login', function(req, res) {
   const email = req.body.email;
   const password = req.body.password;
   
   if(email === null || password === null) {
-    res.send(400).json({ 'error': 'parametres invalides' });
+    res.status(400).json({ 'error': 'parametres invalides' });
   }
   
   UserController.checkUser(email)
@@ -51,7 +47,7 @@ userRouter.post('/register', function(req, res) {
   const name = req.body.name;
   
   if(email === undefined || password1 === undefined || password2 === undefined || name === undefined) {
-    res.send(400).json({ 'error': 'parametres invalides' });
+    res.status(400).json({ 'error': 'parametres invalides' });
   }
   
   if(password1 !== password2) {
