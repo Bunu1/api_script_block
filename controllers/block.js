@@ -11,22 +11,26 @@ BlockController.add = function(name, description) {
   });
 }
 
-BlockController.getFullBlocks = function(id) {
-	const where = {};
-	if(id !== undefined) {
-		where.id = {
-			[Op.like] :  id
-		}
-	}
+BlockController.getFullBlocks = function(instr) {
 	
-	return Block.findAll({
-		include: [{
-			model: ModelIndex.Argument,
-		}, {
-			model: ModelIndex.Instruction
-		}],
-		where: where
-	})
+  if(instr === 0) {
+    return Block.findAll({
+      include: [{
+        model: ModelIndex.Argument,
+      }/*, {
+        model: ModelIndex.Instruction
+      }*/]
+    })
+  } else {
+    return Block.findAll({
+      include: [{
+        model: ModelIndex.Argument,
+      }, {
+        model: ModelIndex.Instruction
+      }]
+    })
+  }
+	
 }
 
 BlockController.getBlockInfos = function(id) {

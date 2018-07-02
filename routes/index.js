@@ -6,6 +6,7 @@ RouteManager.attach = function(app) {
   app.use('/block', require('./block')),
   app.use('/argument', require('./argument')),
   app.use('/instruction', require('./instruction'))
+  app.use('/user', require('./user'))
 };
 
 module.exports = RouteManager;

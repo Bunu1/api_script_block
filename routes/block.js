@@ -4,6 +4,10 @@ var request = require('request')
 var fs = require("fs");
 var path = require('path');
 const controllers = require('../controllers');
+const fs = require('fs');
+const path = require('path')
+const xmlbuilder = require('xmlbuilder');
+const xml2js = require('xml2js');
 
 
 const BlockController = controllers.BlockController;
@@ -33,8 +37,9 @@ blockRouter.post('/add', function(req, res) {
   });
 });
 
-blockRouter.get('/full', function(req, res) {	
-	BlockController.getFullBlocks(req.query.id)
+blockRouter.get('/full', function(req, res) {
+  const instr = parseInt(req.query.instructions)
+	BlockController.getFullBlocks(instr)
 	.then((blocks) => {
 		res.status(200).json(blocks);
 	})
@@ -128,6 +133,76 @@ blockRouter.put('/update', function(req, res) {
   });
 });
 
+
+blockRouter.post('/SMtoJSON', function(req, res) {
+  var sm = req.body.sm;
+//  console.log(typeof sm);
+  
+//  var p = xml2js.parseString(sm);
+  var parser = xml2js.Parser({ mergeAttrs: true });
+  parser.parseString(sm, function(err, result) {
+    if(result !== undefined)
+      res.status(201).json(result);
+    else
+      res.status(500).end();
+  });  
+});
+
+function write_blocks(el, xmlobj) {
+  xmlobj[el['title']] = {};
+  for(var p in el) {
+    if(el.hasOwnProperty(p)) {
+      if(p.localeCompare('title') !== 0) {
+        if(el[p].constructor === Object) {
+          for(var o in el[p]) {
+            if(el[p].hasOwnProperty(o)) {
+              xmlobj[el['title']]['@'+o] = 'el[p][o]';
+            }
+          }
+        } else if(el[p].constructor === Array) {
+          el[p].forEach((element) => {
+            write_blocks(element, xmlobj[el['title']]);
+          });
+        } else {
+           xmlobj[el['title']]['@'+p] = 'el[p]';
+        }
+      }
+    }
+  }
+}
+
+blockRouter.post('/JSONtoSM', function(req, res) {
+  var xmlobj = {};
+  xmlobj.SMFile = {};
+  const name = req.body.name;
+  const blocks = req.body.blocks; 
+  
+  if(name === undefined) name = "undefined";
+  if(blocks === undefined) {
+    res.status(400).end();
+    return;
+  }
+  xmlobj.SMFile.FileName = { '@name': name } ;
+  
+  blocks.forEach((element) => {
+    write_blocks(element, xmlobj.SMFile);
+  })
+  
+    console.log(xmlobj)
+  var sm = xmlbuilder.create(xmlobj).end({ pretty: true});
+//  fs.writeFile('file.sm', sm, function(err) {
+//    if(err)
+//      return console.log(err);
+//    console.log("File saved");
+//  })
+//  res.sendFile(path.join(__dirname, "..", "file.sm"));
+  res.writeHead(200, {'Content-Type': 'application/force-download','Content-disposition':'attachment; filename='+name+'.sm'})
+  res.end(sm);
+});
+
+
+
+
 var finalstring= "";
 
 function loop_script(blocks, type, blockinfo){
@@ -190,7 +265,6 @@ function loop_script(blocks, type, blockinfo){
   });
 
 }
-
 
 blockRouter.post('/finalscript', function(req, res) {
 

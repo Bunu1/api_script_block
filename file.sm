@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<SMFile>
+  <FileName name="test1"/>
+  <block1 id="1" #1="var" #2="2" options="-o -p -t"/>
+  <if id="2">
+    <cp id="5" #1="uwu" options="-n name"/>
+    <mv id="50" #1="var" #2="6" #3="bonjour"/>
+  </if>
+</SMFile>

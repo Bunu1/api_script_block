@@ -22,7 +22,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       defaultValue: DataTypes.NOW
     },
-		rank: {
+		admin: {
       type: DataTypes.BIGINT,
       allowNull: false,
       defaultValue: 0
@@ -30,12 +30,12 @@ module.exports = function (sequelize, DataTypes) {
 		active: {
       type: DataTypes.BIGINT,
       allowNull: false,
-      defaultValue: 0
+      defaultValue: 1
     },
 		enabled: {
       type: DataTypes.BIGINT,
       allowNull: false,
-      defaultValue: 0
+      defaultValue: 1
     }
 	}, {
 		paranoid: false,
@@ -49,6 +49,6 @@ module.exports = function (sequelize, DataTypes) {
 
 // INTERNAL
 function _associate(models) {
-	models.User.hasMany(models.Script, { foreignKey: 'id_user', sourceKey: 'id' });
-  models.User.hasMany(models.Article, { foreignKey: 'id_user', sourceKey: 'id' });
+//	models.User.hasMany(models.Script, { foreignKey: 'id_user', sourceKey: 'id' });
+//  models.User.hasMany(models.Article, { foreignKey: 'id_user', sourceKey: 'id' });
 }
