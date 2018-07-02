@@ -12,4 +12,30 @@ jwtUtils.generateToken = function(user) {
   });
 }
 
+jwtUtils.checkToken = function(request, response, next) {
+  jwt.verify(request.headers.authorization.split(" ")[1], JWT_SIGN_SECRET, function(err, decoded) {
+    if(err) {
+      return response.json({ 'error': 'Failed to authenticate token' });
+    } else {
+      request.decoded = decoded;
+      next();
+    }
+  })
+}
+
+jwtUtils.checkTokenAdmin = function(request, response, next) {
+  jwt.verify(request.headers.authorization.split(" ")[1], JWT_SIGN_SECRET, function(err, decoded) {
+    if(err) {
+      return response.json({ 'error': 'Failed to authenticate token' });
+    } else {
+      if(decoded.isAdmin === 1){
+        request.decoded = decoded;
+        next();
+      } else {
+        return response.json({ 'error': 'User not admin' });
+      }
+    }
+  })
+}
+
 module.exports = jwtUtils;

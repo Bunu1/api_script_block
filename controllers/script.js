@@ -4,6 +4,12 @@ const Op = ModelIndex.Sequelize.Op;
 
 const ScriptController = function() { };
 
+ScriptController.updateDLC = function(script, id, count) {
+  return script.updateAttributes({
+    downloads_count: count+1
+  })
+}
+
 ScriptController.add = function(name, description, size, id_user) {
   return Script.create({
     name: name,

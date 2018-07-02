@@ -25,6 +25,7 @@ userRouter.post('/login', function(req, res) {
         if(result) {
           res.status(200).json({
             'id': user.id,
+            'isAdmin': user.admin,
             'token': jwt.generateToken(user)
           });
         } else {

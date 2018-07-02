@@ -1,13 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const controllers = require('../controllers');
-
+const jwt = require('../utils/jwt.utils');
+const ModelIndex = require('../models');
 const ScriptController = controllers.ScriptController;
 
 const scriptRouter = express.Router();
 scriptRouter.use(bodyParser.json());
 
-scriptRouter.post('/add', function(req, res) {
+scriptRouter.post('/add', jwt.checkToken, function(req, res) {
   const name = req.body.name;
   const description = req.body.description;
   const size = req.body.size;
@@ -53,7 +54,7 @@ scriptRouter.get('/', function(req, res) {
   });
 });
 
-scriptRouter.delete('/remove/:id', function(req, res) {
+scriptRouter.delete('/remove/:id', jwt.checkTokenAdmin, function(req, res) {
   const id = parseInt(req.params.id);
   
   if(id === undefined) {
@@ -70,7 +71,29 @@ scriptRouter.delete('/remove/:id', function(req, res) {
   });
 })
 
-scriptRouter.post('/update', function(req, res) {
+scriptRouter.put('/updateDLC/:id', function(req, res) {
+  const id = req.params.id;
+  if(id === undefined) {
+    return res.status(400).end();
+  }
+  
+  ModelIndex.Script.findOne({where:{id:id}})
+  .then((script) => {
+    ScriptController.updateDLC(script, id, script.downloads_count)
+    .then((sc) => {
+      res.status(200).json({ 'download_count': sc.downloads_count })
+    })
+    .catch((err) => {
+      res.status(500).json({ 'error': "can't update download count" })
+    });
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(404).json({ 'error': 'script not found' });
+  })
+});
+
+scriptRouter.post('/update', jwt.checkToken, function(req, res) {
   const id = req.body.id;
   const description = req.body.description;
   const category = req.body.category;

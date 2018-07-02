@@ -6,14 +6,14 @@ var path = require('path');
 const controllers = require('../controllers');
 const xmlbuilder = require('xmlbuilder');
 const xml2js = require('xml2js');
-
+const jwt = require('../utils/jwt.utils');
 
 const BlockController = controllers.BlockController;
 
 const blockRouter = express.Router();
 blockRouter.use(bodyParser.json());
 
-blockRouter.post('/add', function(req, res) {
+blockRouter.post('/add', jwt.checkTokenAdmin, function(req, res) {
   const name = req.body.name;
   const description = req.body.description;
   
@@ -77,7 +77,7 @@ blockRouter.get('/', function(req, res) {
   });
 });
 
-blockRouter.put('/disable/:id', function(req, res) {
+blockRouter.put('/disable/:id', jwt.checkTokenAdmin, function(req, res) {
 	const id =  req.params.id;
 	if(isNan(parseInt(id, 10))) {
 		res.status(404).end();
@@ -94,7 +94,7 @@ blockRouter.put('/disable/:id', function(req, res) {
 	});
 });
 
-blockRouter.put('/enable/:id', function(req, res) {
+blockRouter.put('/enable/:id', jwt.checkTokenAdmin, function(req, res) {
 	const id =  req.params.id;
 	BlockController.update(id, undefined, undefined, 1)
 	.then((p) => {
@@ -106,7 +106,7 @@ blockRouter.put('/enable/:id', function(req, res) {
 	});
 });
 
-blockRouter.put('/update', function(req, res) {
+blockRouter.put('/update', jwt.checkTokenAdmin, function(req, res) {
   const id = req.body.id;
   const name = req.body.name;
   const description = req.body.description;
