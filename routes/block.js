@@ -1,7 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 var request = require('request')
+var fs = require("fs");
+var path = require('path');
 const controllers = require('../controllers');
+
 
 const BlockController = controllers.BlockController;
 
@@ -125,6 +128,70 @@ blockRouter.put('/update', function(req, res) {
   });
 });
 
+var finalstring= "";
+
+function loop_script(blocks, type, blockinfo){
+
+	blocks.forEach(function(block) {
+
+	var nb_instruction = 0;
+	var nb_blocks = 0;
+	var nb_blocks_enc = 0;
+	var index = 0;
+
+
+	for (var i = 0; i < blockinfo.length; i++) {
+		if(block['id'] == blockinfo[i]['id']){
+			index = i;
+		}
+	}
+	for (var i = 0; i < blockinfo[index]['Instructions'].length; i++) {
+		if(blockinfo[index]['Instructions'][i]['platform'] == type)nb_instruction++;
+	}
+
+	for (var i = 0; i < blockinfo[index]['Instructions'].length; i++) {
+		if(blockinfo[index]['Instructions'][i]['type'].indexOf('blocs') != -1)nb_blocks++;
+	}
+
+	for (var i = 0; i < nb_instruction; i++) {
+		if(blockinfo[index]['Instructions'][i]['Block_Instruction']['pos'] == i+1){
+			var instruction = blockinfo[index]['Instructions'][i];
+			//console.log(instruction);
+			if(type == instruction['platform']){
+	  		if(instruction['type'].indexOf('arguments') != -1){
+		  		var base = instruction['syntax'];
+		  		for (var k in block['arguments']){
+		  			base = base.replace("`"+k+"`", block['arguments'][k]);
+				}
+				finalstring += base;
+		  		finalstring += '\n';
+		  	}
+
+		  	if(instruction['type'].indexOf('text-only') != -1){
+		  		var base = instruction['syntax'];
+				finalstring += base;
+		  		finalstring += '\n';
+		  	}
+
+		  	if(instruction['type'].indexOf('blocs') != -1){
+		  		var keys = Object.keys(block['arguments']);
+		  		for (var g = 0 ; g < keys.length; g++) {
+		  			while(g < nb_blocks_enc)g++;
+		  			if(keys[g].indexOf('#blocks'+(g+1)) != -1 ){
+						loop_script(block['arguments'][keys[g]], type, blockinfo);	
+						nb_blocks_enc++;
+						break;						  
+		  			}
+		  		}
+		  	}
+	  	}
+		}
+	}
+  });
+
+}
+
+
 blockRouter.post('/finalscript', function(req, res) {
 
   const type = req.body.type;
@@ -137,16 +204,19 @@ blockRouter.post('/finalscript', function(req, res) {
   if(blocks === undefined) {
     res.status(400).end();
     return;
+  }  
+  if(type == "unix") {
+  	var extension = ".sh";
+  	finalstring+= "#!/bin/bash\n\n"
+  }
+  if(type == "windows") {
+  	var extension = ".bat";
   }
 
-  var blockinfo = new Array();
-
-  var finalstring= "";
-  	blocks.forEach(function(block) {
-	setTimeout(function(){
+  	var blockinfo = new Array();
 	request({
 	  method: 'GET',
-	  uri: "http://localhost:8080/block/infos/"+block['id'],
+	  uri: "http://localhost:8080/block/full",
 	  headers: {
 	  	'Access-Control-Allow-Origin': '*',
 	  	'Content-type': 'application/json'
@@ -154,50 +224,20 @@ blockRouter.post('/finalscript', function(req, res) {
 	  json: true
 	}, function (error, response, body) {
 	  var bd = JSON.parse(JSON.stringify(body));
-	  blockinfo.push(bd[0]);
-
-	  blockinfo[blockinfo.length-1]['Instructions'].forEach(function(instruction) {
-	  	if(type == instruction['platform']){
-	  		if(instruction['type'].indexOf('arguments') != -1 && instruction['type'].indexOf('loop') == -1){
-		  		var base = instruction['syntax'];
-		  		for (var k in block['arguments']){
-		  			base = base.replace("`"+k+"`", block['arguments'][k]);
-
-				}
-				finalstring += base;
-		  		finalstring += '\n';
-		  	}
-
-		  	if(instruction['type'].indexOf('text-only') != -1 && instruction['type'].indexOf('loop') == -1){
-		  		var base = instruction['syntax'];
-				finalstring += base;
-		  		finalstring += '\n';
-		  	}
-
-		  	if(instruction['type'].indexOf('blocs') != -1 && instruction['type'].indexOf('loop') == -1){
-
-		  	}
-
-	  	}
-	  	
-	  });
-
-	  console.log(finalstring);
-	  //console.log(bd[0]);
-	  console.log("----------------------------------");
+	  blockinfo.push(bd);
+		loop_script(blocks, type, blockinfo[0]);
 	})
-
-  //console.log(blockinfo);
-	/*request('GET', "http://localhost:8080/block/infos/"+block['id']).done((res) => {
-	  console.log(res.body);
-	});*/
-	  }, 100);
-  });
+  
   setTimeout(function(){
-  //console.log(blockinfo);
-  res.status(201).json(blockinfo);
-
-  }, 2000);
+  console.log(finalstring);
+	fs.writeFile('file'+extension, finalstring, function(err) {
+	if(err)
+		return console.log(err);
+	console.log("File saved");
+	})
+	res.sendFile(path.join(__dirname, "..", "file"+extension));
+	finalstring = "";
+  }, 5000);
   });
 
 
