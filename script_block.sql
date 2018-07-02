@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.6.4
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 01 juil. 2018 à 21:34
--- Version du serveur :  5.7.21
--- Version de PHP :  5.6.35
+-- Client :  127.0.0.1
+-- Généré le :  Lun 02 Juillet 2018 à 10:19
+-- Version du serveur :  5.7.14
+-- Version de PHP :  5.6.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -28,32 +26,30 @@ SET time_zone = "+00:00";
 -- Structure de la table `argument`
 --
 
-DROP TABLE IF EXISTS `argument`;
-CREATE TABLE IF NOT EXISTS `argument` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `argument` (
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `value` varchar(100) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
-  `description` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=latin1;
+  `description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `argument`
+-- Contenu de la table `argument`
 --
 
 INSERT INTO `argument` (`id`, `name`, `value`, `type`, `description`) VALUES
-(1, 'Nom', '#1', NULL, 'Nom de la variable'),
-(2, 'Valeur', '#2', NULL, 'Valeur à affecter à la variable'),
-(3, 'Variable', '#1', NULL, 'Variable à exporter'),
-(4, 'Variable', '#1', NULL, 'Variable stockant les informations saisies'),
-(5, 'Texte', '#2', NULL, 'Texte à afficher lors de la demande de saisie'),
-(6, 'Chemin d\'accès', '#1', NULL, 'Chemin où créer le répertoire'),
-(7, 'Source', '#1', NULL, 'Chemin vers le fichier source'),
-(8, 'Destination', '#2', NULL, 'Chemin vers l\'endroit de copie du fichier source'),
-(9, 'Valeur des droits', '#1', NULL, 'Nombre à 3 chiffre permettant de définir les droits sur  un fichier.'),
-(10, 'Processus', '#1', NULL, 'PID ou Nom du processus'),
-(11, 'Options', '#O', NULL, 'Options de la commande'),
+(1, 'Nom', '`#1`', NULL, 'Nom de la variable'),
+(2, 'Valeur', '`#2`', NULL, 'Valeur à affecter à la variable'),
+(3, 'Variable', '`#1`', NULL, 'Variable à exporter'),
+(4, 'Variable', '`#1`', NULL, 'Variable stockant les informations saisies'),
+(5, 'Texte', '`#2`', NULL, 'Texte à afficher lors de la demande de saisie'),
+(6, 'Chemin d\'accès', '`#1`', NULL, 'Chemin où créer le répertoire'),
+(7, 'Source', '`#1`', NULL, 'Chemin vers le fichier source'),
+(8, 'Destination', '`#2`', NULL, 'Chemin vers l\'endroit de copie du fichier source'),
+(9, 'Valeur des droits', '`#1`', NULL, 'Nombre à 3 chiffre permettant de définir les droits sur  un fichier.'),
+(10, 'Processus', '`#1`', NULL, 'PID ou Nom du processus'),
+(11, 'Options', '`#O`', NULL, 'Options de la commande'),
 (20, 'New Variable\'s Name', '`#1`', NULL, 'The variable\'s name in the program (can be used directly after the assignement)'),
 (21, 'Already existing variable\'s name', '`#2`', NULL, 'An already existing variable\'s name)'),
 (22, 'Default Value', '`#3`', NULL, 'A default value in case of an empty existing value'),
@@ -109,19 +105,17 @@ INSERT INTO `argument` (`id`, `name`, `value`, `type`, `description`) VALUES
 -- Structure de la table `article`
 --
 
-DROP TABLE IF EXISTS `article`;
-CREATE TABLE IF NOT EXISTS `article` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `article` (
+  `id` int(11) NOT NULL,
   `subject` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `available` int(11) NOT NULL DEFAULT '1',
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `id_user` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `article`
+-- Contenu de la table `article`
 --
 
 INSERT INTO `article` (`id`, `subject`, `content`, `available`, `date_add`, `id_user`) VALUES
@@ -134,16 +128,14 @@ INSERT INTO `article` (`id`, `subject`, `content`, `available`, `date_add`, `id_
 -- Structure de la table `block`
 --
 
-DROP TABLE IF EXISTS `block`;
-CREATE TABLE IF NOT EXISTS `block` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `block` (
+  `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+  `description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `block`
+-- Contenu de la table `block`
 --
 
 INSERT INTO `block` (`id`, `name`, `description`) VALUES
@@ -189,7 +181,8 @@ INSERT INTO `block` (`id`, `name`, `description`) VALUES
 (68, 'Custom', 'Custom block for personnal use (you can write free code inside)'),
 (69, 'And', 'And operator'),
 (70, 'Or', 'Or operator'),
-(71, 'Logical Not', 'Logical Not operator (!)');
+(71, 'Logical Not', 'Logical Not operator (!)'),
+(231, 'Case of Switch', 'a variable\'s value and the blocks within');
 
 -- --------------------------------------------------------
 
@@ -197,17 +190,14 @@ INSERT INTO `block` (`id`, `name`, `description`) VALUES
 -- Structure de la table `block_argument`
 --
 
-DROP TABLE IF EXISTS `block_argument`;
-CREATE TABLE IF NOT EXISTS `block_argument` (
+CREATE TABLE `block_argument` (
   `id_block` int(11) NOT NULL,
   `id_argument` int(11) NOT NULL,
-  `pre_option` varchar(10) DEFAULT NULL,
-  KEY `id_arg` (`id_argument`),
-  KEY `id_block_arg` (`id_block`)
+  `pre_option` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `block_argument`
+-- Contenu de la table `block_argument`
 --
 
 INSERT INTO `block_argument` (`id_block`, `id_argument`, `pre_option`) VALUES
@@ -243,7 +233,6 @@ INSERT INTO `block_argument` (`id_block`, `id_argument`, `pre_option`) VALUES
 (22, 24, NULL),
 (22, 25, NULL),
 (23, 26, NULL),
-(23, 27, NULL),
 (24, 28, NULL),
 (24, 29, NULL),
 (25, 30, NULL),
@@ -287,7 +276,8 @@ INSERT INTO `block_argument` (`id_block`, `id_argument`, `pre_option`) VALUES
 (66, 84, NULL),
 (67, 24, NULL),
 (67, 25, NULL),
-(68, 85, NULL);
+(68, 85, NULL),
+(231, 27, NULL);
 
 -- --------------------------------------------------------
 
@@ -295,17 +285,14 @@ INSERT INTO `block_argument` (`id_block`, `id_argument`, `pre_option`) VALUES
 -- Structure de la table `block_instruction`
 --
 
-DROP TABLE IF EXISTS `block_instruction`;
-CREATE TABLE IF NOT EXISTS `block_instruction` (
+CREATE TABLE `block_instruction` (
   `id_block` int(11) NOT NULL,
   `id_instruction` int(11) NOT NULL,
-  `pos` int(11) NOT NULL,
-  KEY `id_instruction_block` (`id_instruction`),
-  KEY `id_block` (`id_block`)
+  `pos` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `block_instruction`
+-- Contenu de la table `block_instruction`
 --
 
 INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
@@ -351,10 +338,10 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (21, 45, 3),
 (22, 46, 1),
 (23, 47, 1),
-(23, 48, 2),
-(23, 49, 3),
-(23, 50, 4),
-(23, 51, 5),
+(231, 48, 1),
+(231, 49, 2),
+(231, 50, 3),
+(23, 51, 3),
 (24, 52, 1),
 (24, 53, 2),
 (24, 54, 3),
@@ -380,10 +367,10 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (21, 123, 3),
 (22, 124, 1),
 (23, 125, 1),
-(23, 126, 2),
-(23, 127, 3),
-(23, 128, 4),
-(23, 123, 5),
+(231, 126, 1),
+(231, 127, 2),
+(231, 128, 3),
+(23, 129, 3),
 (24, 130, 1),
 (24, 131, 2),
 (24, 132, 3),
@@ -407,7 +394,9 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (70, 173, 1),
 (71, 170, 1),
 (71, 172, 1),
-(71, 174, 1);
+(71, 174, 1),
+(23, 471, 2),
+(23, 1251, 2);
 
 -- --------------------------------------------------------
 
@@ -415,19 +404,16 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 -- Structure de la table `code_block`
 --
 
-DROP TABLE IF EXISTS `code_block`;
-CREATE TABLE IF NOT EXISTS `code_block` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `code_block` (
+  `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `platform` varchar(100) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `id_block` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_block` (`id_block`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `id_block` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `code_block`
+-- Contenu de la table `code_block`
 --
 
 INSERT INTO `code_block` (`id`, `name`, `platform`, `description`, `id_block`) VALUES
@@ -442,13 +428,11 @@ INSERT INTO `code_block` (`id`, `name`, `platform`, `description`, `id_block`) V
 -- Structure de la table `conditions`
 --
 
-DROP TABLE IF EXISTS `conditions`;
-CREATE TABLE IF NOT EXISTS `conditions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `conditions` (
+  `id` int(11) NOT NULL,
   `display` varchar(10) NOT NULL,
   `unix` varchar(10) NOT NULL,
-  `windows` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`)
+  `windows` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -457,71 +441,69 @@ CREATE TABLE IF NOT EXISTS `conditions` (
 -- Structure de la table `instruction`
 --
 
-DROP TABLE IF EXISTS `instruction`;
-CREATE TABLE IF NOT EXISTS `instruction` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `instruction` (
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `syntax` text NOT NULL,
   `type` varchar(20) DEFAULT NULL,
-  `platform` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=175 DEFAULT CHARSET=latin1;
+  `platform` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `instruction`
+-- Contenu de la table `instruction`
 --
 
 INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
-(1, 'Affectation', '#1 = #2', 'arguments', 'unix'),
-(2, 'Exportation', 'export #1', 'arguments', 'unix'),
-(3, 'Lecture', 'read #1?#2', 'arguments', 'unix'),
-(4, 'Lecture', '#1 = Read-Host \"#2\"', 'arguments', 'windows'),
+(1, 'Affectation', '`#1` = `#2`', 'arguments', 'unix'),
+(2, 'Exportation', 'export `#1`', 'arguments', 'unix'),
+(3, 'Lecture', 'read `#1`?`#2`', 'arguments', 'unix'),
+(4, 'Lecture', '`#1` = Read-Host "`#2`"', 'arguments', 'windows'),
 (5, 'If Start', 'if [ ', 'text-only', 'unix'),
-(6, 'If Condition', '#blocs', 'blocs', 'unix'),
+(6, 'If Condition', '`#blocs`', 'blocs', 'unix'),
 (7, 'If End Condition', ' ] \r\nthen ', 'text-only', 'unix'),
-(8, 'If Content', '#blocs', 'blocs', 'unix'),
-(9, 'Else', 'else', 'text-only', 'unix'),
-(10, 'Else Content', '#blocs', 'blocs', 'unix'),
+(8, 'If Content', '`#blocs`', 'blocs', 'unix'),
+(9, 'Else', 'else\n:', 'text-only', 'unix'),
+(10, 'Else Content', '`#blocs`', 'blocs', 'unix'),
 (11, 'If End', 'fi', 'text-only', 'unix'),
 (12, 'If Start', 'if ', 'text-only', 'windows'),
-(13, 'If Condition', '#blocs', 'blocs', 'windows'),
+(13, 'If Condition', '`#blocs`', 'blocs', 'windows'),
 (14, 'If End Condition', ' (\r\n', 'text-only', 'windows'),
-(15, 'If Content', '#blocs\r\n', 'blocs', 'windows'),
+(15, 'If Content', '`#blocs`\n', 'blocs', 'windows'),
 (16, 'If End', ')', 'text-only', 'windows'),
 (17, 'Else', 'else (', 'text-only', 'windows'),
-(18, 'Else Content', '#blocs', 'blocs', 'windows'),
+(18, 'Else Content', '`#blocs`', 'blocs', 'windows'),
 (19, 'End Else', ')', 'text-only', 'windows'),
 (20, 'While Start', 'while [ ', 'text-only', 'unix'),
-(21, 'While Condition', '#blocs', 'blocs', 'unix'),
+(21, 'While Condition', '`#blocs`', 'blocs', 'unix'),
 (22, 'While End Condition', ' ]\r\ndo', 'text-only', 'unix'),
-(23, 'While Content', '#blocs', 'blocs', 'unix'),
+(23, 'While Content', '`#blocs`', 'blocs', 'unix'),
 (24, 'While End', 'done', 'text-only', 'unix'),
-(25, 'Affectation', 'set #1 = #2', 'arguments', 'windows'),
-(26, 'Current Working Directory', 'pwd #O', 'arguments', 'unix'),
+(25, 'Affectation', 'set `#1` = `#2`', 'arguments', 'windows'),
+(26, 'Current Working Directory', 'pwd `#O`', 'arguments', 'unix'),
 (27, 'Current Working Directory', 'cd', 'arguments', 'windows'),
-(28, 'Create Directory', 'mkdir #O #1', 'arguments', 'unix'),
-(29, 'Create Directory', 'mkdir \"#1\"', 'arguments', 'windows'),
-(30, 'Copie', 'cp #O #1 #2', 'arguments', 'unix'),
-(31, 'Copie', 'copy \"#1\" \"#2', 'arguments', 'windows'),
-(32, 'Déplacer', 'mv #O #1 #2a', 'arguments', 'unix'),
-(33, 'Déplacer', 'move \"#1\" \"#2\"', 'arguments', 'windows'),
-(34, 'Renommer', 'ren \"#1\" \"#2\"', 'arguments', 'windows'),
-(35, 'Umask', 'umask #1', 'arguments', 'unix'),
-(36, 'Processus', 'ps #O', 'text-only', 'unix'),
+(28, 'Create Directory', 'mkdir `#O` `#1`', 'arguments', 'unix'),
+(29, 'Create Directory', 'mkdir "`#1`"', 'arguments', 'windows'),
+(30, 'Copie', 'cp `#O` `#1` `#2`', 'arguments', 'unix'),
+(31, 'Copie', 'copy "`#1`" "`#2`"', 'arguments', 'windows'),
+(32, 'Déplacer', 'mv `#O` `#1` `#2`a', 'arguments', 'unix'),
+(33, 'Déplacer', 'move "`#1`" "`#2`"', 'arguments', 'windows'),
+(34, 'Renommer', 'ren "`#1`" "`#2`"', 'arguments', 'windows'),
+(35, 'Umask', 'umask `#1`', 'arguments', 'unix'),
+(36, 'Processus', 'ps `#O`', 'text-only', 'unix'),
 (37, 'Processus', 'tasklist', 'text-only', 'windows'),
-(38, 'Finir Processus', 'kill #O #1', 'arguments-number', 'unix'),
-(39, 'Finir Processus', 'pkill #O #1', 'arguments-string', 'unix'),
-(40, 'Finir Processus', 'taskkill /PID #1 /F', 'arguments-number', 'windows'),
-(41, 'Finir Processus', 'taskkill /IM #1 /F', 'arguments-string', 'windows'),
+(38, 'Finir Processus', 'kill `#O` `#1`', 'arguments-number', 'unix'),
+(39, 'Finir Processus', 'pkill `#O` `#1`', 'arguments-string', 'unix'),
+(40, 'Finir Processus', 'taskkill /PID `#1` /F', 'arguments-number', 'windows'),
+(41, 'Finir Processus', 'taskkill /IM `#1` /F', 'arguments-string', 'windows'),
 (42, 'Default Variable', '`#1`=${`#2`:- `#3`}', 'arguments', 'unix'),
 (43, 'Function Start', '`#1`() {', 'arguments', 'unix'),
 (44, 'Function Content', '`#blocs`', 'blocs', 'unix'),
 (45, 'Function End', '}', 'text-only', 'unix'),
 (46, 'Function Call', '`#1` `#2`', 'arguments', 'unix'),
 (47, 'Switch Start', 'case `#1` in', 'arguments', 'unix'),
-(48, 'Case Start', '`#2`) ', 'arguments-loopstart', 'unix'),
+(48, 'Case Start', '`#2`) ', 'arguments', 'unix'),
 (49, 'Switch Content', '`#blocs` ', 'blocs', 'unix'),
-(50, 'Case End', ';;', 'text-only-loopend', 'unix'),
+(50, 'Case End', ';;', 'text-only', 'unix'),
 (51, 'Switch End', 'esac', 'text-only', 'unix'),
 (52, 'For Start', 'for `#1` in `#2` do', 'arguments', 'unix'),
 (53, 'For Content', '`#blocs` ', 'blocs', 'unix'),
@@ -547,12 +529,12 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
 (122, 'Function Content', '`#blocs`', 'blocs', 'windows'),
 (123, 'Function End', 'exit /b', 'text-only', 'windows'),
 (124, 'Function Call', 'CALL :`#1` `#2`', 'arguments', 'windows'),
-(125, 'Switch Start', 'powershell -Command \"& {Switch (`#1`) {', 'arguments', 'windows'),
-(126, 'Case Start', '`#2` { ', 'arguments-loopstart', 'windows'),
+(125, 'Switch Start', 'powershell -Command "& {Switch (`#1`) {', 'arguments', 'windows'),
+(126, 'Case Start', '`#2` { ', 'arguments', 'windows'),
 (127, 'Switch Content', '`#blocs` ', 'blocs', 'windows'),
-(128, 'Case End', '}', 'text-only-loopend', 'windows'),
-(129, 'Switch End', '}}\"', 'text-only', 'windows'),
-(130, 'For Start', 'for `#1` `#` in (`#2`) do ( ', 'arguments', 'windows'),
+(128, 'Case End', '}', 'text-only', 'windows'),
+(129, 'Switch End', '}}"', 'text-only', 'windows'),
+(130, 'For Start', 'for `#1` in (`#2`) do ( ', 'arguments', 'windows'),
 (131, 'For Content', '`#blocs` ', 'blocs', 'windows'),
 (132, 'For End', ')', 'text-only', 'windows'),
 (133, 'Array declaration', 'set `#1`=`#2`', 'arguments', 'windows'),
@@ -575,7 +557,9 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
 (171, 'Or', '||', 'text-only', 'unix'),
 (172, 'Or', 'OR', 'text-only', 'windows'),
 (173, 'Not', '!', 'text-only', 'unix'),
-(174, 'Not', 'NOT', 'text-only', 'windows');
+(174, 'Not', 'NOT', 'text-only', 'windows'),
+(471, 'Case Content', '`#blocs` ', 'blocs', 'unix'),
+(1251, 'Case Content', '`#blocs` ', 'blocs', 'windows');
 
 -- --------------------------------------------------------
 
@@ -583,9 +567,8 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
 -- Structure de la table `script`
 --
 
-DROP TABLE IF EXISTS `script`;
-CREATE TABLE IF NOT EXISTS `script` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `script` (
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `category` varchar(255) NOT NULL DEFAULT 'clean',
@@ -593,13 +576,11 @@ CREATE TABLE IF NOT EXISTS `script` (
   `downloads_count` int(11) NOT NULL DEFAULT '0',
   `date_crea` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_user` int(11) NOT NULL,
-  `report` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+  `report` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `script`
+-- Contenu de la table `script`
 --
 
 INSERT INTO `script` (`id`, `name`, `description`, `category`, `size`, `downloads_count`, `date_crea`, `id_user`, `report`) VALUES
@@ -612,33 +593,139 @@ INSERT INTO `script` (`id`, `name`, `description`, `category`, `size`, `download
 -- Structure de la table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `date_insc` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `admin` int(11) NOT NULL DEFAULT '0',
-  `active` int(11) NOT NULL DEFAULT '1',
-  `enabled` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+  `rank` int(11) NOT NULL DEFAULT '0',
+  `active` int(11) NOT NULL DEFAULT '0',
+  `enabled` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `user`
+-- Contenu de la table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `email`, `password`, `date_insc`, `admin`, `active`, `enabled`) VALUES
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `date_insc`, `rank`, `active`, `enabled`) VALUES
 (1, 'bunu', 'bunu@nu.bu', 'bunu', '2018-05-06 13:37:08', 1, 1, 1),
-(70, 'aze', 'aze@azr.com', '$2y$10$TjKkx5n9/P.mdfPdaN.pTOkOCfwlt2ndzu0n0QzY3qIimMDRfvNS6', '2018-05-13 19:47:41', 1, 1, 1),
-(71, 'Capel Yohann', 'test@nu.bu', 'ab4f63f9ac65152575886860dde480a1', '2018-07-01 21:00:51', 0, 1, 1),
-(72, 'Capel Yohann', 'aaa@nu.bu', 'ab4f63f9ac65152575886860dde480a1', '2018-07-01 21:00:58', 0, 1, 1),
-(73, 'Capel Yohann', 'nubu@nu.bu', '$2b$05$oLKCKBd/pOiNFgFlE0c5mOfHG.BN73y5qql6wp5MP8.OlWrloChMa', '2018-07-01 21:19:57', 0, 1, 1),
-(74, 'Capel Yohann', 'uwu@gmail.com', '$2b$05$HgL/vtBcUx3NC5Wbgct.t.GJOrhbhRSrOz24J4CNP5Olu307w8Ey6', '2018-07-01 21:32:31', 0, 1, 1);
+(70, 'aze', 'aze@azr.com', '$2y$10$TjKkx5n9/P.mdfPdaN.pTOkOCfwlt2ndzu0n0QzY3qIimMDRfvNS6', '2018-05-13 19:47:41', 1, 1, 1);
 
 --
--- Contraintes pour les tables déchargées
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `argument`
+--
+ALTER TABLE `argument`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `article`
+--
+ALTER TABLE `article`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `block`
+--
+ALTER TABLE `block`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `block_argument`
+--
+ALTER TABLE `block_argument`
+  ADD KEY `id_arg` (`id_argument`),
+  ADD KEY `id_block_arg` (`id_block`);
+
+--
+-- Index pour la table `block_instruction`
+--
+ALTER TABLE `block_instruction`
+  ADD KEY `id_instruction_block` (`id_instruction`),
+  ADD KEY `id_block` (`id_block`);
+
+--
+-- Index pour la table `code_block`
+--
+ALTER TABLE `code_block`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_block` (`id_block`);
+
+--
+-- Index pour la table `conditions`
+--
+ALTER TABLE `conditions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `instruction`
+--
+ALTER TABLE `instruction`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `script`
+--
+ALTER TABLE `script`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Index pour la table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `argument`
+--
+ALTER TABLE `argument`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+--
+-- AUTO_INCREMENT pour la table `article`
+--
+ALTER TABLE `article`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT pour la table `block`
+--
+ALTER TABLE `block`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=232;
+--
+-- AUTO_INCREMENT pour la table `code_block`
+--
+ALTER TABLE `code_block`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT pour la table `conditions`
+--
+ALTER TABLE `conditions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `instruction`
+--
+ALTER TABLE `instruction`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1252;
+--
+-- AUTO_INCREMENT pour la table `script`
+--
+ALTER TABLE `script`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+--
+-- AUTO_INCREMENT pour la table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+--
+-- Contraintes pour les tables exportées
 --
 
 --
@@ -666,7 +753,6 @@ ALTER TABLE `code_block`
 --
 ALTER TABLE `script`
   ADD CONSTRAINT `script_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
