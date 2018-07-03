@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 02 Juillet 2018 à 10:19
+-- Généré le :  Mar 03 Juillet 2018 à 09:20
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -131,58 +131,59 @@ INSERT INTO `article` (`id`, `subject`, `content`, `available`, `date_add`, `id_
 CREATE TABLE `block` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `description` varchar(255) NOT NULL
+  `description` varchar(255) NOT NULL,
+  `type` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `block`
 --
 
-INSERT INTO `block` (`id`, `name`, `description`) VALUES
-(1, 'Affectation', 'Permet d\'affecter une valeur à une variable'),
-(2, 'Exportation', 'Permet l\'exportation d\'une variable'),
-(3, 'Lecture', 'Permet la saisie de données formatées par un utilisateur'),
-(4, 'If', 'Bloc de condition'),
-(5, 'Else', 'Bloc dans le cas ou  la condition n\'est pas valide (se place seulement après un bloc if)'),
-(6, 'While', 'Permet de boucler tant que la condition n\'est pas validée'),
-(7, 'Current Working Directory', 'Permet d\'afficher le répertoire de travail actuel'),
-(8, 'Create directory', 'Permet à l\'utilisateur de créer un répertoire (crée les parents si nécessaire) '),
-(9, 'Copie', 'Permet de copier un fichier'),
-(10, 'Déplacer', 'Permet de déplacer (ou renommer (unix)) ou un fichier en fonction de l\'adresse de destination'),
-(11, 'Renommer (Windows)', 'Permet de renommer un fichier (windows)'),
-(12, 'Droits Fichier (Unix)', 'Permet de définir les droits sur un fichier.\nLe pre'),
-(13, 'Processus ', 'Permet d\'afficher les processus'),
-(14, 'Finir Processus', 'Permet de finir un processus'),
-(20, 'Default Variable', 'Assigning a variable\'s value or a default value for a new variable'),
-(21, 'Create Function', 'Create a function within the program. Make sure to give it a unique name'),
-(22, 'Call Function', 'Call a function with its name and its arguments'),
-(23, 'Switch Case', 'Create a switch case with its variable and the different cases'),
-(24, 'For loop', 'Create a for loop in a list of objects'),
-(25, 'Declare Array', 'Create an array with or without initialised values'),
-(26, 'Show Array', 'Create an array with or without initialised values'),
-(50, 'cd Command', 'Change the shell working directory'),
-(51, 'ls Command', 'List  information  about  the FILEs (the current directory by default)'),
-(52, 'touch Command', 'Update the access and modification times of each FILE to the current time'),
-(53, 'rm Command', 'Removes each specified file.  By default, it does not remove directories.'),
-(54, 'chmod Command', 'Changes the file mode bits of each given file according to mode, which can be either a symbolic representation of changes to make, or an octal number representing the bit pattern for the new mode bits.'),
-(55, 'cut Command', 'Print selected parts of lines from each FILE to standard output.'),
-(56, 'sort Command', 'Write sorted concatenation of all FILE(s) to standard output.'),
-(57, 'head Command', 'Print the first 10 lines of each FILE to standard output.  With more than one FILE, precede each with a header giving the file name.'),
-(58, 'tail Command', 'Print the last 10 lines of each FILE to standard output.  With more than one FILE, precede each with a header giving the file name.'),
-(59, 'cat Command', 'Concatenate FILE(s) to standard output.'),
-(60, 'find Command', 'Search for files in a directory hierarchy.'),
-(61, 'grep Command', 'grep searches for PATTERN in each FILE. If no FILE is given, recursive searches examine the working directory, and nonrecursive searches read standard input.'),
-(62, 'sed Command', 'A stream editor used to filer and perform basic text transformations on an input stream (a file or input from a pipeline)'),
-(63, 'Empty file', 'Create an empty file'),
-(64, 'Return', 'Allows to return a value from a function'),
-(65, 'Comparison Test', 'Test: something operator something'),
-(66, 'File Test', 'Several test on a file'),
-(67, 'Function Test', 'Test on the returned value of a function'),
-(68, 'Custom', 'Custom block for personnal use (you can write free code inside)'),
-(69, 'And', 'And operator'),
-(70, 'Or', 'Or operator'),
-(71, 'Logical Not', 'Logical Not operator (!)'),
-(231, 'Case of Switch', 'a variable\'s value and the blocks within');
+INSERT INTO `block` (`id`, `name`, `description`, `type`) VALUES
+(1, 'Affectation', 'Permet d\'affecter une valeur à une variable', NULL),
+(2, 'Exportation', 'Permet l\'exportation d\'une variable', NULL),
+(3, 'Lecture', 'Permet la saisie de données formatées par un utilisateur', NULL),
+(4, 'If', 'Bloc de condition', 'content-cond|true|false'),
+(5, 'Else', 'Bloc dans le cas ou  la condition n\'est pas valide (se place seulement après un bloc if)', NULL),
+(6, 'While', 'Permet de boucler tant que la condition n\'est pas validée', 'content-cond|true'),
+(7, 'Current Working Directory', 'Permet d\'afficher le répertoire de travail actuel', NULL),
+(8, 'Create directory', 'Permet à l\'utilisateur de créer un répertoire (crée les parents si nécessaire) ', NULL),
+(9, 'Copie', 'Permet de copier un fichier', NULL),
+(10, 'Déplacer', 'Permet de déplacer (ou renommer (unix)) ou un fichier en fonction de l\'adresse de destination', NULL),
+(11, 'Renommer (Windows)', 'Permet de renommer un fichier (windows)', NULL),
+(12, 'Droits Fichier (Unix)', 'Permet de définir les droits sur un fichier.\nLe pre', NULL),
+(13, 'Processus ', 'Permet d\'afficher les processus', NULL),
+(14, 'Finir Processus', 'Permet de finir un processus', NULL),
+(20, 'Default Variable', 'Assigning a variable\'s value or a default value for a new variable', NULL),
+(21, 'Create Function', 'Create a function within the program. Make sure to give it a unique name', 'content'),
+(22, 'Call Function', 'Call a function with its name and its arguments', NULL),
+(23, 'Switch Case', 'Create a switch case with its variable and the different cases', 'content'),
+(24, 'For loop', 'Create a for loop in a list of objects', 'content'),
+(25, 'Declare Array', 'Create an array with or without initialised values', NULL),
+(26, 'Show Array', 'Create an array with or without initialised values', NULL),
+(50, 'cd Command', 'Change the shell working directory', NULL),
+(51, 'ls Command', 'List  information  about  the FILEs (the current directory by default)', NULL),
+(52, 'touch Command', 'Update the access and modification times of each FILE to the current time', NULL),
+(53, 'rm Command', 'Removes each specified file.  By default, it does not remove directories.', NULL),
+(54, 'chmod Command', 'Changes the file mode bits of each given file according to mode, which can be either a symbolic representation of changes to make, or an octal number representing the bit pattern for the new mode bits.', NULL),
+(55, 'cut Command', 'Print selected parts of lines from each FILE to standard output.', NULL),
+(56, 'sort Command', 'Write sorted concatenation of all FILE(s) to standard output.', NULL),
+(57, 'head Command', 'Print the first 10 lines of each FILE to standard output.  With more than one FILE, precede each with a header giving the file name.', NULL),
+(58, 'tail Command', 'Print the last 10 lines of each FILE to standard output.  With more than one FILE, precede each with a header giving the file name.', NULL),
+(59, 'cat Command', 'Concatenate FILE(s) to standard output.', NULL),
+(60, 'find Command', 'Search for files in a directory hierarchy.', NULL),
+(61, 'grep Command', 'grep searches for PATTERN in each FILE. If no FILE is given, recursive searches examine the working directory, and nonrecursive searches read standard input.', NULL),
+(62, 'sed Command', 'A stream editor used to filer and perform basic text transformations on an input stream (a file or input from a pipeline)', NULL),
+(63, 'Empty file', 'Create an empty file', NULL),
+(64, 'Return', 'Allows to return a value from a function', NULL),
+(65, 'Comparison Test', 'Test: something operator something', NULL),
+(66, 'File Test', 'Several test on a file', NULL),
+(67, 'Function Test', 'Test on the returned value of a function', NULL),
+(68, 'Custom', 'Custom block for personnal use (you can write free code inside)', NULL),
+(69, 'And', 'And operator', NULL),
+(70, 'Or', 'Or operator', NULL),
+(71, 'Logical Not', 'Logical Not operator (!)', NULL),
+(231, 'Case of Switch', 'a variable\'s value and the blocks within', NULL);
 
 -- --------------------------------------------------------
 
