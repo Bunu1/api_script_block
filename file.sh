@@ -3,6 +3,7 @@
 toto=${sauce:- 10}
 func arg1 arg2
 func() {
+toto=${sauce:- 10}
 }
 if [ 
 toto=${sauce:- 10}

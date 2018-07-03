@@ -249,8 +249,7 @@ function loop_script(blocks, type, blockinfo){
 		  	if(instruction['type'].indexOf('blocs') != -1){
 		  		var keys = Object.keys(block['arguments']);
 		  		for (var g = 0 ; g < keys.length; g++) {
-		  			while(g < nb_blocks_enc)g++;
-		  			if(keys[g].indexOf('#blocks'+(g+1)) != -1 ){
+		  			if(keys[g].indexOf('#blocks'+(nb_blocks_enc)) != -1 ){
 						loop_script(block['arguments'][keys[g]], type, blockinfo);	
 						nb_blocks_enc++;
 						break;						  
