@@ -1,13 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const controllers = require('../controllers');
+const jwt = require('../utils/jwt.utils');
 
 const ArgumentController = controllers.ArgumentController;
 
 const argumentRouter = express.Router();
 argumentRouter.use(bodyParser.json());
 
-argumentRouter.post('/add', function(req, res) {
+argumentRouter.post('/add', jwt.checkTokenAdmin, function(req, res) {
   const subject = req.body.subject;
   const content = req.body.content;
   const id_user = req.body.id_user;
@@ -47,7 +48,7 @@ argumentRouter.get('/', function(req, res) {
   });
 });
 
-argumentRouter.delete('/remove/:id', function(req, res) {
+argumentRouter.delete('/remove/:id', jwt.checkTokenAdmin, function(req, res) {
   const id = parseInt(req.params.id);
   
   if(id === undefined) {
@@ -64,7 +65,7 @@ argumentRouter.delete('/remove/:id', function(req, res) {
   });
 })
 
-argumentRouter.post('/update', function(req, res) {
+argumentRouter.post('/update', jwt.checkTokenAdmin, function(req, res) {
   const id = req.body.id;
   const subject = req.body.subject;
   const content = req.body.content;

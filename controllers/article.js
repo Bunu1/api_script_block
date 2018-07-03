@@ -58,7 +58,11 @@ ArticleController.findAll = function(id, subject, content, available, date_add, 
 }
 
 ArticleController.remove = function(id) {
-  return Article.destroy({ where: { id: id } });
+  return Article.destroy({
+    where: { 
+      id: id
+    } 
+  });
 }
 
 ArticleController.update = function(id, subject, content, available) {
