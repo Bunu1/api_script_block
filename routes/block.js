@@ -300,7 +300,7 @@ blockRouter.post('/finalscript', function(req, res) {
 	})
   
   setTimeout(function(){
-  console.log(finalstring);
+  /*console.log(finalstring);
 	fs.writeFile('file'+extension, finalstring, function(err) {
 	if(err)
 		return console.log(err);
@@ -308,7 +308,10 @@ blockRouter.post('/finalscript', function(req, res) {
 	})
 	res.sendFile(path.join(__dirname, "..", "file"+extension));
 	finalstring = "";
+	*/
+ 	res.status(201).end(finalstring);
   }, 5000);
+
   });
 
 
