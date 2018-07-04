@@ -14,8 +14,8 @@ module.exports = function(sequelize, DataTypes){
             allowNull: false
 		},
 		type: {
-			type: DataTypes.STRING,
-						allowNull: false
+			type: DataTypes.TEXT,
+            allowNull: false
 		}
 	}, {
 		underscored: true,
