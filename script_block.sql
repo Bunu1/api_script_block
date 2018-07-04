@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 04 juil. 2018 à 08:10
+-- Généré le :  mer. 04 juil. 2018 à 08:29
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `argument`;
 CREATE TABLE IF NOT EXISTS `argument` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `value` varchar(100) DEFAULT NULL,
+  `keyValue` varchar(100) DEFAULT NULL,
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=latin1;
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `argument` (
 -- Déchargement des données de la table `argument`
 --
 
-INSERT INTO `argument` (`id`, `name`, `value`, `description`) VALUES
+INSERT INTO `argument` (`id`, `name`, `keyValue`, `description`) VALUES
 (1, 'Nom', '`#1`', 'Nom de la variable'),
 (2, 'Valeur', '`#2`', 'Valeur à affecter à la variable'),
 (3, 'Variable', '`#1`', 'Variable à exporter'),
