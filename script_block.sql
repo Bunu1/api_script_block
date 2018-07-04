@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
--- Client :  127.0.0.1
--- Généré le :  Mar 03 Juillet 2018 à 09:20
--- Version du serveur :  5.7.14
--- Version de PHP :  5.6.25
+-- Hôte : 127.0.0.1:3306
+-- Généré le :  mer. 04 juil. 2018 à 08:10
+-- Version du serveur :  5.7.19
+-- Version de PHP :  5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,78 +28,79 @@ SET time_zone = "+00:00";
 -- Structure de la table `argument`
 --
 
-CREATE TABLE `argument` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `argument`;
+CREATE TABLE IF NOT EXISTS `argument` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `value` varchar(100) DEFAULT NULL,
-  `type` int(11) DEFAULT NULL,
-  `description` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `argument`
+-- Déchargement des données de la table `argument`
 --
 
-INSERT INTO `argument` (`id`, `name`, `value`, `type`, `description`) VALUES
-(1, 'Nom', '`#1`', NULL, 'Nom de la variable'),
-(2, 'Valeur', '`#2`', NULL, 'Valeur à affecter à la variable'),
-(3, 'Variable', '`#1`', NULL, 'Variable à exporter'),
-(4, 'Variable', '`#1`', NULL, 'Variable stockant les informations saisies'),
-(5, 'Texte', '`#2`', NULL, 'Texte à afficher lors de la demande de saisie'),
-(6, 'Chemin d\'accès', '`#1`', NULL, 'Chemin où créer le répertoire'),
-(7, 'Source', '`#1`', NULL, 'Chemin vers le fichier source'),
-(8, 'Destination', '`#2`', NULL, 'Chemin vers l\'endroit de copie du fichier source'),
-(9, 'Valeur des droits', '`#1`', NULL, 'Nombre à 3 chiffre permettant de définir les droits sur  un fichier.'),
-(10, 'Processus', '`#1`', NULL, 'PID ou Nom du processus'),
-(11, 'Options', '`#O`', NULL, 'Options de la commande'),
-(20, 'New Variable\'s Name', '`#1`', NULL, 'The variable\'s name in the program (can be used directly after the assignement)'),
-(21, 'Already existing variable\'s name', '`#2`', NULL, 'An already existing variable\'s name)'),
-(22, 'Default Value', '`#3`', NULL, 'A default value in case of an empty existing value'),
-(23, 'Function Name', '`#1`', NULL, 'The function\'s name'),
-(24, 'Function Name', '`#1`', NULL, 'The function\'s name'),
-(25, 'Function Arguments', '`#2`', NULL, 'The function\'s arguments'),
-(26, 'Switch Variable', '`#1`', NULL, 'The function\'s name'),
-(27, 'One Case of Switch', '`#2`', NULL, 'The function\'s name'),
-(28, 'For Variable', '`#1`', NULL, 'The loop variable that will serve as an iterator'),
-(29, 'For List', '`#2`', NULL, 'The iterable list'),
-(30, 'Array Name', '`#1`', NULL, 'The array\'s name'),
-(31, 'Array values', '`#2`', NULL, 'The array\'s values'),
-(50, 'cd Options', '`#1`', NULL, 'Options of cd command, try \'man cd\' to see them all'),
-(51, 'cd Argument', '`#2`', NULL, 'An existing path'),
-(52, 'ls Options', '`#1`', NULL, 'Options of ls command, try \'man ls\' to see them all'),
-(53, 'ls Argument', '`#2`', NULL, 'An existing file or directory'),
-(54, 'touch Options', '`#1`', NULL, 'Options of touch command, try \'man touch\' to see them all'),
-(55, 'touch Argument', '`#2`', NULL, 'A file'),
-(56, 'rm Options', '`#1`', NULL, 'Options of rm command, try \'man rm\' to see them all'),
-(57, 'rm Argument', '`#2`', NULL, 'A file or directory'),
-(58, 'chmod Options', '`#1`', NULL, 'Options of chmod command, try \'man chmod\' to see them all'),
-(59, 'chmod Mode', '`#2`', NULL, 'A mode representing the rights on the file or directory'),
-(60, 'chmod Argument', '`#2`', NULL, 'A file or directory'),
-(61, 'cut Options', '`#1`', NULL, 'Options of cut command, try \'man cut\' to see them all'),
-(62, 'cut Argument', '`#2`', NULL, 'A file'),
-(63, 'sort Options', '`#1`', NULL, 'Options of sort command, try \'man sort\' to see them all'),
-(64, 'sort Argument', '`#2`', NULL, 'A file'),
-(65, 'head Options', '`#1`', NULL, 'Options of head command, try \'man head\' to see them all'),
-(66, 'head Argument', '`#2`', NULL, 'A file'),
-(67, 'tail Options', '`#1`', NULL, 'Options of tail command, try \'man tail\' to see them all'),
-(68, 'tail Argument', '`#2`', NULL, 'A file'),
-(69, 'cat Options', '`#1`', NULL, 'Options of cat command, try \'man cat\' to see them all'),
-(70, 'cat Argument', '`#2`', NULL, 'A file'),
-(71, 'find Options', '`#1`', NULL, 'Options of find command, try \'man find\' to see them all'),
-(72, 'find Argument', '`#2`', NULL, 'A file'),
-(73, 'grep Options', '`#1`', NULL, 'Options of grep command, try \'man grep\' to see them all'),
-(74, 'grep Pattern', '`#2`', NULL, 'A pattern searched on eached lines of the file(s)'),
-(75, 'grep File', '`#2`', NULL, 'A file'),
-(76, 'sed Options', '`#1`', NULL, 'Options of sed command, try \'man sed\' to see them all'),
-(77, 'sed Pattern', '`#2`', NULL, 'A pattern searched on eached lines of the file(s)'),
-(78, 'sed File', '`#2`', NULL, 'A file'),
-(79, 'touch Options', '`#1`', NULL, 'Name of the empty file'),
-(80, 'Return value', '`#1`', NULL, 'Returned value'),
-(81, 'First Operand', '`#1`', NULL, 'Something comparable'),
-(82, 'Second  Operand', '`#2`', NULL, 'Something comparable'),
-(83, 'Operator', '`#op`', NULL, 'Operator for comparison'),
-(84, 'Filename', '`#1`', NULL, 'Name of the file'),
-(85, 'Code', '`#1`', NULL, 'The code you write in');
+INSERT INTO `argument` (`id`, `name`, `value`, `description`) VALUES
+(1, 'Nom', '`#1`', 'Nom de la variable'),
+(2, 'Valeur', '`#2`', 'Valeur à affecter à la variable'),
+(3, 'Variable', '`#1`', 'Variable à exporter'),
+(4, 'Variable', '`#1`', 'Variable stockant les informations saisies'),
+(5, 'Texte', '`#2`', 'Texte à afficher lors de la demande de saisie'),
+(6, 'Chemin d\'accès', '`#1`', 'Chemin où créer le répertoire'),
+(7, 'Source', '`#1`', 'Chemin vers le fichier source'),
+(8, 'Destination', '`#2`', 'Chemin vers l\'endroit de copie du fichier source'),
+(9, 'Valeur des droits', '`#1`', 'Nombre à 3 chiffre permettant de définir les droits sur  un fichier.'),
+(10, 'Processus', '`#1`', 'PID ou Nom du processus'),
+(11, 'Options', '`#O`', 'Options de la commande'),
+(20, 'New Variable\'s Name', '`#1`', 'The variable\'s name in the program (can be used directly after the assignement)'),
+(21, 'Already existing variable\'s name', '`#2`', 'An already existing variable\'s name)'),
+(22, 'Default Value', '`#3`', 'A default value in case of an empty existing value'),
+(23, 'Function Name', '`#1`', 'The function\'s name'),
+(24, 'Function Name', '`#1`', 'The function\'s name'),
+(25, 'Function Arguments', '`#2`', 'The function\'s arguments'),
+(26, 'Switch Variable', '`#1`', 'The function\'s name'),
+(27, 'One Case of Switch', '`#2`', 'The function\'s name'),
+(28, 'For Variable', '`#1`', 'The loop variable that will serve as an iterator'),
+(29, 'For List', '`#2`', 'The iterable list'),
+(30, 'Array Name', '`#1`', 'The array\'s name'),
+(31, 'Array values', '`#2`', 'The array\'s values'),
+(50, 'cd Options', '`#1`', 'Options of cd command, try \'man cd\' to see them all'),
+(51, 'cd Argument', '`#2`', 'An existing path'),
+(52, 'ls Options', '`#1`', 'Options of ls command, try \'man ls\' to see them all'),
+(53, 'ls Argument', '`#2`', 'An existing file or directory'),
+(54, 'touch Options', '`#1`', 'Options of touch command, try \'man touch\' to see them all'),
+(55, 'touch Argument', '`#2`', 'A file'),
+(56, 'rm Options', '`#1`', 'Options of rm command, try \'man rm\' to see them all'),
+(57, 'rm Argument', '`#2`', 'A file or directory'),
+(58, 'chmod Options', '`#1`', 'Options of chmod command, try \'man chmod\' to see them all'),
+(59, 'chmod Mode', '`#2`', 'A mode representing the rights on the file or directory'),
+(60, 'chmod Argument', '`#2`', 'A file or directory'),
+(61, 'cut Options', '`#1`', 'Options of cut command, try \'man cut\' to see them all'),
+(62, 'cut Argument', '`#2`', 'A file'),
+(63, 'sort Options', '`#1`', 'Options of sort command, try \'man sort\' to see them all'),
+(64, 'sort Argument', '`#2`', 'A file'),
+(65, 'head Options', '`#1`', 'Options of head command, try \'man head\' to see them all'),
+(66, 'head Argument', '`#2`', 'A file'),
+(67, 'tail Options', '`#1`', 'Options of tail command, try \'man tail\' to see them all'),
+(68, 'tail Argument', '`#2`', 'A file'),
+(69, 'cat Options', '`#1`', 'Options of cat command, try \'man cat\' to see them all'),
+(70, 'cat Argument', '`#2`', 'A file'),
+(71, 'find Options', '`#1`', 'Options of find command, try \'man find\' to see them all'),
+(72, 'find Argument', '`#2`', 'A file'),
+(73, 'grep Options', '`#1`', 'Options of grep command, try \'man grep\' to see them all'),
+(74, 'grep Pattern', '`#2`', 'A pattern searched on eached lines of the file(s)'),
+(75, 'grep File', '`#2`', 'A file'),
+(76, 'sed Options', '`#1`', 'Options of sed command, try \'man sed\' to see them all'),
+(77, 'sed Pattern', '`#2`', 'A pattern searched on eached lines of the file(s)'),
+(78, 'sed File', '`#2`', 'A file'),
+(79, 'touch Options', '`#1`', 'Name of the empty file'),
+(80, 'Return value', '`#1`', 'Returned value'),
+(81, 'First Operand', '`#1`', 'Something comparable'),
+(82, 'Second  Operand', '`#2`', 'Something comparable'),
+(83, 'Operator', '`#op`', 'Operator for comparison'),
+(84, 'Filename', '`#1`', 'Name of the file'),
+(85, 'Code', '`#1`', 'The code you write in');
 
 -- --------------------------------------------------------
 
@@ -105,17 +108,19 @@ INSERT INTO `argument` (`id`, `name`, `value`, `type`, `description`) VALUES
 -- Structure de la table `article`
 --
 
-CREATE TABLE `article` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE IF NOT EXISTS `article` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `subject` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `available` int(11) NOT NULL DEFAULT '1',
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `id_user` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_user` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `article`
+-- Déchargement des données de la table `article`
 --
 
 INSERT INTO `article` (`id`, `subject`, `content`, `available`, `date_add`, `id_user`) VALUES
@@ -128,62 +133,64 @@ INSERT INTO `article` (`id`, `subject`, `content`, `available`, `date_add`, `id_
 -- Structure de la table `block`
 --
 
-CREATE TABLE `block` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `block`;
+CREATE TABLE IF NOT EXISTS `block` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `type` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `type` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=232 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `block`
+-- Déchargement des données de la table `block`
 --
 
 INSERT INTO `block` (`id`, `name`, `description`, `type`) VALUES
-(1, 'Affectation', 'Permet d\'affecter une valeur à une variable', NULL),
-(2, 'Exportation', 'Permet l\'exportation d\'une variable', NULL),
-(3, 'Lecture', 'Permet la saisie de données formatées par un utilisateur', NULL),
+(1, 'Affectation', 'Permet d\'affecter une valeur à une variable', 'simple'),
+(2, 'Exportation', 'Permet l\'exportation d\'une variable', 'simple'),
+(3, 'Lecture', 'Permet la saisie de données formatées par un utilisateur', 'simple'),
 (4, 'If', 'Bloc de condition', 'content-cond|true|false'),
-(5, 'Else', 'Bloc dans le cas ou  la condition n\'est pas valide (se place seulement après un bloc if)', NULL),
+(5, 'Else', 'Bloc dans le cas ou  la condition n\'est pas valide (se place seulement après un bloc if)', 'simple'),
 (6, 'While', 'Permet de boucler tant que la condition n\'est pas validée', 'content-cond|true'),
-(7, 'Current Working Directory', 'Permet d\'afficher le répertoire de travail actuel', NULL),
-(8, 'Create directory', 'Permet à l\'utilisateur de créer un répertoire (crée les parents si nécessaire) ', NULL),
-(9, 'Copie', 'Permet de copier un fichier', NULL),
-(10, 'Déplacer', 'Permet de déplacer (ou renommer (unix)) ou un fichier en fonction de l\'adresse de destination', NULL),
-(11, 'Renommer (Windows)', 'Permet de renommer un fichier (windows)', NULL),
-(12, 'Droits Fichier (Unix)', 'Permet de définir les droits sur un fichier.\nLe pre', NULL),
-(13, 'Processus ', 'Permet d\'afficher les processus', NULL),
-(14, 'Finir Processus', 'Permet de finir un processus', NULL),
-(20, 'Default Variable', 'Assigning a variable\'s value or a default value for a new variable', NULL),
+(7, 'Current Working Directory', 'Permet d\'afficher le répertoire de travail actuel', 'simple'),
+(8, 'Create directory', 'Permet à l\'utilisateur de créer un répertoire (crée les parents si nécessaire) ', 'simple'),
+(9, 'Copie', 'Permet de copier un fichier', 'simple'),
+(10, 'Déplacer', 'Permet de déplacer (ou renommer (unix)) ou un fichier en fonction de l\'adresse de destination', 'simple'),
+(11, 'Renommer (Windows)', 'Permet de renommer un fichier (windows)', 'simple'),
+(12, 'Droits Fichier (Unix)', 'Permet de définir les droits sur un fichier.\nLe pre', 'simple'),
+(13, 'Processus ', 'Permet d\'afficher les processus', 'simple'),
+(14, 'Finir Processus', 'Permet de finir un processus', 'simple'),
+(20, 'Default Variable', 'Assigning a variable\'s value or a default value for a new variable', 'simple'),
 (21, 'Create Function', 'Create a function within the program. Make sure to give it a unique name', 'content'),
-(22, 'Call Function', 'Call a function with its name and its arguments', NULL),
+(22, 'Call Function', 'Call a function with its name and its arguments', 'simple'),
 (23, 'Switch Case', 'Create a switch case with its variable and the different cases', 'content'),
 (24, 'For loop', 'Create a for loop in a list of objects', 'content'),
-(25, 'Declare Array', 'Create an array with or without initialised values', NULL),
-(26, 'Show Array', 'Create an array with or without initialised values', NULL),
-(50, 'cd Command', 'Change the shell working directory', NULL),
-(51, 'ls Command', 'List  information  about  the FILEs (the current directory by default)', NULL),
-(52, 'touch Command', 'Update the access and modification times of each FILE to the current time', NULL),
-(53, 'rm Command', 'Removes each specified file.  By default, it does not remove directories.', NULL),
-(54, 'chmod Command', 'Changes the file mode bits of each given file according to mode, which can be either a symbolic representation of changes to make, or an octal number representing the bit pattern for the new mode bits.', NULL),
-(55, 'cut Command', 'Print selected parts of lines from each FILE to standard output.', NULL),
-(56, 'sort Command', 'Write sorted concatenation of all FILE(s) to standard output.', NULL),
-(57, 'head Command', 'Print the first 10 lines of each FILE to standard output.  With more than one FILE, precede each with a header giving the file name.', NULL),
-(58, 'tail Command', 'Print the last 10 lines of each FILE to standard output.  With more than one FILE, precede each with a header giving the file name.', NULL),
-(59, 'cat Command', 'Concatenate FILE(s) to standard output.', NULL),
-(60, 'find Command', 'Search for files in a directory hierarchy.', NULL),
-(61, 'grep Command', 'grep searches for PATTERN in each FILE. If no FILE is given, recursive searches examine the working directory, and nonrecursive searches read standard input.', NULL),
-(62, 'sed Command', 'A stream editor used to filer and perform basic text transformations on an input stream (a file or input from a pipeline)', NULL),
-(63, 'Empty file', 'Create an empty file', NULL),
-(64, 'Return', 'Allows to return a value from a function', NULL),
-(65, 'Comparison Test', 'Test: something operator something', NULL),
-(66, 'File Test', 'Several test on a file', NULL),
-(67, 'Function Test', 'Test on the returned value of a function', NULL),
-(68, 'Custom', 'Custom block for personnal use (you can write free code inside)', NULL),
-(69, 'And', 'And operator', NULL),
-(70, 'Or', 'Or operator', NULL),
-(71, 'Logical Not', 'Logical Not operator (!)', NULL),
-(231, 'Case of Switch', 'a variable\'s value and the blocks within', NULL);
+(25, 'Declare Array', 'Create an array with or without initialised values', 'simple'),
+(26, 'Show Array', 'Create an array with or without initialised values', 'simple'),
+(50, 'cd Command', 'Change the shell working directory', 'simple'),
+(51, 'ls Command', 'List  information  about  the FILEs (the current directory by default)', 'simple'),
+(52, 'touch Command', 'Update the access and modification times of each FILE to the current time', 'simple'),
+(53, 'rm Command', 'Removes each specified file.  By default, it does not remove directories.', 'simple'),
+(54, 'chmod Command', 'Changes the file mode bits of each given file according to mode, which can be either a symbolic representation of changes to make, or an octal number representing the bit pattern for the new mode bits.', 'simple'),
+(55, 'cut Command', 'Print selected parts of lines from each FILE to standard output.', 'simple'),
+(56, 'sort Command', 'Write sorted concatenation of all FILE(s) to standard output.', 'simple'),
+(57, 'head Command', 'Print the first 10 lines of each FILE to standard output.  With more than one FILE, precede each with a header giving the file name.', 'simple'),
+(58, 'tail Command', 'Print the last 10 lines of each FILE to standard output.  With more than one FILE, precede each with a header giving the file name.', 'simple'),
+(59, 'cat Command', 'Concatenate FILE(s) to standard output.', 'simple'),
+(60, 'find Command', 'Search for files in a directory hierarchy.', 'simple'),
+(61, 'grep Command', 'grep searches for PATTERN in each FILE. If no FILE is given, recursive searches examine the working directory, and nonrecursive searches read standard input.', 'simple'),
+(62, 'sed Command', 'A stream editor used to filer and perform basic text transformations on an input stream (a file or input from a pipeline)', 'simple'),
+(63, 'Empty file', 'Create an empty file', 'simple'),
+(64, 'Return', 'Allows to return a value from a function', 'simple'),
+(65, 'Comparison Test', 'Test: something operator something', 'simple'),
+(66, 'File Test', 'Several test on a file', 'simple'),
+(67, 'Function Test', 'Test on the returned value of a function', 'simple'),
+(68, 'Custom', 'Custom block for personnal use (you can write free code inside)', 'simple'),
+(69, 'And', 'And operator', 'simple'),
+(70, 'Or', 'Or operator', 'simple'),
+(71, 'Logical Not', 'Logical Not operator (!)', 'simple'),
+(231, 'Case of Switch', 'a variable\'s value and the blocks within', 'simple');
 
 -- --------------------------------------------------------
 
@@ -191,14 +198,17 @@ INSERT INTO `block` (`id`, `name`, `description`, `type`) VALUES
 -- Structure de la table `block_argument`
 --
 
-CREATE TABLE `block_argument` (
+DROP TABLE IF EXISTS `block_argument`;
+CREATE TABLE IF NOT EXISTS `block_argument` (
   `id_block` int(11) NOT NULL,
   `id_argument` int(11) NOT NULL,
-  `pre_option` varchar(10) DEFAULT NULL
+  `pre_option` varchar(10) DEFAULT NULL,
+  KEY `id_arg` (`id_argument`),
+  KEY `id_block_arg` (`id_block`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `block_argument`
+-- Déchargement des données de la table `block_argument`
 --
 
 INSERT INTO `block_argument` (`id_block`, `id_argument`, `pre_option`) VALUES
@@ -286,14 +296,17 @@ INSERT INTO `block_argument` (`id_block`, `id_argument`, `pre_option`) VALUES
 -- Structure de la table `block_instruction`
 --
 
-CREATE TABLE `block_instruction` (
+DROP TABLE IF EXISTS `block_instruction`;
+CREATE TABLE IF NOT EXISTS `block_instruction` (
   `id_block` int(11) NOT NULL,
   `id_instruction` int(11) NOT NULL,
-  `pos` int(11) NOT NULL
+  `pos` int(11) NOT NULL,
+  KEY `id_instruction_block` (`id_instruction`),
+  KEY `id_block` (`id_block`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `block_instruction`
+-- Déchargement des données de la table `block_instruction`
 --
 
 INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
@@ -405,16 +418,19 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 -- Structure de la table `code_block`
 --
 
-CREATE TABLE `code_block` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `code_block`;
+CREATE TABLE IF NOT EXISTS `code_block` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `platform` varchar(100) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `id_block` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_block` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_block` (`id_block`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `code_block`
+-- Déchargement des données de la table `code_block`
 --
 
 INSERT INTO `code_block` (`id`, `name`, `platform`, `description`, `id_block`) VALUES
@@ -429,11 +445,13 @@ INSERT INTO `code_block` (`id`, `name`, `platform`, `description`, `id_block`) V
 -- Structure de la table `conditions`
 --
 
-CREATE TABLE `conditions` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `conditions`;
+CREATE TABLE IF NOT EXISTS `conditions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `display` varchar(10) NOT NULL,
   `unix` varchar(10) NOT NULL,
-  `windows` varchar(10) NOT NULL
+  `windows` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -442,23 +460,25 @@ CREATE TABLE `conditions` (
 -- Structure de la table `instruction`
 --
 
-CREATE TABLE `instruction` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `instruction`;
+CREATE TABLE IF NOT EXISTS `instruction` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `syntax` text NOT NULL,
   `type` varchar(20) DEFAULT NULL,
-  `platform` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `platform` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1252 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `instruction`
+-- Déchargement des données de la table `instruction`
 --
 
 INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
 (1, 'Affectation', '`#1` = `#2`', 'arguments', 'unix'),
 (2, 'Exportation', 'export `#1`', 'arguments', 'unix'),
 (3, 'Lecture', 'read `#1`?`#2`', 'arguments', 'unix'),
-(4, 'Lecture', '`#1` = Read-Host "`#2`"', 'arguments', 'windows'),
+(4, 'Lecture', '`#1` = Read-Host \"`#2`\"', 'arguments', 'windows'),
 (5, 'If Start', 'if [ ', 'text-only', 'unix'),
 (6, 'If Condition', '`#blocs`', 'blocs', 'unix'),
 (7, 'If End Condition', ' ] \r\nthen ', 'text-only', 'unix'),
@@ -483,12 +503,12 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
 (26, 'Current Working Directory', 'pwd `#O`', 'arguments', 'unix'),
 (27, 'Current Working Directory', 'cd', 'arguments', 'windows'),
 (28, 'Create Directory', 'mkdir `#O` `#1`', 'arguments', 'unix'),
-(29, 'Create Directory', 'mkdir "`#1`"', 'arguments', 'windows'),
+(29, 'Create Directory', 'mkdir \"`#1`\"', 'arguments', 'windows'),
 (30, 'Copie', 'cp `#O` `#1` `#2`', 'arguments', 'unix'),
-(31, 'Copie', 'copy "`#1`" "`#2`"', 'arguments', 'windows'),
+(31, 'Copie', 'copy \"`#1`\" \"`#2`\"', 'arguments', 'windows'),
 (32, 'Déplacer', 'mv `#O` `#1` `#2`a', 'arguments', 'unix'),
-(33, 'Déplacer', 'move "`#1`" "`#2`"', 'arguments', 'windows'),
-(34, 'Renommer', 'ren "`#1`" "`#2`"', 'arguments', 'windows'),
+(33, 'Déplacer', 'move \"`#1`\" \"`#2`\"', 'arguments', 'windows'),
+(34, 'Renommer', 'ren \"`#1`\" \"`#2`\"', 'arguments', 'windows'),
 (35, 'Umask', 'umask `#1`', 'arguments', 'unix'),
 (36, 'Processus', 'ps `#O`', 'text-only', 'unix'),
 (37, 'Processus', 'tasklist', 'text-only', 'windows'),
@@ -530,11 +550,11 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
 (122, 'Function Content', '`#blocs`', 'blocs', 'windows'),
 (123, 'Function End', 'exit /b', 'text-only', 'windows'),
 (124, 'Function Call', 'CALL :`#1` `#2`', 'arguments', 'windows'),
-(125, 'Switch Start', 'powershell -Command "& {Switch (`#1`) {', 'arguments', 'windows'),
+(125, 'Switch Start', 'powershell -Command \"& {Switch (`#1`) {', 'arguments', 'windows'),
 (126, 'Case Start', '`#2` { ', 'arguments', 'windows'),
 (127, 'Switch Content', '`#blocs` ', 'blocs', 'windows'),
 (128, 'Case End', '}', 'text-only', 'windows'),
-(129, 'Switch End', '}}"', 'text-only', 'windows'),
+(129, 'Switch End', '}}\"', 'text-only', 'windows'),
 (130, 'For Start', 'for `#1` in (`#2`) do ( ', 'arguments', 'windows'),
 (131, 'For Content', '`#blocs` ', 'blocs', 'windows'),
 (132, 'For End', ')', 'text-only', 'windows'),
@@ -568,8 +588,9 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
 -- Structure de la table `script`
 --
 
-CREATE TABLE `script` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `script`;
+CREATE TABLE IF NOT EXISTS `script` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `category` varchar(255) NOT NULL DEFAULT 'clean',
@@ -577,11 +598,13 @@ CREATE TABLE `script` (
   `downloads_count` int(11) NOT NULL DEFAULT '0',
   `date_crea` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_user` int(11) NOT NULL,
-  `report` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `report` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `id_user` (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `script`
+-- Déchargement des données de la table `script`
 --
 
 INSERT INTO `script` (`id`, `name`, `description`, `category`, `size`, `downloads_count`, `date_crea`, `id_user`, `report`) VALUES
@@ -594,19 +617,21 @@ INSERT INTO `script` (`id`, `name`, `description`, `category`, `size`, `download
 -- Structure de la table `user`
 --
 
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `date_insc` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `rank` int(11) NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '0',
-  `enabled` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `enabled` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=latin1;
 
 --
--- Contenu de la table `user`
+-- Déchargement des données de la table `user`
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `date_insc`, `rank`, `active`, `enabled`) VALUES
@@ -614,119 +639,7 @@ INSERT INTO `user` (`id`, `name`, `email`, `password`, `date_insc`, `rank`, `act
 (70, 'aze', 'aze@azr.com', '$2y$10$TjKkx5n9/P.mdfPdaN.pTOkOCfwlt2ndzu0n0QzY3qIimMDRfvNS6', '2018-05-13 19:47:41', 1, 1, 1);
 
 --
--- Index pour les tables exportées
---
-
---
--- Index pour la table `argument`
---
-ALTER TABLE `argument`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `article`
---
-ALTER TABLE `article`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `block`
---
-ALTER TABLE `block`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `block_argument`
---
-ALTER TABLE `block_argument`
-  ADD KEY `id_arg` (`id_argument`),
-  ADD KEY `id_block_arg` (`id_block`);
-
---
--- Index pour la table `block_instruction`
---
-ALTER TABLE `block_instruction`
-  ADD KEY `id_instruction_block` (`id_instruction`),
-  ADD KEY `id_block` (`id_block`);
-
---
--- Index pour la table `code_block`
---
-ALTER TABLE `code_block`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_block` (`id_block`);
-
---
--- Index pour la table `conditions`
---
-ALTER TABLE `conditions`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `instruction`
---
-ALTER TABLE `instruction`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `script`
---
-ALTER TABLE `script`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_user` (`id_user`);
-
---
--- Index pour la table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `argument`
---
-ALTER TABLE `argument`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
---
--- AUTO_INCREMENT pour la table `article`
---
-ALTER TABLE `article`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT pour la table `block`
---
-ALTER TABLE `block`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=232;
---
--- AUTO_INCREMENT pour la table `code_block`
---
-ALTER TABLE `code_block`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT pour la table `conditions`
---
-ALTER TABLE `conditions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `instruction`
---
-ALTER TABLE `instruction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1252;
---
--- AUTO_INCREMENT pour la table `script`
---
-ALTER TABLE `script`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
---
--- AUTO_INCREMENT pour la table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
---
--- Contraintes pour les tables exportées
+-- Contraintes pour les tables déchargées
 --
 
 --
@@ -754,6 +667,7 @@ ALTER TABLE `code_block`
 --
 ALTER TABLE `script`
   ADD CONSTRAINT `script_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
