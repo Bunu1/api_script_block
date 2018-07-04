@@ -12,6 +12,10 @@ module.exports = function(sequelize, DataTypes){
 		description: {
 			type: DataTypes.TEXT,
             allowNull: false
+		},
+		type: {
+			type: DataTypes.STRING,
+						allowNull: false
 		}
 	}, {
 		underscored: true,
