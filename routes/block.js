@@ -317,9 +317,7 @@ blockRouter.post('/finalscript', function(req, res) {
 	finalstring = "";
 	*/
  	res.status(201).end(finalstring);
- 	setTimeout(function(){
- 		//finalstring = "";
- 	}, 2000);
+ 	finalstring = "";
   }, 5000);
 
   });
