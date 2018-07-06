@@ -202,14 +202,14 @@ blockRouter.put('/update', jwt.checkTokenAdmin, function(req, res) {
 var finalstring= "";
 
 function loop_script(blocks, type, blockinfo){
-
 	blocks.forEach(function(block) {
 
 	var nb_instruction = 0;
 	var nb_blocks = 0;
 	var nb_blocks_enc = 0;
 	var index = 0;
-
+	var good_inst = 0;
+	var check_inst;
 
 	for (var i = 0; i < blockinfo.length; i++) {
 		if(block['id'] == blockinfo[i]['id']){
@@ -225,37 +225,44 @@ function loop_script(blocks, type, blockinfo){
 	}
 
 	for (var i = 0; i < nb_instruction; i++) {
-		if(blockinfo[index]['Instructions'][i]['Block_Instruction']['pos'] == i+1){
-			var instruction = blockinfo[index]['Instructions'][i];
-			//console.log(instruction);
+		check_inst = 0;
+
+		if(blockinfo[index]['Instructions'][good_inst]['Block_Instruction']['pos'] == i+1){
+			var instruction = blockinfo[index]['Instructions'][good_inst];
+
 			if(type == instruction['platform']){
-	  		if(instruction['type'].indexOf('arguments') != -1){
-		  		var base = instruction['syntax'];
-		  		for (var k in block['arguments']){
-		  			base = base.replace("`"+k+"`", block['arguments'][k]);
-				}
-				finalstring += base;
-		  		finalstring += '\n';
-		  	}
+				check_inst = 1;
+		  		if(instruction['type'].indexOf('arguments') != -1){
 
-		  	if(instruction['type'].indexOf('text-only') != -1){
-		  		var base = instruction['syntax'];
-				finalstring += base;
-		  		finalstring += '\n';
-		  	}
+			  		var base = instruction['syntax'];
+			  		for (var k in block['arguments']){
+			  			base = base.replace("`"+k+"`", block['arguments'][k]);
+					}
+					finalstring += base;
+			  		finalstring += '\n';
+			  	}
 
-		  	if(instruction['type'].indexOf('blocs') != -1){
-		  		var keys = Object.keys(block['arguments']);
-		  		for (var g = 0 ; g < keys.length; g++) {
-		  			if(keys[g].indexOf('#blocks'+(nb_blocks_enc)) != -1 ){
-						loop_script(block['arguments'][keys[g]], type, blockinfo);	
-						nb_blocks_enc++;
-						break;						  
-		  			}
-		  		}
-		  	}
-	  	}
+			  	if(instruction['type'].indexOf('text-only') != -1){
+			  		var base = instruction['syntax'];
+					finalstring += base;
+			  		finalstring += '\n';
+			  	}
+
+			  	if(instruction['type'].indexOf('blocs') != -1){
+			  		var keys = Object.keys(block['arguments']);
+			  		for (var g = 0 ; g < keys.length; g++) {
+			  			if(keys[g].indexOf('#blocks'+(nb_blocks_enc)) != -1 ){
+							loop_script(block['arguments'][keys[g]], type, blockinfo);	
+							nb_blocks_enc++;
+							break;						  
+			  			}
+			  		}
+			  	}
+
+	  		}//fin plateforme
 		}
+		if(check_inst == 0)i--;
+		good_inst++;
 	}
   });
 
@@ -304,11 +311,11 @@ blockRouter.post('/finalscript', function(req, res) {
 		return console.log(err);
 	console.log("File saved");
 	})
-	finalstring = "";
 	res.sendFile(path.join(__dirname, "..", "file"+extension));
 	
 	*/
-		res.status(201).end(finalstring);
+ 	res.status(201).end(finalstring);
+ 	finalstring = "";
   }, 5000);
 
   });
