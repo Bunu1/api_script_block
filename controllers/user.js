@@ -20,4 +20,64 @@ UserController.createUser = function(email, password, name) {
   });
 }
 
+UserController.findAll = function(id, name, email, date_insc, admin, active, enabled) {
+  const where = {};
+  const options = {};
+  
+  if(id !== undefined){
+    where.id = {
+      [Op.like]: `${id}%`
+    }
+  }
+  if(name !== undefined){
+    where.name = {
+      [Op.like]: `${name}%`
+    }
+  }
+  if(email !== undefined){
+    where.email = {
+      [Op.like]: `${email}%`
+    }
+  }
+  if(date_insc !== undefined){
+    where.date_insc = {
+      [Op.like]: `${date_insc}%`
+    }
+  }
+  if(admin !== undefined){
+    where.admin = {
+      [Op.like]: `${admin}%`
+    }
+  }
+  if(active !== undefined){
+    where.active = {
+      [Op.like]: `${active}%`
+    }
+  }
+  if(enabled !== undefined){
+    where.enabled = {
+      [Op.like]: `${enabled}%`
+    }
+  }
+  
+  return User.findAll(options);
+};
+
+UserController.update = function(id, admin, active, enabled) {
+  console.log("HERE");
+  return User.find({where: {id: id}})
+  .then((User) => {
+    if(User) {
+      if(admin === undefined) admin = User.admin;
+      if(active === undefined) active = User.active;
+      if(enabled === undefined) enabled = User.enabled;
+      return User.updateAttributes({
+        admin: admin,
+        active: active,
+        enabled: enabled
+      });
+    }
+  })
+}
+
 module.exports = UserController
