@@ -304,10 +304,11 @@ blockRouter.post('/finalscript', function(req, res) {
 		return console.log(err);
 	console.log("File saved");
 	})
-	res.sendFile(path.join(__dirname, "..", "file"+extension));
 	finalstring = "";
+	res.sendFile(path.join(__dirname, "..", "file"+extension));
+	
 	*/
- 	res.status(201).end(finalstring);
+		res.status(201).end(finalstring);
   }, 5000);
 
   });
