@@ -225,7 +225,6 @@ function loop_script(blocks, type, blockinfo){
 	for (var i = 0; i < blockinfo[index]['Instructions'].length; i++) {
 		if(blockinfo[index]['Instructions'][i]['type'].indexOf('blocs') != -1)nb_blocks++;
 	}
-
 	for (var i = 0; i < nb_instruction; i++) {
 		check_inst = 0;
 
