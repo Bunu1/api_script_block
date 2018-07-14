@@ -41,6 +41,38 @@ userRouter.post('/login', function(req, res) {
   });
 });
 
+userRouter.get('/', jwt.checkTokenAdmin, function(req, res) {
+  const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
+  const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
+  UserController.findAll(req.query.id, req.query.name, req.query.email, req.query.date_insc, req.query.admin, req.query.active, req.query.enabled)
+  .then((scripts) => {
+    res.json(scripts);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).end();
+  });
+});
+
+userRouter.post('/update', jwt.checkTokenAdmin, function(req, res) {
+  console.log("HERE1");
+  console.log(req.query.id);
+  if(req.query.id === undefined) {
+    console.log("HERE3");
+    res.status(400).end();
+    return;
+  }
+  console.log("HERE2");
+  UserController.update(req.query.id, req.query.admin, req.query.active, req.query.enabled)
+  .then((p) => {
+    res.status(201).json(p);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).end();
+  });
+});
+
 userRouter.post('/register', function(req, res) {
   const email = req.body.email;
   const password1 = req.body.password1;
