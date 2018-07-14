@@ -257,7 +257,6 @@ function loop_script(blocks, type, blockinfo){
 			  			}
 			  		}
 			  	}
-
 	  		}//fin plateforme
 		}
 		if(check_inst == 0)i--;

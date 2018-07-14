@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 06 Juillet 2018 à 08:10
+-- Généré le :  Sam 14 Juillet 2018 à 17:40
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -183,7 +183,7 @@ INSERT INTO `block` (`id`, `name`, `description`, `type`) VALUES
 (69, 'And', 'And operator', 'simple'),
 (70, 'Or', 'Or operator', 'simple'),
 (71, 'Logical Not', 'Logical Not operator (!)', 'simple'),
-(231, 'Case of Switch', 'a variable\'s value and the blocks within', 'simple');
+(231, 'Case of Switch', 'a variable\'s value and the blocks within', 'content');
 
 -- --------------------------------------------------------
 
@@ -342,7 +342,6 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (231, 48, 1),
 (231, 49, 2),
 (231, 50, 3),
-(23, 51, 3),
 (24, 52, 1),
 (24, 53, 2),
 (24, 54, 3),
@@ -371,7 +370,6 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (231, 126, 1),
 (231, 127, 2),
 (231, 128, 3),
-(23, 129, 3),
 (24, 130, 1),
 (24, 131, 2),
 (24, 132, 3),
@@ -399,7 +397,14 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (70, 171, 1),
 (70, 172, 1),
 (71, 173, 1),
-(71, 174, 1);
+(71, 174, 1),
+(23, 51, 3),
+(23, 129, 3),
+(6, 20, 1),
+(6, 21, 2),
+(6, 22, 3),
+(6, 23, 4),
+(6, 24, 5);
 
 -- --------------------------------------------------------
 
