@@ -44,7 +44,7 @@ scriptRouter.post('/add', jwt.checkToken, function(req, res) {
 scriptRouter.get('/', function(req, res) {
   const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
   const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
-  ScriptController.findAll(req.query.id, req.query.name, req.query.description, req.query.category, req.query.size, req.query.downloads_count, req.query.date_crea, req.query.id_user, req.query.report, limit, offset)
+  ScriptController.findAll(req.query.id, req.query.name, req.query.description, req.query.category, req.query.size, req.query.downloads_count, req.query.date_crea, req.query.id_user, req.query.available, limit, offset)
   .then((scripts) => {
     res.json(scripts);
   })
@@ -98,14 +98,14 @@ scriptRouter.post('/update', jwt.checkToken, function(req, res) {
   const description = req.body.description;
   const category = req.body.category;
   const dl_count = req.body.downloads_count;
-  const report = req.body.report;
+  const available = req.body.available;
   
   if(id === undefined) {
-    res.status(400).end();
+    res.status(400).json({ "error": "ubyiuhoij" });
     return;
   }
   
-  ScriptController.update(id, description, category, dl_count, report)
+  ScriptController.update(id, description, category, dl_count, available)
   .then((p) => {
     res.status(200).json(p);
   })

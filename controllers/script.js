@@ -78,19 +78,19 @@ ScriptController.remove = function(id) {
   return Script.destroy({ where: { id: id } });
 }
 
-ScriptController.update = function(id, description, category, dl_count, report) {
+ScriptController.update = function(id, description, category, dl_count, available) {
   return Script.find({where: {id: id}})
   .then((script) => {
     if(script) {
       if(description === undefined) description = script.description;
       if(category === undefined) category = script.category;
       if(dl_count === undefined) dl_count = script.downloads_count;
-      if(report === undefined) report = script.report;
+      if(available === undefined) available = script.available;
       return script.updateAttributes({
         description: description,
         category: category,
         downloads_count: dl_count,
-        report: report
+        available: available
       });
     }
   })
