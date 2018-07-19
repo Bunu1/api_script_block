@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Sam 14 Juillet 2018 à 17:40
+-- Généré le :  Mer 18 Juillet 2018 à 09:45
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -342,6 +342,7 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (231, 48, 1),
 (231, 49, 2),
 (231, 50, 3),
+(23, 51, 3),
 (24, 52, 1),
 (24, 53, 2),
 (24, 54, 3),
@@ -370,6 +371,7 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (231, 126, 1),
 (231, 127, 2),
 (231, 128, 3),
+(23, 129, 3),
 (24, 130, 1),
 (24, 131, 2),
 (24, 132, 3),
@@ -398,13 +400,8 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (70, 172, 1),
 (71, 173, 1),
 (71, 174, 1),
-(23, 51, 3),
-(23, 129, 3),
-(6, 20, 1),
-(6, 21, 2),
-(6, 22, 3),
-(6, 23, 4),
-(6, 24, 5);
+(23, 49, 2),
+(23, 127, 2);
 
 -- --------------------------------------------------------
 
@@ -572,27 +569,56 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `report`
+--
+
+CREATE TABLE `report` (
+  `id` int(11) NOT NULL,
+  `id_script` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `comment` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `report`
+--
+
+INSERT INTO `report` (`id`, `id_script`, `id_user`, `comment`) VALUES
+(1, 32, 72, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+(2, 32, 72, 'haha huhu hoho'),
+(3, 32, 72, 'haha huhu hoho'),
+(15, 32, 72, 'haha huhu hoho'),
+(16, 33, 72, 'haha huhu hoho'),
+(17, 33, 72, 'haha huhu hoho'),
+(18, 33, 72, NULL),
+(19, 33, 72, NULL),
+(20, 32, 72, NULL),
+(25, 32, 72, 'uvybink,l');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `script`
 --
 
 CREATE TABLE `script` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` text NOT NULL,
   `category` varchar(255) NOT NULL DEFAULT 'clean',
   `size` int(11) NOT NULL,
   `downloads_count` int(11) NOT NULL DEFAULT '0',
   `date_crea` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_user` int(11) NOT NULL,
-  `report` int(11) NOT NULL DEFAULT '0'
+  `available` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `script`
 --
 
-INSERT INTO `script` (`id`, `name`, `description`, `category`, `size`, `downloads_count`, `date_crea`, `id_user`, `report`) VALUES
-(32, 'SUMASHU', 'AHUMEDO', 'clean', 6, 0, '2018-05-16 14:31:51', 70, 0),
+INSERT INTO `script` (`id`, `name`, `description`, `category`, `size`, `downloads_count`, `date_crea`, `id_user`, `available`) VALUES
+(32, 'SUMASHU', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'dangerous', 6, 2, '2018-05-16 14:31:51', 70, 1),
 (33, 'bonjour', 'aurevoir', 'clean', 6, 0, '2018-05-16 14:36:56', 70, 0);
 
 -- --------------------------------------------------------
@@ -618,7 +644,10 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `date_insc`, `admin`, `active`, `enabled`) VALUES
 (1, 'bunu', 'bunu@nu.bu', 'bunu', '2018-05-06 13:37:08', 1, 1, 1),
-(70, 'aze', 'aze@azr.com', '$2y$10$TjKkx5n9/P.mdfPdaN.pTOkOCfwlt2ndzu0n0QzY3qIimMDRfvNS6', '2018-05-13 19:47:41', 1, 1, 1);
+(70, 'aze', 'aze@azr.com', '$2y$10$TjKkx5n9/P.mdfPdaN.pTOkOCfwlt2ndzu0n0QzY3qIimMDRfvNS6', '2018-05-13 19:47:41', 1, 1, 1),
+(71, 'aa', 'aa@aa.aa', '$2b$05$pX54H9MyYduqRgsoLrz7RO4olZ3fdJczMyOuWEo8sIYBKptXu5TJW', '2018-07-06 10:04:25', 0, 1, 1),
+(72, 'test', 'test@test.test', '$2b$05$p.qqERj1AIylm5NHBhlcrOObg8cvdiq6186H8IyEEi.pJu3qP9oQO', '2018-07-06 10:10:26', 0, 1, 1),
+(73, 'admin', 'admin@admin.admin', '$2b$05$xUmTqkaFps.yqj2otlaUBufGuoJyiVc4/Js3tpJXpmM.20j3u0bAe', '2018-07-06 10:11:55', 1, 1, 1);
 
 --
 -- Index pour les tables exportées
@@ -676,6 +705,14 @@ ALTER TABLE `instruction`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `report`
+--
+ALTER TABLE `report`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_script` (`id_script`),
+  ADD KEY `id_user` (`id_user`);
+
+--
 -- Index pour la table `script`
 --
 ALTER TABLE `script`
@@ -723,6 +760,11 @@ ALTER TABLE `conditions`
 ALTER TABLE `instruction`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1252;
 --
+-- AUTO_INCREMENT pour la table `report`
+--
+ALTER TABLE `report`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+--
 -- AUTO_INCREMENT pour la table `script`
 --
 ALTER TABLE `script`
@@ -731,7 +773,7 @@ ALTER TABLE `script`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 --
 -- Contraintes pour les tables exportées
 --
@@ -755,6 +797,13 @@ ALTER TABLE `block_instruction`
 --
 ALTER TABLE `code_block`
   ADD CONSTRAINT `id_block` FOREIGN KEY (`id_block`) REFERENCES `block` (`id`);
+
+--
+-- Contraintes pour la table `report`
+--
+ALTER TABLE `report`
+  ADD CONSTRAINT `script_report` FOREIGN KEY (`id_script`) REFERENCES `script` (`id`),
+  ADD CONSTRAINT `user_report` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
 --
 -- Contraintes pour la table `script`

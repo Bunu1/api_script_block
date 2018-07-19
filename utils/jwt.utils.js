@@ -24,18 +24,23 @@ jwtUtils.checkToken = function(request, response, next) {
 }
 
 jwtUtils.checkTokenAdmin = function(request, response, next) {
-  jwt.verify(request.headers.authorization.split(" ")[1], JWT_SIGN_SECRET, function(err, decoded) {
-    if(err) {
-      return response.json({ 'error': 'Failed to authenticate token' });
-    } else {
-      if(decoded.isAdmin === 1){
-        request.decoded = decoded;
-        next();
-      } else {
-        return response.json({ 'error': 'User not admin' });
-      }
-    }
-  })
+	var auth = request.headers.authorization;
+	if(auth) {
+		jwt.verify(auth.split(" ")[1], JWT_SIGN_SECRET, function(err, decoded) {
+			if(err) {
+				return response.json({ 'error': 'Failed to authenticate token' });
+			} else {
+				if(decoded.isAdmin === 1){
+					request.decoded = decoded;
+					next();
+				} else {
+					return response.json({ 'error': 'User not admin' });
+				}
+			}
+		});
+	} else {
+		return response.status(500).end({ "error": "No token sent" });
+	}
 }
 
 module.exports = jwtUtils;

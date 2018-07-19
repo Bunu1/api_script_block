@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     },
 		description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false
     },
 		category: {
@@ -37,10 +37,10 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       foreignKey: true
     },
-    report: {
-      type: DataTypes.BIGINT,
+    available: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0
+      defaultValue: 1
     }
 	}, {
 		paranoid: false,
