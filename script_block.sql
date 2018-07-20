@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 18 Juillet 2018 à 09:45
+-- Généré le :  Ven 20 Juillet 2018 à 17:17
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -430,6 +430,31 @@ INSERT INTO `code_block` (`id`, `name`, `platform`, `description`, `id_block`) V
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `comment`
+--
+
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL,
+  `id_script` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `comment` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `comment`
+--
+
+INSERT INTO `comment` (`id`, `id_script`, `id_user`, `comment`) VALUES
+(7, 32, 72, 'Commentaire de test'),
+(11, 32, 73, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+(12, 32, 73, 'ou hi ou haha'),
+(13, 32, 73, 'hahaha'),
+(14, 32, 73, 'owow'),
+(15, 32, 73, 'fvgbhnj,');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `conditions`
 --
 
@@ -569,6 +594,21 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `option`
+--
+
+CREATE TABLE `option` (
+  `id` int(11) NOT NULL,
+  `id_block` int(11) NOT NULL,
+  `name` varchar(150) NOT NULL,
+  `unix` varchar(50) NOT NULL,
+  `windows` varchar(50) NOT NULL,
+  `input` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `report`
 --
 
@@ -593,7 +633,10 @@ INSERT INTO `report` (`id`, `id_script`, `id_user`, `comment`) VALUES
 (18, 33, 72, NULL),
 (19, 33, 72, NULL),
 (20, 32, 72, NULL),
-(25, 32, 72, 'uvybink,l');
+(25, 32, 72, 'uvybink,l'),
+(26, 32, 72, 'uvybink,l'),
+(27, 32, 72, 'ezgfdv'),
+(28, 32, 72, 'earzfdvçhu');
 
 -- --------------------------------------------------------
 
@@ -618,8 +661,8 @@ CREATE TABLE `script` (
 --
 
 INSERT INTO `script` (`id`, `name`, `description`, `category`, `size`, `downloads_count`, `date_crea`, `id_user`, `available`) VALUES
-(32, 'SUMASHU', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'dangerous', 6, 2, '2018-05-16 14:31:51', 70, 1),
-(33, 'bonjour', 'aurevoir', 'clean', 6, 0, '2018-05-16 14:36:56', 70, 0);
+(32, 'SUMASHU', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'dangerous', 6, 4, '2018-05-16 14:31:51', 70, 0),
+(33, 'bonjour', 'aurevoir', 'clean', 6, 1, '2018-05-16 14:36:56', 70, 1);
 
 -- --------------------------------------------------------
 
@@ -647,7 +690,8 @@ INSERT INTO `user` (`id`, `name`, `email`, `password`, `date_insc`, `admin`, `ac
 (70, 'aze', 'aze@azr.com', '$2y$10$TjKkx5n9/P.mdfPdaN.pTOkOCfwlt2ndzu0n0QzY3qIimMDRfvNS6', '2018-05-13 19:47:41', 1, 1, 1),
 (71, 'aa', 'aa@aa.aa', '$2b$05$pX54H9MyYduqRgsoLrz7RO4olZ3fdJczMyOuWEo8sIYBKptXu5TJW', '2018-07-06 10:04:25', 0, 1, 1),
 (72, 'test', 'test@test.test', '$2b$05$p.qqERj1AIylm5NHBhlcrOObg8cvdiq6186H8IyEEi.pJu3qP9oQO', '2018-07-06 10:10:26', 0, 1, 1),
-(73, 'admin', 'admin@admin.admin', '$2b$05$xUmTqkaFps.yqj2otlaUBufGuoJyiVc4/Js3tpJXpmM.20j3u0bAe', '2018-07-06 10:11:55', 1, 1, 1);
+(73, 'admin', 'admin@admin.admin', '$2b$05$xUmTqkaFps.yqj2otlaUBufGuoJyiVc4/Js3tpJXpmM.20j3u0bAe', '2018-07-06 10:11:55', 1, 1, 1),
+(74, 'l ;', 'admin@admin.lk;:', '$2b$05$n75A.s0bUjFIDxTHV9BOb.FsuVuvP9tg1JKDfUyqw7hquGHmv8htm', '2018-07-20 16:45:23', 0, 1, 1);
 
 --
 -- Index pour les tables exportées
@@ -693,6 +737,16 @@ ALTER TABLE `code_block`
   ADD KEY `id_block` (`id_block`);
 
 --
+-- Index pour la table `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_script_2` (`id_script`),
+  ADD KEY `id_user_2` (`id_user`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_script` (`id_script`);
+
+--
 -- Index pour la table `conditions`
 --
 ALTER TABLE `conditions`
@@ -703,6 +757,13 @@ ALTER TABLE `conditions`
 --
 ALTER TABLE `instruction`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `option`
+--
+ALTER TABLE `option`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_block` (`id_block`);
 
 --
 -- Index pour la table `report`
@@ -750,6 +811,11 @@ ALTER TABLE `block`
 ALTER TABLE `code_block`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
+-- AUTO_INCREMENT pour la table `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+--
 -- AUTO_INCREMENT pour la table `conditions`
 --
 ALTER TABLE `conditions`
@@ -760,10 +826,15 @@ ALTER TABLE `conditions`
 ALTER TABLE `instruction`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1252;
 --
+-- AUTO_INCREMENT pour la table `option`
+--
+ALTER TABLE `option`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT pour la table `report`
 --
 ALTER TABLE `report`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT pour la table `script`
 --
@@ -773,7 +844,7 @@ ALTER TABLE `script`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 --
 -- Contraintes pour les tables exportées
 --
@@ -797,6 +868,19 @@ ALTER TABLE `block_instruction`
 --
 ALTER TABLE `code_block`
   ADD CONSTRAINT `id_block` FOREIGN KEY (`id_block`) REFERENCES `block` (`id`);
+
+--
+-- Contraintes pour la table `comment`
+--
+ALTER TABLE `comment`
+  ADD CONSTRAINT `script_comment` FOREIGN KEY (`id_script`) REFERENCES `script` (`id`),
+  ADD CONSTRAINT `user_comment` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+
+--
+-- Contraintes pour la table `option`
+--
+ALTER TABLE `option`
+  ADD CONSTRAINT `block_options` FOREIGN KEY (`id_block`) REFERENCES `block` (`id`);
 
 --
 -- Contraintes pour la table `report`
