@@ -11,8 +11,10 @@ userRouter.use(bodyParser.json());
 
 
 userRouter.post('/login', function(req, res) {
-  const email = req.body.email;
-  const password = req.body.password;
+  const email = req.body[0].email;
+  const password = req.body[0].password;
+  console.log(email);
+  console.log(password);
   
   if(email === null || password === null) {
     res.status(400).json({ 'error': 'Invalid parameters' });
@@ -23,11 +25,12 @@ userRouter.post('/login', function(req, res) {
     if(user) {
       bcrypt.compare(password, user.password, function(err, result) {
         if(result) {
-          res.status(200).json({
+          res.status(200).json([{
             'id': user.id,
+            'name': user.name,
             'isAdmin': user.admin,
             'token': jwt.generateToken(user)
-          });
+          }]);
         } else {
           res.status(404).json({ 'error': 'Invalid identifiers' });
         }
@@ -72,10 +75,10 @@ userRouter.post('/update', jwt.checkTokenAdmin, function(req, res) {
 });
 
 userRouter.post('/register', function(req, res) {
-  const email = req.body.email;
-  const password1 = req.body.password1;
-  const password2 = req.body.password2;
-  const name = req.body.name;
+  const email = req.body[0].email;
+  const password1 = req.body[0].password1;
+  const password2 = req.body[0].password2;
+  const name = req.body[0].name;
   
   if(email === undefined || password1 === undefined || password2 === undefined || name === undefined) {
     res.status(400).json({ 'error': 'parametres invalides' });
