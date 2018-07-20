@@ -5,5 +5,6 @@ module.exports = {
   ArgumentController: require('./argument'),
   InstructionController: require('./instruction'),
   UserController: require('./user'),
-  ReportController: require('./report')
+  ReportController: require('./report'),
+  OptionController: require('./option')
 }

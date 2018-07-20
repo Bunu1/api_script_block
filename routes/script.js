@@ -115,5 +115,36 @@ scriptRouter.post('/update', jwt.checkToken, function(req, res) {
   });
 });
 
+scriptRouter.post('/addComment', jwt.checkToken, function(req, res) {
+	const id_user = req.body.id_user;
+	const id_script = req.body.id_script;
+	const comment = req.body.comment;
+	
+	if(id_user === undefined || id_script === undefined || comment === undefined) {
+		res.status(400).json();
+	}
+	
+	ScriptController.addComment(id_user, id_script, comment)
+	.then((cmt) => {
+		res.status(201).json(cmt);
+	})
+	.catch((err) => {
+		res.status(500).json({ 'error': 'Error adding the comment' });
+	})
+});
 
+scriptRouter.get('/getComments/:id_script', function(req, res) {
+	const id_script = req.params.id_script;
+	if(id_script === undefined) {
+		res.status(400).end();
+	}
+	
+	ScriptController.getComments(id_script)
+	.then((cmt) => {
+		res.status(200).json(cmt);
+	})
+	.catch((err) => {
+		res.status(500).json({ 'error': 'Error getting comments' });
+	})
+});
 module.exports = scriptRouter;

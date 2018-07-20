@@ -24,7 +24,7 @@ reportRouter.get('/getComments/:id_script', function(req, res) {
 	})
 });
 
-reportRouter.get('/reports_infos', jwt.checkToken, function(req, res) {
+reportRouter.get('/reports_infos', jwt.checkTokenAdmin, function(req, res) {
 	ReportController.countInfos()
 	.then((infos) => {
 		res.status(200).json(infos);
@@ -41,11 +41,11 @@ reportRouter.post('/add', jwt.checkToken, function(req, res) {
 	const comment = req.body.comment;
 
 	if(id_script === undefined) {
-		res.status(400).end();
+		res.status(401).end();
 		return;
 	}
 	if(id_user === undefined) {
-		res.status(400).end();
+		res.status(402).end();
 		return;
 	}
 
@@ -59,7 +59,7 @@ reportRouter.post('/add', jwt.checkToken, function(req, res) {
 	});
 });
 
-reportRouter.get('/', function(req, res) {
+reportRouter.get('/', jwt.checkTokenAdmin, function(req, res) {
 	const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
 	const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
 	ReportController.findAll(req.query.id, req.query.id_script, req.query.id_user, req.query.comment, limit, offset)

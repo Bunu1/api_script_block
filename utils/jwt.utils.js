@@ -8,7 +8,7 @@ jwtUtils.generateToken = function(user) {
     id: user.id,
     isAdmin: user.admin
   }, JWT_SIGN_SECRET, {
-    expiresIn: '1h'
+    expiresIn: '3h'
   });
 }
 

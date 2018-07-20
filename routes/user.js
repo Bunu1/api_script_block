@@ -15,10 +15,10 @@ userRouter.post('/login', function(req, res) {
   const password = req.body.password;
   
   if(email === null || password === null) {
-    res.status(400).json({ 'error': 'parametres invalides' });
+    res.status(400).json({ 'error': 'Invalid parameters' });
   }
   
-  UserController.checkUser(email)
+  UserController.checkUserEmail(email)
   .then((user) => {
     if(user) {
       bcrypt.compare(password, user.password, function(err, result) {
@@ -29,15 +29,15 @@ userRouter.post('/login', function(req, res) {
             'token': jwt.generateToken(user)
           });
         } else {
-          res.status(403).json({ 'error': 'invalid password' });
+          res.status(404).json({ 'error': 'Invalid identifiers' });
         }
       });
     } else {
-      res.status(404).json({ 'error': 'user not in DB' });
+			res.status(404).json({ 'error': 'Invalid identifiers' });
     }
   })
   .catch((err) => {
-    res.status(500).json({ 'error': 'unable to find user' });
+		res.status(404).json({ 'error': 'Invalid identifiers' });
   });
 });
 
@@ -55,15 +55,13 @@ userRouter.get('/', jwt.checkTokenAdmin, function(req, res) {
 });
 
 userRouter.post('/update', jwt.checkTokenAdmin, function(req, res) {
-  console.log("HERE1");
   console.log(req.query.id);
   if(req.query.id === undefined) {
-    console.log("HERE3");
     res.status(400).end();
     return;
   }
-  console.log("HERE2");
-  UserController.update(req.query.id, req.query.admin, req.query.active, req.query.enabled)
+
+	UserController.update(req.query.id, req.query.admin, req.query.active, req.query.enabled)
   .then((p) => {
     res.status(201).json(p);
   })
@@ -86,22 +84,35 @@ userRouter.post('/register', function(req, res) {
   if(password1 !== password2) {
     res.status(500).json({ 'error': 'passwords are different' });
   } else {
-    UserController.checkUser(email)
+    UserController.checkUserEmail(email)
     .then((user) => {
       if(!user) {
-        bcrypt.hash(password1, 5, function(err, bcryptpwd) {
-          UserController.createUser(email, bcryptpwd, name)
-          .then((newUser) => {
-            res.status(201).json({ 'id': newUser.id });
-          })
-          .catch((err) => {
-            res.status(500).json({ 'error': 'user creation failed' });
-          });
-        });
+				UserController.checkUserName(name)
+				.then((user) => {
+					if(!user) {
+						bcrypt.hash(password1, 5, function(err, bcryptpwd) {
+							UserController.createUser(email, bcryptpwd, name)
+								.then((newUser) => {
+								res.status(201).json({ 'id': newUser.id });
+							})
+							.catch((err) => {
+								res.status(500).json({ 'error': 'User creation failed' });
+							});
+						});
+					} else {
+						res.status(409).json({ 'error': 'Name already exists' });
+					}
+				})
+				.catch((err) => {
+					res.status(500).json({ 'error': 'User creation failed' });
+				});
       } else {
-        res.status(409).json({ 'error': 'User already exists' });
+        res.status(409).json({ 'error': 'Email already exists' });
       }
-    });
+    })
+		.catch((err) => {
+			res.status(500).json({ 'error': 'User creation failed' });
+		});
   }
 });
 

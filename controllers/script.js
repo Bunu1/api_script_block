@@ -4,6 +4,36 @@ const Op = ModelIndex.Sequelize.Op;
 
 const ScriptController = function() { };
 
+ScriptController.getComments = function(id_script) {
+	var options = {};
+	var where = {};
+	
+	where.id_script = {
+		[Op.eq]: id_script
+	}
+	
+	options.where = where;
+	options.include = [
+		{
+			model: ModelIndex.User,
+			attributes: ['id', 'name']
+		}
+	]
+	return ModelIndex.Comment.findAll(options);
+}
+
+ScriptController.addComment = function(id_user, id_script, comment) {
+	console.log(id_user)
+	console.log(id_script)
+	console.log(comment)
+	
+	return ModelIndex.Comment.create({
+		id_user: id_user,
+		id_script: id_script,
+		comment: comment
+	});
+}
+
 ScriptController.updateDLC = function(script, id, count) {
   return script.updateAttributes({
     downloads_count: count+1

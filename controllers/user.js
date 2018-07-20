@@ -4,12 +4,20 @@ const Op = ModelIndex.Sequelize.Op;
 
 const UserController = function() { };
 
-UserController.checkUser = function(email) {
+UserController.checkUserEmail = function(email) {
   return User.findOne({
     where: {
       email: email
     }
   })
+}
+
+UserController.checkUserName = function(name) {
+	return User.findOne({
+		where: {
+			name: name
+		}
+	})
 }
 
 UserController.createUser = function(email, password, name) {
