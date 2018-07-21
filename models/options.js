@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-	const Option = sequelize.define('Option', {
+	const Options = sequelize.define('Options', {
 		id: {
 			type: DataTypes.BIGINT,
 			primaryKey: true,
@@ -8,7 +8,13 @@ module.exports = function (sequelize, DataTypes) {
 		},
 		id_block: {
 			type: DataTypes.BIGINT,
-			allowNull: false
+			allowNull: false,
+      		foreignKey: true
+		},
+		id_argument: {
+			type: DataTypes.BIGINT,
+			allowNull: false,
+      		foreignKey: true
 		},
 		name: {
 			type: DataTypes.TEXT,
@@ -31,11 +37,12 @@ module.exports = function (sequelize, DataTypes) {
 		timestamps: false,
 		freezeTableName: true
 	});
-	Option.associate = _associate;
-	return Option;
+	Options.associate = _associate;
+	return Options;
 }
 
 // INTERNAL
 function _associate(models) {
-	models.Option.belongsTo(models.Block, { foreignKey: 'id_block', targetKey: 'id'});
+	models.Options.belongsTo(models.Block, { foreignKey: 'id_block', targetKey: 'id'});
+	models.Options.belongsTo(models.Argument, { foreignKey: 'id_argument', targetKey: 'id'});
 }
