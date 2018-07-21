@@ -8,11 +8,11 @@ const ScriptController = controllers.ScriptController;
 const scriptRouter = express.Router();
 scriptRouter.use(bodyParser.json());
 
-scriptRouter.post('/add'/*, jwt.checkToken*/, function(req, res) {
+scriptRouter.post('/add', jwt.checkToken, function(req, res) {
   const name = req.body[0].name;
   const description = req.body[0].description;
   const size = req.body[0].size;
-  const id_user = req.body[0].id_user;
+  const id_user = req.id_user;
   
   if(name === undefined) {
     res.status(400).json({ "error": "You have to set a name to the script" });
