@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Sam 21 Juillet 2018 à 08:20
+-- Généré le :  Sam 21 Juillet 2018 à 10:24
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -401,7 +401,9 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (71, 173, 1),
 (71, 174, 1),
 (23, 49, 2),
-(23, 127, 2);
+(23, 127, 2),
+(65, 1258, 1),
+(66, 1259, 1);
 
 -- --------------------------------------------------------
 
@@ -476,120 +478,123 @@ CREATE TABLE `instruction` (
   `name` varchar(255) NOT NULL,
   `syntax` text NOT NULL,
   `type` varchar(20) DEFAULT NULL,
-  `platform` varchar(50) DEFAULT NULL
+  `platform` varchar(50) DEFAULT NULL,
+  `chariot` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `instruction`
 --
 
-INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
-(1, 'Affectation', '`#1` = `#2`', 'arguments', 'unix'),
-(2, 'Exportation', 'export `#1`', 'arguments', 'unix'),
-(3, 'Lecture', 'read `#1`?`#2`', 'arguments', 'unix'),
-(4, 'Lecture', '`#1` = Read-Host "`#2`"', 'arguments', 'windows'),
-(5, 'If Start', 'if [ ', 'text-only', 'unix'),
-(6, 'If Condition', '`#blocs`', 'blocs', 'unix'),
-(7, 'If End Condition', ' ] \r\nthen ', 'text-only', 'unix'),
-(8, 'If Content', '`#blocs`', 'blocs', 'unix'),
-(9, 'Else', 'else\n:', 'text-only', 'unix'),
-(10, 'Else Content', '`#blocs`', 'blocs', 'unix'),
-(11, 'If End', 'fi', 'text-only', 'unix'),
-(12, 'If Start', 'if ', 'text-only', 'windows'),
-(13, 'If Condition', '`#blocs`', 'blocs', 'windows'),
-(14, 'If End Condition', ' (\r\n', 'text-only', 'windows'),
-(15, 'If Content', '`#blocs`\n', 'blocs', 'windows'),
-(16, 'If End', ')', 'text-only', 'windows'),
-(17, 'Else', 'else (', 'text-only', 'windows'),
-(18, 'Else Content', '`#blocs`', 'blocs', 'windows'),
-(19, 'End Else', ')', 'text-only', 'windows'),
-(20, 'While Start', 'while [ ', 'text-only', 'unix'),
-(21, 'While Condition', '`#blocs`', 'blocs', 'unix'),
-(22, 'While End Condition', ' ]\r\ndo', 'text-only', 'unix'),
-(23, 'While Content', '`#blocs`', 'blocs', 'unix'),
-(24, 'While End', 'done', 'text-only', 'unix'),
-(25, 'Affectation', 'set `#1` = `#2`', 'arguments', 'windows'),
-(26, 'Current Working Directory', 'pwd `#O`', 'arguments', 'unix'),
-(27, 'Current Working Directory', 'cd', 'arguments', 'windows'),
-(28, 'Create Directory', 'mkdir `#O` `#1`', 'arguments', 'unix'),
-(29, 'Create Directory', 'mkdir "`#1`"', 'arguments', 'windows'),
-(30, 'Copie', 'cp `#O` `#1` `#2`', 'arguments', 'unix'),
-(31, 'Copie', 'copy "`#1`" "`#2`"', 'arguments', 'windows'),
-(32, 'Déplacer', 'mv `#O` `#1` `#2`a', 'arguments', 'unix'),
-(33, 'Déplacer', 'move "`#1`" "`#2`"', 'arguments', 'windows'),
-(34, 'Renommer', 'ren "`#1`" "`#2`"', 'arguments', 'windows'),
-(35, 'Umask', 'umask `#1`', 'arguments', 'unix'),
-(36, 'Processus', 'ps `#O`', 'text-only', 'unix'),
-(37, 'Processus', 'tasklist', 'text-only', 'windows'),
-(38, 'Finir Processus', 'kill `#O` `#1`', 'arguments-number', 'unix'),
-(39, 'Finir Processus', 'pkill `#O` `#1`', 'arguments-string', 'unix'),
-(40, 'Finir Processus', 'taskkill /PID `#1` /F', 'arguments-number', 'windows'),
-(41, 'Finir Processus', 'taskkill /IM `#1` /F', 'arguments-string', 'windows'),
-(42, 'Default Variable', '`#1`=${`#2`:- `#3`}', 'arguments', 'unix'),
-(43, 'Function Start', '`#1`() {', 'arguments', 'unix'),
-(44, 'Function Content', '`#blocs`', 'blocs', 'unix'),
-(45, 'Function End', '}', 'text-only', 'unix'),
-(46, 'Function Call', '`#1` `#2`', 'arguments', 'unix'),
-(47, 'Switch Start', 'case `#1` in', 'arguments', 'unix'),
-(48, 'Case Start', '`#2`) ', 'arguments', 'unix'),
-(49, 'Switch Content', '`#blocs` ', 'blocs', 'unix'),
-(50, 'Case End', ';;', 'text-only', 'unix'),
-(51, 'Switch End', 'esac', 'text-only', 'unix'),
-(52, 'For Start', 'for `#1` in `#2` do', 'arguments', 'unix'),
-(53, 'For Content', '`#blocs` ', 'blocs', 'unix'),
-(54, 'For End', 'done', 'text-only', 'unix'),
-(55, 'Array declaration', 'declare -a `#1`=(`#2`)', 'arguments', 'unix'),
-(56, 'Array show', 'echo ${`#1`[*]}', 'arguments', 'unix'),
-(57, 'cd Command', 'cd `#1` `#2`', 'arguments', 'unix'),
-(58, 'ls Command', 'ls `#1` `#2`', 'arguments', 'unix'),
-(59, 'touch Command', 'touch `#1` `#2`', 'arguments', 'unix'),
-(60, 'rm Command', 'rm `#1` `#2`', 'arguments', 'unix'),
-(61, 'chmod Command', 'chmod `#1` `#2` `#3`', 'arguments', 'unix'),
-(62, 'cut Command', 'cut `#1` `#2`', 'arguments', 'unix'),
-(63, 'sort Command', 'sort `#1` `#2`', 'arguments', 'unix'),
-(64, 'head Command', 'head `#1` `#2`', 'arguments', 'unix'),
-(65, 'tail Command', 'tail `#1` `#2`', 'arguments', 'unix'),
-(66, 'cat Command', 'cat `#1` `#2`', 'arguments', 'unix'),
-(67, 'find Command', 'find `#1` `#2`', 'arguments', 'unix'),
-(68, 'grep Command', 'grep `#1` `#2` `#3`', 'arguments', 'unix'),
-(69, 'sed Command', 'sed `#1` `#2` `#3`', 'arguments', 'unix'),
-(70, 'Empty File Command', 'touch `#1`', 'arguments', 'unix'),
-(120, 'Default Variable', 'IF [%`#2`] == [] (SET `#1`=`#2`) else (SET `#1`=`#3`)', 'arguments', 'windows'),
-(121, 'Function Start', ':`#1`', 'arguments', 'windows'),
-(122, 'Function Content', '`#blocs`', 'blocs', 'windows'),
-(123, 'Function End', 'exit /b', 'text-only', 'windows'),
-(124, 'Function Call', 'CALL :`#1` `#2`', 'arguments', 'windows'),
-(125, 'Switch Start', 'powershell -Command "& {Switch (`#1`) {', 'arguments', 'windows'),
-(126, 'Case Start', '`#2` { ', 'arguments', 'windows'),
-(127, 'Switch Content', '`#blocs` ', 'blocs', 'windows'),
-(128, 'Case End', '}', 'text-only', 'windows'),
-(129, 'Switch End', '}}"', 'text-only', 'windows'),
-(130, 'For Start', 'for `#1` in (`#2`) do ( ', 'arguments', 'windows'),
-(131, 'For Content', '`#blocs` ', 'blocs', 'windows'),
-(132, 'For End', ')', 'text-only', 'windows'),
-(133, 'Array declaration', 'set `#1`=`#2`', 'arguments', 'windows'),
-(134, 'Array show', 'for %%a in (%`#1`%) do ( echo %%a )', 'arguments', 'windows'),
-(150, 'cd Command', 'cd `#1` `#2`', 'arguments', 'windows'),
-(151, 'dir Command', 'dir `#1` `#2`', 'arguments', 'windows'),
-(153, 'del Command', 'del `#1` `#2`', 'arguments', 'windows'),
-(154, 'cacls Command', 'CACLS `#3` `#1` `#2`', 'arguments', 'windows'),
-(159, 'type Command', 'type `#1` `#2`', 'arguments', 'windows'),
-(160, 'find Command', 'find `#1` `#2`', 'arguments', 'windows'),
-(161, 'findstr Command', 'findstr `#1` `#2` `#3`', 'arguments', 'windows'),
-(163, 'Empty File Command', 'copy /y nul `#1`', 'arguments', 'windows'),
-(164, 'Return', 'return `#1`', 'arguments', 'unix'),
-(165, 'Comparison Test', '[ `#1` `#op` `#2` ]', 'arguments', 'unix'),
-(166, 'File test', '[ `#op` `#1` ]', 'arguments', 'unix'),
-(167, 'Function test', '`#1` `#2`', 'arguments', 'unix'),
-(168, 'Code', '`#1`', 'arguments', 'unix'),
-(169, 'And', '&&', 'text-only', 'unix'),
-(170, 'And', 'AND', 'text-only', 'windows'),
-(171, 'Or', '||', 'text-only', 'unix'),
-(172, 'Or', 'OR', 'text-only', 'windows'),
-(173, 'Not', '!', 'text-only', 'unix'),
-(174, 'Not', 'NOT', 'text-only', 'windows'),
-(471, 'Case Content', '`#blocs` ', 'blocs', 'unix'),
-(1251, 'Case Content', '`#blocs` ', 'blocs', 'windows');
+INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`, `chariot`) VALUES
+(1, 'Affectation', '`#1` = `#2`', 'arguments', 'unix', 1),
+(2, 'Exportation', 'export `#1`', 'arguments', 'unix', 1),
+(3, 'Lecture', 'read `#1`?`#2`', 'arguments', 'unix', 1),
+(4, 'Lecture', '`#1` = Read-Host "`#2`"', 'arguments', 'windows', 1),
+(5, 'If Start', 'if [ ', 'text-only', 'unix', 0),
+(6, 'If Condition', '`#blocs`', 'blocs', 'unix', 0),
+(7, 'If End Condition', ' ] \nthen', 'text-only', 'unix', 1),
+(8, 'If Content', '`#blocs`', 'blocs', 'unix', 1),
+(9, 'Else', 'else\n:', 'text-only', 'unix', 1),
+(10, 'Else Content', '`#blocs`', 'blocs', 'unix', 1),
+(11, 'If End', 'fi', 'text-only', 'unix', 1),
+(12, 'If Start', 'if ', 'text-only', 'windows', 0),
+(13, 'If Condition', '`#blocs`', 'blocs', 'windows', 0),
+(14, 'If End Condition', ' (\r\n', 'text-only', 'windows', 1),
+(15, 'If Content', '`#blocs`\n', 'blocs', 'windows', 1),
+(16, 'If End', ')', 'text-only', 'windows', 0),
+(17, 'Else', ' else (', 'text-only', 'windows', 1),
+(18, 'Else Content', '`#blocs`', 'blocs', 'windows', 1),
+(19, 'End Else', ')', 'text-only', 'windows', 1),
+(20, 'While Start', 'while [ ', 'text-only', 'unix', 0),
+(21, 'While Condition', '`#blocs`', 'blocs', 'unix', 1),
+(22, 'While End Condition', ' ]\r\ndo', 'text-only', 'unix', 1),
+(23, 'While Content', '`#blocs`', 'blocs', 'unix', 1),
+(24, 'While End', 'done', 'text-only', 'unix', 1),
+(25, 'Affectation', 'set `#1` = `#2`', 'arguments', 'windows', 1),
+(26, 'Current Working Directory', 'pwd `#O`', 'arguments', 'unix', 1),
+(27, 'Current Working Directory', 'cd', 'arguments', 'windows', 1),
+(28, 'Create Directory', 'mkdir `#O` `#1`', 'arguments', 'unix', 1),
+(29, 'Create Directory', 'mkdir "`#1`"', 'arguments', 'windows', 1),
+(30, 'Copie', 'cp `#O` `#1` `#2`', 'arguments', 'unix', 1),
+(31, 'Copie', 'copy "`#1`" "`#2`"', 'arguments', 'windows', 1),
+(32, 'Déplacer', 'mv `#O` `#1` `#2`a', 'arguments', 'unix', 1),
+(33, 'Déplacer', 'move "`#1`" "`#2`"', 'arguments', 'windows', 1),
+(34, 'Renommer', 'ren "`#1`" "`#2`"', 'arguments', 'windows', 1),
+(35, 'Umask', 'umask `#1`', 'arguments', 'unix', 1),
+(36, 'Processus', 'ps `#O`', 'text-only', 'unix', 1),
+(37, 'Processus', 'tasklist', 'text-only', 'windows', 1),
+(38, 'Finir Processus', 'kill `#O` `#1`', 'arguments-number', 'unix', 1),
+(39, 'Finir Processus', 'pkill `#O` `#1`', 'arguments-string', 'unix', 1),
+(40, 'Finir Processus', 'taskkill /PID `#1` /F', 'arguments-number', 'windows', 1),
+(41, 'Finir Processus', 'taskkill /IM `#1` /F', 'arguments-string', 'windows', 1),
+(42, 'Default Variable', '`#1`=${`#2`:- `#3`}', 'arguments', 'unix', 1),
+(43, 'Function Start', '`#1`() { ', 'arguments', 'unix', 1),
+(44, 'Function Content', '`#blocs`', 'blocs', 'unix', 1),
+(45, 'Function End', '}', 'text-only', 'unix', 1),
+(46, 'Function Call', '`#1` `#2`', 'arguments', 'unix', 1),
+(47, 'Switch Start', 'case `#1` in', 'arguments', 'unix', 1),
+(48, 'Case Start', '`#2`) ', 'arguments', 'unix', 1),
+(49, 'Switch Content', '`#blocs` ', 'blocs', 'unix', 1),
+(50, 'Case End', ';;', 'text-only', 'unix', 1),
+(51, 'Switch End', 'esac', 'text-only', 'unix', 1),
+(52, 'For Start', 'for `#1` in `#2` do', 'arguments', 'unix', 1),
+(53, 'For Content', '`#blocs` ', 'blocs', 'unix', 1),
+(54, 'For End', 'done', 'text-only', 'unix', 1),
+(55, 'Array declaration', 'declare -a `#1`=(`#2`)', 'arguments', 'unix', 1),
+(56, 'Array show', 'echo ${`#1`[*]}', 'arguments', 'unix', 1),
+(57, 'cd Command', 'cd `#1` `#2`', 'arguments', 'unix', 1),
+(58, 'ls Command', 'ls `#1` `#2`', 'arguments', 'unix', 1),
+(59, 'touch Command', 'touch `#1` `#2`', 'arguments', 'unix', 1),
+(60, 'rm Command', 'rm `#1` `#2`', 'arguments', 'unix', 1),
+(61, 'chmod Command', 'chmod `#1` `#2` `#3`', 'arguments', 'unix', 1),
+(62, 'cut Command', 'cut `#1` `#2`', 'arguments', 'unix', 1),
+(63, 'sort Command', 'sort `#1` `#2`', 'arguments', 'unix', 1),
+(64, 'head Command', 'head `#1` `#2`', 'arguments', 'unix', 1),
+(65, 'tail Command', 'tail `#1` `#2`', 'arguments', 'unix', 1),
+(66, 'cat Command', 'cat `#1` `#2`', 'arguments', 'unix', 1),
+(67, 'find Command', 'find `#1` `#2`', 'arguments', 'unix', 1),
+(68, 'grep Command', 'grep `#1` `#2` `#3`', 'arguments', 'unix', 1),
+(69, 'sed Command', 'sed `#1` `#2` `#3`', 'arguments', 'unix', 1),
+(70, 'Empty File Command', 'touch `#1`', 'arguments', 'unix', 1),
+(120, 'Default Variable', 'IF [%`#2`] == [] (SET `#1`=`#2`) else (SET `#1`=`#3`)', 'arguments', 'windows', 1),
+(121, 'Function Start', ':`#1`', 'arguments', 'windows', 1),
+(122, 'Function Content', '`#blocs`', 'blocs', 'windows', 1),
+(123, 'Function End', 'exit /b', 'text-only', 'windows', 1),
+(124, 'Function Call', 'CALL :`#1` `#2`', 'arguments', 'windows', 1),
+(125, 'Switch Start', 'powershell -Command "& {Switch (`#1`) {', 'arguments', 'windows', 1),
+(126, 'Case Start', '`#2` { ', 'arguments', 'windows', 1),
+(127, 'Switch Content', '`#blocs` ', 'blocs', 'windows', 1),
+(128, 'Case End', '}', 'text-only', 'windows', 1),
+(129, 'Switch End', '}}"', 'text-only', 'windows', 1),
+(130, 'For Start', 'for `#1` in (`#2`) do ( ', 'arguments', 'windows', 1),
+(131, 'For Content', '`#blocs` ', 'blocs', 'windows', 1),
+(132, 'For End', ')', 'text-only', 'windows', 1),
+(133, 'Array declaration', 'set `#1`=`#2`', 'arguments', 'windows', 1),
+(134, 'Array show', 'for %%a in (%`#1`%) do ( echo %%a )', 'arguments', 'windows', 1),
+(150, 'cd Command', 'cd `#1` `#2`', 'arguments', 'windows', 1),
+(151, 'dir Command', 'dir `#1` `#2`', 'arguments', 'windows', 1),
+(153, 'del Command', 'del `#1` `#2`', 'arguments', 'windows', 1),
+(154, 'cacls Command', 'CACLS `#3` `#1` `#2`', 'arguments', 'windows', 1),
+(159, 'type Command', 'type `#1` `#2`', 'arguments', 'windows', 1),
+(160, 'find Command', 'find `#1` `#2`', 'arguments', 'windows', 1),
+(161, 'findstr Command', 'findstr `#1` `#2` `#3`', 'arguments', 'windows', 1),
+(163, 'Empty File Command', 'copy /y nul `#1`', 'arguments', 'windows', 1),
+(164, 'Return', 'return `#1`', 'arguments', 'unix', 1),
+(165, 'Comparison Test', ' `#1` `#op` `#2` ', 'arguments', 'unix', 0),
+(166, 'File test', ' `#op` `#1` ', 'arguments', 'unix', 0),
+(167, 'Function test', '`#1` `#2`', 'arguments', 'unix', 0),
+(168, 'Code', '`#1`', 'arguments', 'unix', 1),
+(169, 'And', ' && ', 'text-only', 'unix', 0),
+(170, 'And', ' AND ', 'text-only', 'windows', 0),
+(171, 'Or', ' || ', 'text-only', 'unix', 0),
+(172, 'Or', ' OR ', 'text-only', 'windows', 0),
+(173, 'Not', '! ', 'text-only', 'unix', 0),
+(174, 'Not', ' NOT ', 'text-only', 'windows', 0),
+(471, 'Case Content', '`#blocs` ', 'blocs', 'unix', 1),
+(1251, 'Case Content', '`#blocs` ', 'blocs', 'windows', 1),
+(1258, 'Comparison Test', ' `#1` `#op` `#2` ', 'arguments', 'windows', 0),
+(1259, 'File Test', ' `#op` `#1` ', 'arguments', 'windows', 0);
 
 -- --------------------------------------------------------
 
@@ -725,7 +730,10 @@ CREATE TABLE `script` (
 
 INSERT INTO `script` (`id`, `name`, `description`, `category`, `size`, `downloads_count`, `date_crea`, `id_user`, `available`) VALUES
 (32, 'SUMASHU', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'dangerous', 6, 4, '2018-05-16 14:31:51', 70, 0),
-(33, 'bonjour', 'aurevoir', 'clean', 6, 1, '2018-05-16 14:36:56', 70, 1);
+(33, 'bonjour', 'aurevoir', 'clean', 6, 1, '2018-05-16 14:36:56', 70, 1),
+(34, 'name', 'desc', 'clean', 10, 0, '2018-07-21 08:58:13', 73, 1),
+(35, 'name', 'desc', 'clean', 10, 0, '2018-07-21 08:59:55', 73, 1),
+(36, 'yohann', 'yohann', 'clean', 0, 0, '2018-07-21 09:05:28', 73, 1);
 
 -- --------------------------------------------------------
 
@@ -888,7 +896,7 @@ ALTER TABLE `conditions`
 -- AUTO_INCREMENT pour la table `instruction`
 --
 ALTER TABLE `instruction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1252;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1260;
 --
 -- AUTO_INCREMENT pour la table `options`
 --
@@ -903,7 +911,7 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT pour la table `script`
 --
 ALTER TABLE `script`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
