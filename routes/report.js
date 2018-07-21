@@ -37,7 +37,7 @@ reportRouter.get('/reports_infos', jwt.checkTokenAdmin, function(req, res) {
 
 reportRouter.post('/add', jwt.checkToken, function(req, res) {
 	const id_script = req.body.id_script;
-	const id_user = req.body.id_user;
+	const id_user = req.id_user;
 	const comment = req.body.comment;
 
 	if(id_script === undefined) {
@@ -92,7 +92,7 @@ reportRouter.delete('/remove/:id', jwt.checkTokenAdmin, function(req, res) {
 reportRouter.put('/update', jwt.checkTokenAdmin, function(req, res) {
 	const id = req.body.id;
 	const id_script = req.body.id_script;
-	const id_user = req.body.id_user;
+	const id_user = req.id_user;
 	const comment = req.body.comment;
 
 	if(id === undefined) {

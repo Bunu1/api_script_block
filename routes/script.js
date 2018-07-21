@@ -10,12 +10,12 @@ scriptRouter.use(bodyParser.json());
 
 scriptRouter.post('/add', jwt.checkToken, function(req, res) {
   const name = req.body.name;
-  const description = req.body.description;
+  let description = req.body.description;
   const size = req.body.size;
-  const id_user = req.body.id_user;
-  
+  const id_user = req.id_user;
+	
   if(name === undefined) {
-    res.status(400).end();
+    res.status(400).json({ "error": "You have to set a name to the script" });
     return;
   }
   if(description === undefined) {
@@ -26,7 +26,7 @@ scriptRouter.post('/add', jwt.checkToken, function(req, res) {
     return;
   }
   if(id_user === undefined) {
-    res.status(400).end();
+    res.status(400).json({ "error": "You have to be connected to send a script" });
     return;
   }
   
@@ -36,7 +36,7 @@ scriptRouter.post('/add', jwt.checkToken, function(req, res) {
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).end();
+    res.status(500).json({ "error": "Can't upload the script"});
   });
 });
 
@@ -54,7 +54,7 @@ scriptRouter.get('/', function(req, res) {
   });
 });
 
-scriptRouter.delete('/remove/:id', jwt.checkTokenAdmin, function(req, res) {
+scriptRouter.delete('/remove/:id', jwt.checkToken, function(req, res) {
   const id = parseInt(req.params.id);
   
   if(id === undefined) {
@@ -116,7 +116,7 @@ scriptRouter.post('/update', jwt.checkToken, function(req, res) {
 });
 
 scriptRouter.post('/addComment', jwt.checkToken, function(req, res) {
-	const id_user = req.body.id_user;
+	const id_user = req.id_user;
 	const id_script = req.body.id_script;
 	const comment = req.body.comment;
 	

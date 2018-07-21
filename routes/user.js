@@ -13,8 +13,6 @@ userRouter.use(bodyParser.json());
 userRouter.post('/login', function(req, res) {
   const email = req.body[0].email;
   const password = req.body[0].password;
-  console.log(email);
-  console.log(password);
   
   if(email === null || password === null) {
     res.status(400).json({ 'error': 'Invalid parameters' });
@@ -52,13 +50,11 @@ userRouter.get('/', jwt.checkTokenAdmin, function(req, res) {
     res.json(scripts);
   })
   .catch((err) => {
-    console.error(err);
     res.status(500).end();
   });
 });
 
 userRouter.post('/update', jwt.checkTokenAdmin, function(req, res) {
-  console.log(req.query.id);
   if(req.query.id === undefined) {
     res.status(400).end();
     return;
@@ -69,7 +65,6 @@ userRouter.post('/update', jwt.checkTokenAdmin, function(req, res) {
     res.status(201).json(p);
   })
   .catch((err) => {
-    console.error(err);
     res.status(500).end();
   });
 });
