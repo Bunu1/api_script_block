@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Sam 21 Juillet 2018 à 08:00
+-- Généré le :  Sam 21 Juillet 2018 à 08:20
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -629,7 +629,7 @@ INSERT INTO `options` (`id`, `id_argument`, `name`, `unix`, `windows`, `input`, 
 (15, 11, 'silent kill(unix)', '-p', NULL, 1, 14),
 (16, 11, 'parent process(unix)', '-p', NULL, 1, 15),
 (17, 11, 'exact pattern(unix)', '-f', NULL, 1, 15),
-(18, 11, 'real user id', '-u', NULL, 1, 15),
+(18, 11, 'real user id(unix)', '-u', NULL, 1, 15),
 (19, 50, 'cd to script location(windows)', NULL, '/d', 0, 50),
 (20, 50, 'change directory and drive(windows)', NULL, '/D', 0, 50),
 (21, 50, 'force symbolic(unix)', '-L', NULL, 0, 50),
@@ -648,26 +648,26 @@ INSERT INTO `options` (`id`, `id_argument`, `name`, `unix`, `windows`, `input`, 
 (34, 58, 'read', 'r', '/G R', 0, 54),
 (35, 58, 'write', 'w', '/G W', 0, 54),
 (36, 58, 'execution', 'x', '/G F', 0, 54),
-(37, 61, 'delimitor', '-d', NULL, 1, 55),
-(38, 61, 'fields', '-f', NULL, 1, 55),
-(39, 63, 'case unsensitive', '-f', NULL, 0, 56),
-(40, 63, 'reverse', '-r', NULL, 0, 56),
-(41, 65, 'lines number', '-n', NULL, 1, 57),
-(42, 65, 'quiet', '-q', NULL, 0, 57),
-(43, 65, 'verbose', '-v', NULL, 0, 57),
-(44, 67, 'lines number', '-n', NULL, 0, 58),
-(45, 67, 'quiet', '-q', NULL, 0, 58),
-(46, 67, 'verbose', '-v', NULL, 0, 58),
-(47, 69, 'show line number', '-n', NULL, 0, 59),
-(48, 71, 'follow symbolic links', '-follow', NULL, 0, 60),
-(49, 71, 'don\'t follow mounted', '-mount', NULL, 0, 60),
-(50, 71, 'show line numbers', NULL, '/N', 0, 60),
-(51, 71, 'reverse search', NULL, '/V', 0, 60),
+(37, 61, 'delimitor(unix)', '-d', NULL, 1, 55),
+(38, 61, 'fields(unix)', '-f', NULL, 1, 55),
+(39, 63, 'case unsensitive(unix)', '-f', NULL, 0, 56),
+(40, 63, 'reverse(unix)', '-r', NULL, 0, 56),
+(41, 65, 'lines number(unix)', '-n', NULL, 1, 57),
+(42, 65, 'quiet(unix)', '-q', NULL, 0, 57),
+(43, 65, 'verbose(unix)', '-v', NULL, 0, 57),
+(44, 67, 'lines number(unix)', '-n', NULL, 0, 58),
+(45, 67, 'quiet(unix)', '-q', NULL, 0, 58),
+(46, 67, 'verbose(unix)', '-v', NULL, 0, 58),
+(47, 69, 'show line number(unix)', '-n', NULL, 0, 59),
+(48, 71, 'follow symbolic links(unix)', '-follow', NULL, 0, 60),
+(49, 71, 'don\'t follow mounted(unix)', '-mount', NULL, 0, 60),
+(50, 71, 'show line numbers(windows)', NULL, '/N', 0, 60),
+(51, 71, 'reverse search(windows)', NULL, '/V', 0, 60),
 (52, 73, 'regex', '-G', '/r', 0, 61),
 (53, 73, 'reverse', '-v', '/v', 0, 61),
 (54, 73, 'show offset', '-b', '/o', 0, 61),
-(55, 76, 'add script', '-e', NULL, 1, 62),
-(56, 76, 'quiet', '-n', NULL, 0, 62);
+(55, 76, 'add script(unix)', '-e', NULL, 1, 62),
+(56, 76, 'quiet(unix)', '-n', NULL, 0, 62);
 
 -- --------------------------------------------------------
 
