@@ -238,13 +238,15 @@ function loop_script(blocks, type, blockinfo){
 			  			base = base.replace("`"+k+"`", block['arguments'][k]);
 					}
 					finalstring += base;
-			  		finalstring += '\n';
+					if(instruction['chariot'] == 1)finalstring += '\n';
+					if(instruction['chariot'] == 0)finalstring += ' ';
 			  	}
 
 			  	if(instruction['type'].indexOf('text-only') != -1){
 			  		var base = instruction['syntax'];
 					finalstring += base;
-			  		finalstring += '\n';
+					if(instruction['chariot'] == 1)finalstring += '\n';
+					if(instruction['chariot'] == 0)finalstring += ' ';
 			  	}
 
 			  	if(instruction['type'].indexOf('blocs') != -1){

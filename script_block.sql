@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Sam 21 Juillet 2018 à 10:28
+-- Généré le :  Sam 21 Juillet 2018 à 14:44
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -96,7 +96,7 @@ INSERT INTO `argument` (`id`, `name`, `keyValue`, `description`) VALUES
 (82, 'Second  Operand', '`#2`', 'Something comparable'),
 (83, 'Operator', '`#op`', 'Operator for comparison'),
 (84, 'Filename', '`#1`', 'Name of the file'),
-(85, 'Code', '`#1`', 'The code you write in');
+(85, 'Code', '`#custom`', 'The code you write in');
 
 -- --------------------------------------------------------
 
@@ -342,7 +342,6 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (231, 48, 1),
 (231, 49, 2),
 (231, 50, 3),
-(23, 51, 3),
 (24, 52, 1),
 (24, 53, 2),
 (24, 54, 3),
@@ -371,7 +370,6 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (231, 126, 1),
 (231, 127, 2),
 (231, 128, 3),
-(23, 129, 3),
 (24, 130, 1),
 (24, 131, 2),
 (24, 132, 3),
@@ -400,10 +398,16 @@ INSERT INTO `block_instruction` (`id_block`, `id_instruction`, `pos`) VALUES
 (70, 172, 1),
 (71, 173, 1),
 (71, 174, 1),
-(23, 49, 2),
-(23, 127, 2),
 (65, 1258, 1),
-(66, 1259, 1);
+(66, 1259, 1),
+(68, 1260, 1),
+(23, 51, 3),
+(23, 129, 3),
+(6, 20, 1),
+(6, 21, 2),
+(6, 22, 3),
+(6, 23, 4),
+(6, 24, 5);
 
 -- --------------------------------------------------------
 
@@ -487,7 +491,7 @@ CREATE TABLE `instruction` (
 --
 
 INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`, `chariot`) VALUES
-(1, 'Affectation', '`#1` = `#2`', 'arguments', 'unix', 1),
+(1, 'Affectation', '`#1`=`#2`', 'arguments', 'unix', 1),
 (2, 'Exportation', 'export `#1`', 'arguments', 'unix', 1),
 (3, 'Lecture', 'read `#1`?`#2`', 'arguments', 'unix', 1),
 (4, 'Lecture', '`#1` = Read-Host "`#2`"', 'arguments', 'windows', 1),
@@ -594,7 +598,8 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`, `chariot`
 (471, 'Case Content', '`#blocs` ', 'blocs', 'unix', 1),
 (1251, 'Case Content', '`#blocs` ', 'blocs', 'windows', 1),
 (1258, 'Comparison Test', ' `#1` `#op` `#2` ', 'arguments', 'windows', 0),
-(1259, 'File Test', ' `#op` `#1` ', 'arguments', 'windows', 0);
+(1259, 'File Test', ' `#op` `#1` ', 'arguments', 'windows', 0),
+(1260, 'Code', '`#custom`', 'arguments', 'windows', 1);
 
 -- --------------------------------------------------------
 
@@ -733,7 +738,9 @@ INSERT INTO `script` (`id`, `name`, `description`, `category`, `size`, `download
 (33, 'bonjour', 'aurevoir', 'clean', 6, 1, '2018-05-16 14:36:56', 70, 1),
 (34, 'name', 'desc', 'clean', 10, 0, '2018-07-21 08:58:13', 73, 1),
 (35, 'name', 'desc', 'clean', 10, 0, '2018-07-21 08:59:55', 73, 1),
-(36, 'yohann', 'yohann', 'clean', 0, 0, '2018-07-21 09:05:28', 73, 1);
+(36, 'yohann', 'yohann', 'clean', 0, 0, '2018-07-21 09:05:28', 73, 1),
+(37, 'testotest', 'testotest', 'clean', 0, 0, '2018-07-21 10:35:05', 73, 1),
+(38, 'sseees', 'sees', 'clean', 0, 0, '2018-07-21 14:17:00', 73, 1);
 
 -- --------------------------------------------------------
 
@@ -896,7 +903,7 @@ ALTER TABLE `conditions`
 -- AUTO_INCREMENT pour la table `instruction`
 --
 ALTER TABLE `instruction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1260;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1261;
 --
 -- AUTO_INCREMENT pour la table `options`
 --
@@ -911,7 +918,7 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT pour la table `script`
 --
 ALTER TABLE `script`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
