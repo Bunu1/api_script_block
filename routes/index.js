@@ -7,8 +7,8 @@ RouteManager.attach = function(app) {
   app.use('/argument', require('./argument')),
   app.use('/instruction', require('./instruction')),
   app.use('/user', require('./user')),
-	app.use('/report', require('./report')),
-	app.use('/options', require('./options'))
+  app.use('/report', require('./report'))
+  app.use('/options', require('./options'))
 };
 
 module.exports = RouteManager;

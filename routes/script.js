@@ -8,11 +8,11 @@ const ScriptController = controllers.ScriptController;
 const scriptRouter = express.Router();
 scriptRouter.use(bodyParser.json());
 
-scriptRouter.post('/add', jwt.checkToken, function(req, res) {
-  const name = req.body.name;
-  const description = req.body.description;
-  const size = req.body.size;
-  const id_user = req.body.id_user;
+scriptRouter.post('/add'/*, jwt.checkToken*/, function(req, res) {
+  const name = req.body[0].name;
+  const description = req.body[0].description;
+  const size = req.body[0].size;
+  const id_user = req.body[0].id_user;
   
   if(name === undefined) {
     res.status(400).end();
@@ -32,7 +32,7 @@ scriptRouter.post('/add', jwt.checkToken, function(req, res) {
   
   ScriptController.add(name, description, size, id_user)
   .then((p) => {
-    res.status(201).json(p);
+    res.status(201).json([p]);
   })
   .catch((err) => {
     console.error(err);

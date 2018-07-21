@@ -37,8 +37,7 @@ optionsRouter.get('/:id_block', function(req, res) {
 	});
 })
 
-//optionsRouter.post('/add', jwt.checkTokenAdmin, function(req, res) {
-optionsRouter.post('/add', function(req, res) {
+optionsRouter.post('/add', jwt.checkTokenAdmin, function(req, res) {
   const id_block = req.body.id_block;
   const id_argument = req.body.id_argument;
   const name = req.body.name;
@@ -65,8 +64,7 @@ optionsRouter.post('/add', function(req, res) {
   });
 });
 
-//optionsRouter.delete('/remove/:id', jwt.checkTokenAdmin, function(req, res) {
-optionsRouter.delete('/remove/:id', function(req, res) {
+optionsRouter.delete('/remove/:id', jwt.checkTokenAdmin, function(req, res) {
   const id = parseInt(req.params.id);
   
   if(id === undefined) {
@@ -83,8 +81,7 @@ optionsRouter.delete('/remove/:id', function(req, res) {
   });
 })
 
-//optionsRouter.post('/update', jwt.checkTokenAdmin, function(req, res) {
-optionsRouter.post('/update', function(req, res) {
+optionsRouter.post('/update', jwt.checkTokenAdmin, function(req, res) {
   const id = req.body.id;
   const id_block = req.body.id_block;
   const id_argument = req.body.id_argument;
