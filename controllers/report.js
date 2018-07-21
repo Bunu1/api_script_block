@@ -30,6 +30,10 @@ ReportController.getComments = function(id_script) {
 	return Report.findAll(options);
 }
 
+ReportController.countReports = function(id_script) {
+	return Report.count({ where: {'id_script': { [Op.eq]: id_script}} });
+}
+
 ReportController.countInfos = function() {
 	return Report.findAll({
 		attributes: [
@@ -41,7 +45,7 @@ ReportController.countInfos = function() {
 		include: [ 
 			{
 				model: ModelIndex.Script,
-				attributes: ['name'],
+				attributes: ['name', 'available'],
 				include: [
 					{
 						model: ModelIndex.User,

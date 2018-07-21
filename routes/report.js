@@ -8,6 +8,17 @@ const ReportController = controllers.ReportController;
 const reportRouter = express.Router();
 reportRouter.use(bodyParser.json());
 
+reportRouter.get("/countReports/:id_script", function(req, res) {
+	const id_script = req.params.id_script;
+	ReportController.countReports(id_script)
+	.then((cnt) => {
+		res.status(200).json(cnt);
+	})
+	.catch((err) => {
+		res.status(500).json(err);
+	})
+});
+
 reportRouter.get('/getComments/:id_script', function(req, res) {
 	const id_script = req.params.id_script;
 	if(id_script === undefined) {
