@@ -11,8 +11,8 @@ articleRouter.use(bodyParser.json());
 articleRouter.post('/add', jwt.checkTokenAdmin, function(req, res) {
   const subject = req.body.subject;
   const content = req.body.content;
-  const id_user = req.body.id_user;
-  
+  const id_user = req.id_user;
+	
   if(subject === undefined) {
     res.status(400).end();
     return;
@@ -31,7 +31,7 @@ articleRouter.post('/add', jwt.checkTokenAdmin, function(req, res) {
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).end();
+    res.status(500).end({ "error": "Can't add the article" });
   });
 });
 

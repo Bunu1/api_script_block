@@ -11,7 +11,7 @@ argumentRouter.use(bodyParser.json());
 argumentRouter.post('/add', jwt.checkTokenAdmin, function(req, res) {
   const subject = req.body.subject;
   const content = req.body.content;
-  const id_user = req.body.id_user;
+  const id_user = req.id_user;
   
   if(subject === undefined) {
     res.status(400).end();

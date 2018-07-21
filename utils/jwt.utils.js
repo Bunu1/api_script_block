@@ -18,6 +18,7 @@ jwtUtils.checkToken = function(request, response, next) {
       return response.json({ 'error': 'Failed to authenticate token' });
     } else {
       request.decoded = decoded;
+			request.id_user = decoded.id;
       next();
     }
   })
@@ -32,6 +33,7 @@ jwtUtils.checkTokenAdmin = function(request, response, next) {
 			} else {
 				if(decoded.isAdmin === 1){
 					request.decoded = decoded;
+					request.id_user = decoded.id;
 					next();
 				} else {
 					return response.json({ 'error': 'User not admin' });
