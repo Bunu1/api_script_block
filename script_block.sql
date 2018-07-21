@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 20 Juillet 2018 à 17:35
+-- Généré le :  Sam 21 Juillet 2018 à 08:00
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -544,7 +544,7 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
 (58, 'ls Command', 'ls `#1` `#2`', 'arguments', 'unix'),
 (59, 'touch Command', 'touch `#1` `#2`', 'arguments', 'unix'),
 (60, 'rm Command', 'rm `#1` `#2`', 'arguments', 'unix'),
-(61, 'rm Command', 'chmod `#1` `#2` `#3`', 'arguments', 'unix'),
+(61, 'chmod Command', 'chmod `#1` `#2` `#3`', 'arguments', 'unix'),
 (62, 'cut Command', 'cut `#1` `#2`', 'arguments', 'unix'),
 (63, 'sort Command', 'sort `#1` `#2`', 'arguments', 'unix'),
 (64, 'head Command', 'head `#1` `#2`', 'arguments', 'unix'),
@@ -594,17 +594,80 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `option`
+-- Structure de la table `options`
 --
 
-CREATE TABLE `option` (
+CREATE TABLE `options` (
   `id` int(11) NOT NULL,
-  `id_block` int(11) NOT NULL,
-  `name` varchar(150) NOT NULL,
-  `unix` varchar(50) NOT NULL,
-  `windows` varchar(50) NOT NULL,
-  `input` int(11) NOT NULL
+  `id_argument` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `unix` varchar(255) DEFAULT NULL,
+  `windows` varchar(255) DEFAULT NULL,
+  `input` int(11) NOT NULL,
+  `id_block` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `options`
+--
+
+INSERT INTO `options` (`id`, `id_argument`, `name`, `unix`, `windows`, `input`, `id_block`) VALUES
+(1, 11, 'parent mode(unix)', '-p', NULL, 1, 8),
+(2, 11, 'specify mode(unix)', '-m', NULL, 0, 8),
+(3, 11, 'delete target(unix)', '-f', NULL, 0, 9),
+(4, 11, 'keep rights(unix)', '-p', NULL, 0, 9),
+(5, 11, 'recursive copy(unix)', '-r', NULL, 0, 9),
+(6, 11, 'interactive copy(unix)', '-i', NULL, 0, 9),
+(7, 11, 'move with backup(unix)', '-b', NULL, 0, 10),
+(8, 11, 'force move(unix)', '-f', NULL, 0, 10),
+(9, 11, 'interactive move(unix)', '-i', NULL, 0, 10),
+(10, 11, 'long display(unix)', '-l', NULL, 0, 13),
+(11, 11, 'wide display(unix)', '-w', NULL, 0, 13),
+(12, 11, 'user display(unix)', '-u', NULL, 0, 13),
+(13, 11, 'specify signal(unix)', '-s', NULL, 1, 14),
+(14, 11, 'signal names(unix)', '-l', NULL, 1, 14),
+(15, 11, 'silent kill(unix)', '-p', NULL, 1, 14),
+(16, 11, 'parent process(unix)', '-p', NULL, 1, 15),
+(17, 11, 'exact pattern(unix)', '-f', NULL, 1, 15),
+(18, 11, 'real user id', '-u', NULL, 1, 15),
+(19, 50, 'cd to script location(windows)', NULL, '/d', 0, 50),
+(20, 50, 'change directory and drive(windows)', NULL, '/D', 0, 50),
+(21, 50, 'force symbolic(unix)', '-L', NULL, 0, 50),
+(22, 50, 'use physical directory(unix)', '-P', NULL, 0, 50),
+(23, 52, 'all files(unix)', '-a', NULL, 0, 51),
+(24, 52, 'each line(unix)', '-i', NULL, 0, 51),
+(25, 52, 'more info(unix)', '-l', NULL, 0, 51),
+(26, 52, 'display pause(windows)', NULL, '/P', 0, 51),
+(27, 52, 'dense display(windows)', NULL, '/W', 0, 51),
+(28, 52, 'display sub-folders(windows)', NULL, '/S', 0, 51),
+(29, 54, 'specify date(unix)', '-t', NULL, 1, 52),
+(30, 54, 'change modification date(unix)', '-m', NULL, 0, 52),
+(31, 54, 'forbid unexisting files(unix)', '-c', NULL, 0, 52),
+(32, 56, 'recursive', '-R', '/S', 0, 53),
+(33, 56, 'interactive', '-i', '/P', 0, 53),
+(34, 58, 'read', 'r', '/G R', 0, 54),
+(35, 58, 'write', 'w', '/G W', 0, 54),
+(36, 58, 'execution', 'x', '/G F', 0, 54),
+(37, 61, 'delimitor', '-d', NULL, 1, 55),
+(38, 61, 'fields', '-f', NULL, 1, 55),
+(39, 63, 'case unsensitive', '-f', NULL, 0, 56),
+(40, 63, 'reverse', '-r', NULL, 0, 56),
+(41, 65, 'lines number', '-n', NULL, 1, 57),
+(42, 65, 'quiet', '-q', NULL, 0, 57),
+(43, 65, 'verbose', '-v', NULL, 0, 57),
+(44, 67, 'lines number', '-n', NULL, 0, 58),
+(45, 67, 'quiet', '-q', NULL, 0, 58),
+(46, 67, 'verbose', '-v', NULL, 0, 58),
+(47, 69, 'show line number', '-n', NULL, 0, 59),
+(48, 71, 'follow symbolic links', '-follow', NULL, 0, 60),
+(49, 71, 'don\'t follow mounted', '-mount', NULL, 0, 60),
+(50, 71, 'show line numbers', NULL, '/N', 0, 60),
+(51, 71, 'reverse search', NULL, '/V', 0, 60),
+(52, 73, 'regex', '-G', '/r', 0, 61),
+(53, 73, 'reverse', '-v', '/v', 0, 61),
+(54, 73, 'show offset', '-b', '/o', 0, 61),
+(55, 76, 'add script', '-e', NULL, 1, 62),
+(56, 76, 'quiet', '-n', NULL, 0, 62);
 
 -- --------------------------------------------------------
 
@@ -759,10 +822,11 @@ ALTER TABLE `instruction`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `option`
+-- Index pour la table `options`
 --
-ALTER TABLE `option`
+ALTER TABLE `options`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `id_argument` (`id_argument`),
   ADD KEY `id_block` (`id_block`);
 
 --
@@ -826,10 +890,10 @@ ALTER TABLE `conditions`
 ALTER TABLE `instruction`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1252;
 --
--- AUTO_INCREMENT pour la table `option`
+-- AUTO_INCREMENT pour la table `options`
 --
-ALTER TABLE `option`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `options`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 --
 -- AUTO_INCREMENT pour la table `report`
 --
@@ -877,9 +941,10 @@ ALTER TABLE `comment`
   ADD CONSTRAINT `user_comment` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
 --
--- Contraintes pour la table `option`
+-- Contraintes pour la table `options`
 --
-ALTER TABLE `option`
+ALTER TABLE `options`
+  ADD CONSTRAINT `argument_options` FOREIGN KEY (`id_argument`) REFERENCES `argument` (`id`),
   ADD CONSTRAINT `block_options` FOREIGN KEY (`id_block`) REFERENCES `block` (`id`);
 
 --
