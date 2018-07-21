@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Sam 21 Juillet 2018 à 14:44
+-- Généré le :  Sam 21 Juillet 2018 à 23:30
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -71,7 +71,7 @@ INSERT INTO `argument` (`id`, `name`, `keyValue`, `description`) VALUES
 (57, 'rm Argument', '`#2`', 'A file or directory'),
 (58, 'chmod Options', '`#1`', 'Options of chmod command, try \'man chmod\' to see them all'),
 (59, 'chmod Mode', '`#2`', 'A mode representing the rights on the file or directory'),
-(60, 'chmod Argument', '`#2`', 'A file or directory'),
+(60, 'chmod Argument', '`#3`', 'A file or directory'),
 (61, 'cut Options', '`#1`', 'Options of cut command, try \'man cut\' to see them all'),
 (62, 'cut Argument', '`#2`', 'A file'),
 (63, 'sort Options', '`#1`', 'Options of sort command, try \'man sort\' to see them all'),
@@ -86,10 +86,10 @@ INSERT INTO `argument` (`id`, `name`, `keyValue`, `description`) VALUES
 (72, 'find Argument', '`#2`', 'A file'),
 (73, 'grep Options', '`#1`', 'Options of grep command, try \'man grep\' to see them all'),
 (74, 'grep Pattern', '`#2`', 'A pattern searched on eached lines of the file(s)'),
-(75, 'grep File', '`#2`', 'A file'),
+(75, 'grep File', '`#3`', 'A file'),
 (76, 'sed Options', '`#1`', 'Options of sed command, try \'man sed\' to see them all'),
 (77, 'sed Pattern', '`#2`', 'A pattern searched on eached lines of the file(s)'),
-(78, 'sed File', '`#2`', 'A file'),
+(78, 'sed File', '`#3`', 'A file'),
 (79, 'touch Options', '`#1`', 'Name of the empty file'),
 (80, 'Return value', '`#1`', 'Returned value'),
 (81, 'First Operand', '`#1`', 'Something comparable'),
@@ -139,20 +139,19 @@ CREATE TABLE `block` (
 --
 
 INSERT INTO `block` (`id`, `name`, `description`, `type`) VALUES
-(1, 'AFFECTATION', 'Permet d\'affecter une valeur à une variable', 'SIMPLE'),
-(2, 'EXPORTATION', 'Permet l\'exportation d\'une variable', 'SIMPLE'),
-(3, 'LECTURE', 'Permet la saisie de données formatées par un utilisateur', 'SIMPLE'),
-(4, 'IF', 'Bloc de condition', 'CONTENT-COND|TRUE|FALSE'),
-(5, 'ELSE', 'Bloc dans le cas ou  la condition n\'est pas valide (se place seulement après un bloc if)', 'SIMPLE'),
-(6, 'WHILE', 'Permet de boucler tant que la condition n\'est pas validée', 'CONTENT-COND|TRUE'),
-(7, 'CURRENT WORKING DIRECTORY', 'Permet d\'afficher le répertoire de travail actuel', 'SIMPLE'),
-(8, 'CREATE DIRECTORY', 'Permet à l\'utilisateur de créer un répertoire (crée les parents si nécessaire) ', 'SIMPLE'),
-(9, 'COPIE', 'Permet de copier un fichier', 'SIMPLE'),
-(10, 'DÉPLACER', 'Permet de déplacer (ou renommer (unix)) ou un fichier en fonction de l\'adresse de destination', 'SIMPLE'),
-(11, 'RENOMMER (WINDOWS)', 'Permet de renommer un fichier (windows)', 'SIMPLE'),
-(12, 'DROITS FICHIER (UNIX)', 'Permet de définir les droits sur un fichier.\nLe pre', 'SIMPLE'),
-(13, 'PROCESSUS ', 'Permet d\'afficher les processus', 'SIMPLE'),
-(14, 'FINIR PROCESSUS', 'Permet de finir un processus', 'SIMPLE'),
+(1, 'ASSIGN', 'Assign a variable\'s value', 'SIMPLE'),
+(2, 'EXPORT', 'Export a variable', 'SIMPLE'),
+(3, 'READ', 'Read an user\'s input', 'SIMPLE'),
+(4, 'IF', 'Test a set of condition', 'CONTENT-COND|TRUE|FALSE'),
+(6, 'WHILE', 'Loop with undefined end', 'CONTENT-COND|TRUE'),
+(7, 'CURRENT WORKING DIRECTORY', 'Shows current working directory', 'SIMPLE'),
+(8, 'CREATE DIRECTORY', 'Create a directory', 'SIMPLE'),
+(9, 'COPY SOMETHING', 'Copy a file or a directory from one place to another', 'SIMPLE'),
+(10, 'MOVE SOMETHING', 'Move a file in the architecture', 'SIMPLE'),
+(11, 'RENAME (WINDOWS)', 'Rename a file', 'SIMPLE'),
+(12, 'FILE\'S MASK (UNIX)', 'Set the default rights to be granted to new files and directories', 'SIMPLE'),
+(13, 'SHOW PROCESS', 'Show working processes within the active session', 'SIMPLE'),
+(14, 'KILL PROCESSUS', 'Kill a working process', 'SIMPLE'),
 (15, 'TERMINATE PROCESS NAME', 'Terminate a process with its name', 'SIMPLE'),
 (20, 'DEFAULT VARIABLE', 'Assigning a variable\'s value or a default value for a new variable', 'SIMPLE'),
 (21, 'CREATE FUNCTION', 'Create a function within the program. Make sure to give it a unique name', 'CONTENT'),
@@ -221,11 +220,9 @@ INSERT INTO `block_argument` (`id_block`, `id_argument`, `pre_option`) VALUES
 (9, 11, NULL),
 (10, 11, NULL),
 (11, 11, NULL),
-(13, 11, NULL),
 (9, 11, NULL),
 (10, 11, NULL),
 (11, 11, NULL),
-(13, 11, NULL),
 (14, 11, NULL),
 (20, 20, NULL),
 (20, 21, NULL),
@@ -280,7 +277,8 @@ INSERT INTO `block_argument` (`id_block`, `id_argument`, `pre_option`) VALUES
 (68, 85, NULL),
 (231, 27, NULL),
 (15, 10, NULL),
-(15, 11, NULL);
+(15, 11, NULL),
+(13, 11, NULL);
 
 -- --------------------------------------------------------
 
@@ -526,7 +524,7 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`, `chariot`
 (33, 'Déplacer', 'move "`#1`" "`#2`"', 'arguments', 'windows', 1),
 (34, 'Renommer', 'ren "`#1`" "`#2`"', 'arguments', 'windows', 1),
 (35, 'Umask', 'umask `#1`', 'arguments', 'unix', 1),
-(36, 'Processus', 'ps `#O`', 'text-only', 'unix', 1),
+(36, 'Processus', 'ps `#O`', 'arguments', 'unix', 1),
 (37, 'Processus', 'tasklist', 'text-only', 'windows', 1),
 (38, 'Finir Processus', 'kill `#O` `#1`', 'arguments-number', 'unix', 1),
 (39, 'Finir Processus', 'pkill `#O` `#1`', 'arguments-string', 'unix', 1),
@@ -542,7 +540,7 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`, `chariot`
 (49, 'Switch Content', '`#blocs` ', 'blocs', 'unix', 1),
 (50, 'Case End', ';;', 'text-only', 'unix', 1),
 (51, 'Switch End', 'esac', 'text-only', 'unix', 1),
-(52, 'For Start', 'for `#1` in `#2` do', 'arguments', 'unix', 1),
+(52, 'For Start', 'for `#1` in `#2` \ndo', 'arguments', 'unix', 1),
 (53, 'For Content', '`#blocs` ', 'blocs', 'unix', 1),
 (54, 'For End', 'done', 'text-only', 'unix', 1),
 (55, 'Array declaration', 'declare -a `#1`=(`#2`)', 'arguments', 'unix', 1),
@@ -588,7 +586,7 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`, `chariot`
 (165, 'Comparison Test', ' `#1` `#op` `#2` ', 'arguments', 'unix', 0),
 (166, 'File test', ' `#op` `#1` ', 'arguments', 'unix', 0),
 (167, 'Function test', '`#1` `#2`', 'arguments', 'unix', 0),
-(168, 'Code', '`#1`', 'arguments', 'unix', 1),
+(168, 'Code', '`#custom`', 'arguments', 'unix', 1),
 (169, 'And', ' && ', 'text-only', 'unix', 0),
 (170, 'And', ' AND ', 'text-only', 'windows', 0),
 (171, 'Or', ' || ', 'text-only', 'unix', 0),
