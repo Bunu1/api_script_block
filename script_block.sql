@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Sam 21 Juillet 2018 à 23:30
+-- Généré le :  Dim 22 Juillet 2018 à 10:50
 -- Version du serveur :  5.7.14
 -- Version de PHP :  5.6.25
 
@@ -513,7 +513,7 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`, `chariot`
 (22, 'While End Condition', ' ]\r\ndo', 'text-only', 'unix', 1),
 (23, 'While Content', '`#blocs`', 'blocs', 'unix', 1),
 (24, 'While End', 'done', 'text-only', 'unix', 1),
-(25, 'Affectation', 'set `#1` = `#2`', 'arguments', 'windows', 1),
+(25, 'Affectation', 'set `#1`=`#2`', 'arguments', 'windows', 1),
 (26, 'Current Working Directory', 'pwd `#O`', 'arguments', 'unix', 1),
 (27, 'Current Working Directory', 'cd', 'arguments', 'windows', 1),
 (28, 'Create Directory', 'mkdir `#O` `#1`', 'arguments', 'unix', 1),
@@ -569,7 +569,7 @@ INSERT INTO `instruction` (`id`, `name`, `syntax`, `type`, `platform`, `chariot`
 (127, 'Switch Content', '`#blocs` ', 'blocs', 'windows', 1),
 (128, 'Case End', '}', 'text-only', 'windows', 1),
 (129, 'Switch End', '}}"', 'text-only', 'windows', 1),
-(130, 'For Start', 'for `#1` in (`#2`) do ( ', 'arguments', 'windows', 1),
+(130, 'For Start', 'for %%`#1` in (`#2`) do ( ', 'arguments', 'windows', 0),
 (131, 'For Content', '`#blocs` ', 'blocs', 'windows', 1),
 (132, 'For End', ')', 'text-only', 'windows', 1),
 (133, 'Array declaration', 'set `#1`=`#2`', 'arguments', 'windows', 1),
@@ -675,7 +675,12 @@ INSERT INTO `options` (`id`, `id_argument`, `name`, `unix`, `windows`, `input`, 
 (53, 73, 'reverse', '-v', '/v', 0, 61),
 (54, 73, 'show offset', '-b', '/o', 0, 61),
 (55, 76, 'add script(unix)', '-e', NULL, 1, 62),
-(56, 76, 'quiet(unix)', '-n', NULL, 0, 62);
+(56, 76, 'quiet(unix)', '-n', NULL, 0, 62),
+(57, 83, 'equals', '-eq', '==', 0, 65),
+(58, 83, 'inferior', '-lt', 'lss', 0, 65),
+(59, 83, 'superior', '-gt', 'gtr', 0, 65),
+(60, 83, 'different', '-ne', 'neq', 0, 65),
+(61, 83, 'file exist', '-f', 'exist', 0, 66);
 
 -- --------------------------------------------------------
 
@@ -906,7 +911,7 @@ ALTER TABLE `instruction`
 -- AUTO_INCREMENT pour la table `options`
 --
 ALTER TABLE `options`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 --
 -- AUTO_INCREMENT pour la table `report`
 --
