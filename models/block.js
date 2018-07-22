@@ -22,5 +22,10 @@ module.exports = function(sequelize, DataTypes){
 		timestamps: false,
 		freezeTableName: true
 	});
+	Block.associate = _associate;
 	return Block;
+}
+
+function _associate(models) {
+	models.Block.hasOne(models.Options, { foreignKey: 'id_block', targetKey: 'id'});
 }

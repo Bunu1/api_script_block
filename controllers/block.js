@@ -34,15 +34,13 @@ BlockController.getFullBlocks = function(instr) {
 }
 
 BlockController.getBlockInfos = function(id) {
-	return Block.findAll({
+	return Block.find({
 		include: [{
-			model: ModelIndex.Argument,
-//			include: [{
-//				model: ModelIndex.Promotion
-//			}],
-//			required: true
-		}, {
+			model: ModelIndex.Argument
+		},{
 			model: ModelIndex.Instruction
+		},{
+			model: ModelIndex.Options
 		}],
 		where: { id: id }
 	})
