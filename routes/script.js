@@ -40,6 +40,25 @@ scriptRouter.post('/add', jwt.checkToken, function(req, res) {
   });
 });
 
+scriptRouter.get("/getCheckReports", jwt.checkToken, function(req, res) {
+  const id_user = req.id_user;
+  ScriptController.findAll()
+  .then((scripts) => {
+    controllers.ReportController.findByUser(id_user)
+    .then((reports) => {
+      for(var i = 0; i < scripts.length; i++) {
+        scripts[i] = scripts[i].toJSON();
+        for(var j = 0; j < reports.length; j++) {
+//          reports[j] = reports[j].toJSON();
+          if(scripts[i].id === reports[j].id_script) {
+            scripts[i].reported = true;
+          }
+        }
+      }
+      res.status(200).json(scripts);
+    })
+  })
+});
 
 scriptRouter.get('/', function(req, res) {
   const limit = req.query.limit ? parseInt(req.query.limit) : undefined;

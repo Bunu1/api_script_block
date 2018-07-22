@@ -16,22 +16,27 @@ blockRouter.use(bodyParser.json());
 blockRouter.post('/add', jwt.checkTokenAdmin, function(req, res) {
   const name = req.body.name;
   const description = req.body.description;
+  const type = req.body.type;
   
   if(name === undefined) {
     res.status(400).end();
     return;
   }
-  if(content === undefined) {
+  if(description === undefined) {
     description = "";
   }
+  if(type === undefined) {
+    res.status(400).end();
+    return;
+  }
   
-  BlockController.add(name, description)
+  BlockController.add(name, description, type)
   .then((p) => {
     res.status(201).json(p);
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).end();
+    res.status(500).end({ 'error': 'Error creating the block' });
   });
 });
 
@@ -128,6 +133,24 @@ blockRouter.put('/update', jwt.checkTokenAdmin, function(req, res) {
   .catch((err) => {
     console.error(err);
     res.status(500).end();
+  });
+});
+
+blockRouter.delete('/removeFull/:id_block', jwt.checkTokenAdmin, function(req, res) {
+  const id_block = req.params.id_block
+	
+  if(id_block === undefined) {
+    res.status(404).end();
+    return;
+  }
+  
+  BlockController.removeFull(id_block)
+  .then((p) => {
+    res.status(201).json(p);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).end({ "error": "Error destroying full" });
   });
 });
 
@@ -253,7 +276,8 @@ function loop_script(blocks, type, blockinfo){
 			  		var keys = Object.keys(block['arguments']);
 			  		for (var g = 0 ; g < keys.length; g++) {
 			  			if(keys[g].indexOf('#blocks'+(nb_blocks_enc)) != -1 ){
-							loop_script(block['arguments'][keys[g]], type, blockinfo);	
+			  				if(block['arguments'][keys[g]][0]['null'] != "" )
+			  				loop_script(block['arguments'][keys[g]], type, blockinfo);	
 							nb_blocks_enc++;
 							break;						  
 			  			}
@@ -287,6 +311,7 @@ blockRouter.post('/finalscript', function(req, res) {
   }
   if(type == "windows") {
   	var extension = ".bat";
+  	finalstring+= "@echo off\n\n"
   }
 
   	var blockinfo = new Array();
@@ -302,6 +327,10 @@ blockRouter.post('/finalscript', function(req, res) {
 	  var bd = JSON.parse(JSON.stringify(body));
 	  blockinfo.push(bd);
 		loop_script(blocks, type, blockinfo[0]);
+		if(type == "windows"){
+			finalstring+= "\n\npause >nul"
+		}
+
 	})
   
   setTimeout(function(){
@@ -314,6 +343,7 @@ blockRouter.post('/finalscript', function(req, res) {
 	res.sendFile(path.join(__dirname, "..", "file"+extension));
 	
 	*/
+	finalstring = finalstring.replace(/  +/g, ' ');
  	res.status(201).end(finalstring);
  	finalstring = "";
   }, 5000);

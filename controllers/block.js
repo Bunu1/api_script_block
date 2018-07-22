@@ -4,10 +4,11 @@ const Op = ModelIndex.Sequelize.Op;
 
 const BlockController = function() { };
 
-BlockController.add = function(name, description) {
+BlockController.add = function(name, description, type) {
   return Block.create({
     name: name,
     description: description,
+    type: type
   });
 }
 
@@ -78,6 +79,32 @@ BlockController.getAll = function(id, name, description, limit, offset) {
 
 BlockController.remove = function(id) {
   return Block.destroy({ where: { id: id } });
+}
+
+BlockController.removeFull = function(id_block) {
+  return Promise.resolve(id_block)
+  .then((var1) => {
+    return ModelIndex.Block_Argument.findAll({ where: { id_block: id_block }})
+    .then((args) => {
+      args.forEach((el) => {
+        console.log("el arg = " + el.id_instruction)
+        ModelIndex.Block_Argument.destroy({ where: { id_block: id_block, id_argument: el.id_argument }});
+        ModelIndex.Argument.destroy({ where: { id: el.id_argument }});
+      });
+    })
+  })
+  .then((var2) => {
+    return ModelIndex.Block_Instruction.findAll({ where: { id_block: id_block }})
+    .then((inst) => {
+      inst.forEach((el) => {
+        ModelIndex.Block_Instruction.destroy({ where: { id_block: id_block, id_instruction: el.id_instruction }});
+        ModelIndex.Instruction.destroy({ where: { id: el.id_instruction }});
+      });
+    })
+  })
+  .then((var3) => {
+    return Block.destroy({ where: { id: id_block }})
+  })
 }
 
 BlockController.update = function(id, name, description, available) {
