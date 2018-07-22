@@ -9,7 +9,6 @@ const UserController = controllers.UserController;
 const userRouter = express.Router();
 userRouter.use(bodyParser.json());
 
-
 userRouter.post('/login', function(req, res) {
   const email = req.body[0].email;
   const password = req.body[0].password;
@@ -23,12 +22,16 @@ userRouter.post('/login', function(req, res) {
     if(user) {
       bcrypt.compare(password, user.password, function(err, result) {
         if(result) {
-          res.status(200).json([{
-            'id': user.id,
-            'name': user.name,
-            'isAdmin': user.admin,
-            'token': jwt.generateToken(user)
-          }]);
+          if(user.enabled === 1) {
+            res.status(200).json([{
+              'id': user.id,
+              'name': user.name,
+              'isAdmin': user.admin,
+              'token': jwt.generateToken(user)
+            }]);
+          } else {
+            res.status(403).json({ "error": "Account disabled" })
+          }
         } else {
           res.status(404).json({ 'error': 'Invalid identifiers' });
         }
@@ -55,12 +58,12 @@ userRouter.get('/', jwt.checkTokenAdmin, function(req, res) {
 });
 
 userRouter.post('/update', jwt.checkTokenAdmin, function(req, res) {
-  if(req.query.id === undefined) {
+  if(req.body.id === undefined) {
     res.status(400).end();
     return;
   }
 
-	UserController.update(req.query.id, req.query.admin, req.query.active, req.query.enabled)
+	UserController.update(req.body.id, req.body.name, req.body.admin, req.body.enabled)
   .then((p) => {
     res.status(201).json(p);
   })

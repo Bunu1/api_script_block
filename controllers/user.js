@@ -71,17 +71,16 @@ UserController.findAll = function(id, name, email, date_insc, admin, active, ena
   return User.findAll(options);
 };
 
-UserController.update = function(id, admin, active, enabled) {
-  console.log("HERE");
+UserController.update = function(id, name, admin, enabled) {
   return User.find({where: {id: id}})
   .then((User) => {
     if(User) {
+      if(name === undefined) name = User.name;
       if(admin === undefined) admin = User.admin;
-      if(active === undefined) active = User.active;
       if(enabled === undefined) enabled = User.enabled;
       return User.updateAttributes({
+        name: name,
         admin: admin,
-        active: active,
         enabled: enabled
       });
     }

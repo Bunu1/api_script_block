@@ -65,6 +65,9 @@ ReportController.add = function(id_script, id_user, comment) {
 	});
 }
 
+ReportController.findByUser = function(id_user) {
+  return Report.findAll({ where: { id_user: id_user }})
+}
 ReportController.findAll = function(id, id_script, id_user, comment, id_user, limit, offset) {
 	const where = {};
 	const options = {};
