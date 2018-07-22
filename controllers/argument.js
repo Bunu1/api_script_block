@@ -4,11 +4,25 @@ const Op = ModelIndex.Sequelize.Op;
 
 const ArgumentController = function() { };
 
-ArgumentController.add = function(subject, content, id_user) {
+ArgumentController.addToBlock = function(name, keyValue, description, id_block) {
   return Argument.create({
-    subject: subject,
-    content: content,
-    id_user: id_user
+    name: name,
+    keyValue: keyValue,
+    description: description
+  })
+  .then((arg) => {
+    return ModelIndex.Block_Argument.create({
+      id_block: id_block,
+      id_argument: arg.id
+    })
+  })
+}
+
+ArgumentController.add = function(name, keyValue, description) {
+  return Argument.create({
+    name: name,
+    keyValue: keyValue,
+    description: description
   });
 }
 

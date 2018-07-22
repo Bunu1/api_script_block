@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
 		},
 		pre_option: {
 			type: DataTypes.STRING,
-      		allowNull: false
+      		allowNull: true
 		}
 	}, {
 		paranoid: false,
@@ -24,6 +24,6 @@ module.exports = function (sequelize, DataTypes) {
 
 // INTERNAL
 function _associate(models) {
-	models.Block.belongsToMany(models.Argument, { through: models.Block_Argument, foreignKey: 'id_block', targetKey: 'id'});
-	models.Argument.belongsToMany(models.Block, { through: models.Block_Argument, foreignKey: 'id_argument', targetKey: 'id'});
+	models.Block.belongsToMany(models.Argument, { through: models.Block_Argument, foreignKey: 'id_block', targetKey: 'id', onDelete: 'CASCADE'});
+	models.Argument.belongsToMany(models.Block, { through: models.Block_Argument, foreignKey: 'id_argument', targetKey: 'id', onDelete: 'CASCADE'});
 }

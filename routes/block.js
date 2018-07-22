@@ -16,22 +16,27 @@ blockRouter.use(bodyParser.json());
 blockRouter.post('/add', jwt.checkTokenAdmin, function(req, res) {
   const name = req.body.name;
   const description = req.body.description;
+  const type = req.body.type;
   
   if(name === undefined) {
     res.status(400).end();
     return;
   }
-  if(content === undefined) {
+  if(description === undefined) {
     description = "";
   }
+  if(type === undefined) {
+    res.status(400).end();
+    return;
+  }
   
-  BlockController.add(name, description)
+  BlockController.add(name, description, type)
   .then((p) => {
     res.status(201).json(p);
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).end();
+    res.status(500).end({ 'error': 'Error creating the block' });
   });
 });
 
@@ -128,6 +133,24 @@ blockRouter.put('/update', jwt.checkTokenAdmin, function(req, res) {
   .catch((err) => {
     console.error(err);
     res.status(500).end();
+  });
+});
+
+blockRouter.delete('/removeFull/:id_block', jwt.checkTokenAdmin, function(req, res) {
+  const id_block = req.params.id_block
+	
+  if(id_block === undefined) {
+    res.status(404).end();
+    return;
+  }
+  
+  BlockController.removeFull(id_block)
+  .then((p) => {
+    res.status(201).json(p);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).end({ "error": "Error destroying full" });
   });
 });
 
