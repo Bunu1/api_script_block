@@ -276,7 +276,8 @@ function loop_script(blocks, type, blockinfo){
 			  		var keys = Object.keys(block['arguments']);
 			  		for (var g = 0 ; g < keys.length; g++) {
 			  			if(keys[g].indexOf('#blocks'+(nb_blocks_enc)) != -1 ){
-							loop_script(block['arguments'][keys[g]], type, blockinfo);	
+			  				if(block['arguments'][keys[g]][0]['null'] != "" )
+			  				loop_script(block['arguments'][keys[g]], type, blockinfo);	
 							nb_blocks_enc++;
 							break;						  
 			  			}
@@ -310,6 +311,7 @@ blockRouter.post('/finalscript', function(req, res) {
   }
   if(type == "windows") {
   	var extension = ".bat";
+  	finalstring+= "@echo off\n\n"
   }
 
   	var blockinfo = new Array();
@@ -325,6 +327,10 @@ blockRouter.post('/finalscript', function(req, res) {
 	  var bd = JSON.parse(JSON.stringify(body));
 	  blockinfo.push(bd);
 		loop_script(blocks, type, blockinfo[0]);
+		if(type == "windows"){
+			finalstring+= "\n\npause >nul"
+		}
+
 	})
   
   setTimeout(function(){
@@ -337,6 +343,7 @@ blockRouter.post('/finalscript', function(req, res) {
 	res.sendFile(path.join(__dirname, "..", "file"+extension));
 	
 	*/
+	finalstring = finalstring.replace(/  +/g, ' ');
  	res.status(201).end(finalstring);
  	finalstring = "";
   }, 5000);
