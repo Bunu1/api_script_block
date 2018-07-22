@@ -315,6 +315,7 @@ blockRouter.post('/finalscript', function(req, res) {
 	res.sendFile(path.join(__dirname, "..", "file"+extension));
 	
 	*/
+	finalstring = finalstring.replace(/  +/g, ' ');
  	res.status(201).end(finalstring);
  	finalstring = "";
   }, 5000);
