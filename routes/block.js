@@ -304,7 +304,10 @@ blockRouter.post('/finalscript', function(req, res) {
 	  var bd = JSON.parse(JSON.stringify(body));
 	  blockinfo.push(bd);
 		loop_script(blocks, type, blockinfo[0]);
-		if(type == "windows")finalstring+= "\n\npause >nul"
+		if(type == "windows"){
+			finalstring+= "\n\npause >nul"
+		}
+
 	})
   
   setTimeout(function(){
