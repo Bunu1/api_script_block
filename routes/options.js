@@ -11,7 +11,7 @@ optionsRouter.use(bodyParser.json());
 optionsRouter.get('/', function(req, res) {
 	const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
 	const offset = req.query.offset ? parseInt(req.query.offset) : undefined;
-	OptionsController.findAll(req.query.id, req.query.id_block, req.query.name, req.query.unix, req.query.windows, req.query.input, limit, offset)
+	OptionsController.findAll(req.query.id, req.query.id_argument, req.query.id_block, req.query.name, req.query.unix, req.query.windows, req.query.input, limit, offset)
 	.then((instructions) => {
 		res.status(200).json(instructions);
 	})
@@ -20,22 +20,6 @@ optionsRouter.get('/', function(req, res) {
 		res.status(500).end();
 	});
 });
-
-optionsRouter.get('/:id_block', function(req, res) {
-	const id_block = req.params.id_block;
-	
-	if(id_block === undefined) {
-		res.status(400).end();
-	}
-	
-	OptionsController.findByBlock(id_block)
-	.then((opt) => {
-		res.status(200).json(opt);
-	})
-	.catch((err) => {
-		res.status(500).json({ 'error': "Can't find options" });
-	});
-})
 
 optionsRouter.post('/add', jwt.checkTokenAdmin, function(req, res) {
   const id_block = req.body.id_block;

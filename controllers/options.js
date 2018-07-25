@@ -4,18 +4,23 @@ const Op = ModelIndex.Sequelize.Op;
 
 const OptionsController = function() { };
 
-OptionsController.findAll = function(id, id_block, name, unix, windows, input, limit, offset) {
+OptionsController.findAll = function(id, id_argument, id_block, name, unix, windows, input, limit, offset) {
 	const where = {};
 	const options = {};
 
 	if(id !== undefined){
 		where.id = {
-			[Op.like]: `${id}%`
+			[Op.eq]: `${id}%`
 		}
 	}
 	if(id_block !== undefined){
 		where.id_block = {
-			[Op.like]: `${id_block}%`
+			[Op.eq]: `${id_block}%`
+		}
+	}
+	if(id_argument !== undefined){
+		where.id_argument = {
+			[Op.eq]: `${id_argument}%`
 		}
 	}
 	if(name !== undefined){
@@ -49,13 +54,18 @@ OptionsController.findAll = function(id, id_block, name, unix, windows, input, l
 	return Options.findAll(options);
 }
 
-OptionsController.findByBlock = function(id_block) {
+OptionsController.findByBlock = function(id_block, id_argument) {
 	var where = {};
 	var options = {};
 	
 	if(id_block !== undefined) {
 		where.id_block = {
 			[Op.eq]: id_block
+		}
+	}
+	if(id_argument !== undefined) {
+		where.id_argument = {
+			[Op.eq]: id_argument
 		}
 	}
 	
