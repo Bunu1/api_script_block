@@ -4,11 +4,30 @@ const Op = ModelIndex.Sequelize.Op;
 
 const InstructionController = function() { };
 
-InstructionController.add = function(subject, content, id_user) {
+InstructionController.addToBlock = function(name, syntax, type, platform, chariot, id_block, pos) {
   return Instruction.create({
-    subject: subject,
-    content: content,
-    id_user: id_user
+    name: name,
+    syntax: syntax,
+    type: type,
+    platform: platform,
+    chariot: chariot
+  })
+  .then((inst) => {
+    return ModelIndex.Block_Instruction.create({
+      id_block: id_block,
+      id_instruction: inst.id,
+      pos: pos
+    })
+  })
+}
+
+InstructionController.add = function(name, syntax, type, platform, chariot) {
+  return Instruction.create({
+    name: name,
+    syntax: syntax,
+    type: type,
+    platform: platform,
+    chariot: chariot
   });
 }
 

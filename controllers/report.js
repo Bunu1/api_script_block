@@ -30,6 +30,10 @@ ReportController.getComments = function(id_script) {
 	return Report.findAll(options);
 }
 
+ReportController.countReports = function(id_script) {
+	return Report.count({ where: {'id_script': { [Op.eq]: id_script}} });
+}
+
 ReportController.countInfos = function() {
 	return Report.findAll({
 		attributes: [
@@ -41,7 +45,7 @@ ReportController.countInfos = function() {
 		include: [ 
 			{
 				model: ModelIndex.Script,
-				attributes: ['name'],
+				attributes: ['name', 'available'],
 				include: [
 					{
 						model: ModelIndex.User,
@@ -61,6 +65,9 @@ ReportController.add = function(id_script, id_user, comment) {
 	});
 }
 
+ReportController.findByUser = function(id_user) {
+  return Report.findAll({ where: { id_user: id_user }})
+}
 ReportController.findAll = function(id, id_script, id_user, comment, id_user, limit, offset) {
 	const where = {};
 	const options = {};

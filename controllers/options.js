@@ -74,7 +74,7 @@ OptionsController.findByBlock = function(id_block, id_argument) {
 	
 }
 
-OptionsController.add = function(id_argument, id_block, name, unix, windows, input) {
+OptionsController.add = function(name, id_argument, unix, windows, input, id_block) {
   return Options.create({
     id_block: id_block,
     id_argument: id_argument,

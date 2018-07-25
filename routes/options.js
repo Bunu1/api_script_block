@@ -22,29 +22,30 @@ optionsRouter.get('/', function(req, res) {
 });
 
 optionsRouter.post('/add', jwt.checkTokenAdmin, function(req, res) {
-  const id_block = req.body.id_block;
-  const id_argument = req.body.id_argument;
   const name = req.body.name;
+  const id_argument = req.body.id_argument;
+  const unix = req.body.unix;
+  const windows = req.body.windows;
+  const input = req.body.input;
+  const id_block = req.body.id_block;
 
-  if(id_block === undefined) {
+  if(name === undefined || id_argument === undefined || input === undefined || id_block === undefined) {
     res.status(400).end();
   }
-  if(id_argument === undefined) {
-    res.status(400).end();
-    return;
+  if(unix === undefined) {
+    unix = null;
   }
-  if(name === undefined) {
-    res.status(400).end();
-    return;
+  if(windows === undefined) {
+    windows = null;
   }
   
-  OptionsController.add(id_argument, id_block, name, req.body.unix, req.body.windows, req.body.input)
+  OptionsController.add(name, id_argument, unix, windows, input, id_block)
   .then((p) => {
     res.status(201).json(p);
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).end();
+    res.status(500).json({ 'error' : 'Error adding option' });
   });
 });
 
